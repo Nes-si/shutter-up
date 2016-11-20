@@ -3,7 +3,7 @@
 </template>
 
 <script>
-
+  import 'whatwg-fetch';
 </script>
 
 <style>
