@@ -2,21 +2,20 @@
   #app
     .curtain
     router-view.router-view
-    .menu
-      h1 Menu
-      ul
-        li
-          router-link(to="/") Home
-        li
-          router-link(to="/about") About
-
+    menu-component
 </template>
 
 <script>
   import 'whatwg-fetch';
+  
+  import MenuComponent from 'components/Menu';
 
   export default {
-    name: "App"
+    name: "App",
+  
+    components: {
+      MenuComponent
+    }
   }
 </script>
 
