@@ -3,16 +3,16 @@
     .curtain
     .menu
       | here is some menu
-    .index-view
-      .screen
-      .screen
-      .screen
-      .screen
-
+    router-view.router-view
 
 </template>
+
 <script>
   import 'whatwg-fetch';
+
+  export default {
+    name: "App"
+  }
 </script>
 
 <style lang="scss" scoped rel="stylesheet/scss">
@@ -23,6 +23,7 @@
     right: 0;
     bottom: 0;
   }
+  
   .menu {
     position: absolute;
     top: 0;
@@ -31,36 +32,14 @@
     width: 216px;
     background: #F5F5F5;
   }
-  .index-view {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin-left: 216px;
-  }
-  .screen {
+  
+  .router-view {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    transition: trasform .3s ease;
-    &:nth-child(4n-3) {
-      background: red;
-    }
-    &:nth-child(4n-2) {
-      background: green;
-    }
-    &:nth-child(4n-2) {
-      background: blue;
-    }
-    &:nth-child(4n-1) {
-      background: pink;
-    }
   }
-
-
 </style>
 
 
