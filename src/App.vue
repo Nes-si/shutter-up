@@ -1,9 +1,14 @@
 <template lang="pug">
   #app
     .curtain
-    .menu
-      | here is some menu
     router-view.router-view
+    .menu
+      h1 Menu
+      ul
+        li
+          router-link(to="/") Home
+        li
+          router-link(to="/about") About
 
 </template>
 

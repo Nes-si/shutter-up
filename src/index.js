@@ -2,10 +2,13 @@ import 'babel-polyfill';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import configureStore from 'store/configureStore';
 import App from './App';
 import Home from 'components/Home';
 import About from 'components/About';
 
+
+export const store = configureStore();
 
 Vue.use(VueRouter);
 
