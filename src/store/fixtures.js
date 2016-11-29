@@ -1,47 +1,203 @@
-export const portfolioItems = {
-  'yourgratefulnationgn': {
+export const data = [
+  {
     index: 0,
-    title: 'Your Grateful<br/>Nation',
-    description: 'A non-profit committed to transitioning Special Operations veterans into their next successful career.',
-    skills: 'web design, development & content creation',
-    desktopImage: 'monitor-screen.png',
-    mobileImage: 'ygn-mobile.png',
-    sun: 'sun-1.inline.svg',
-    link: 'http://yourgratefulnation.org',
-    bg: '#9E181C'
+    name: "Product",
+    info: `Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, 
+      there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. 
+      A small river named Duden flows by their place and supplies it with the necessary regelialia. 
+      It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
+    slides: [
+      'slide1.jpg',
+      'slide2.jpg',
+      'slide3.jpg'
+    ],
+    items: [
+      {
+        index: 0,
+        title: 'Lorem ipsum',
+        client: 'Client 1',
+        image: 'item1.jpg',
+      },
+      {
+        index: 1,
+        title: 'Aenean massa',
+        client: 'Client 2',
+        image: 'item2.jpg',
+      },
+      {
+        index: 2,
+        title: 'Vivamus elementum',
+        client: 'Client 3',
+        image: 'item3.jpg',
+      },
+      {
+        index: 3,
+        title: 'Curabitur',
+        client: 'Client 4',
+        image: 'item4.jpg',
+      },
+      {
+        index: 4,
+        title: 'Vivamus elementum',
+        client: 'Client 5',
+        image: 'item5.jpg',
+      },
+      {
+        index: 5,
+        title: 'Curabitur',
+        client: 'Client 6',
+        image: 'item6.jpg',
+      }
+    ]
   },
-  'digdeep': {
+  {
     index: 1,
-    title: 'DIGDEEP',
-    description: 'A non-profit defending water access as a human right.',
-    skills: 'web design & development, app development',
-    desktopImage: 'dig-monitor-screen.png',
-    mobileImage: 'dd-mobile.png',
-    sun: 'sun-2.inline.svg',
-    link: 'http://digdeep.com',
-    bg: '#45CBFB'
+    name: "Fashion",
+    info: `Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, 
+      there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. 
+      A small river named Duden flows by their place and supplies it with the necessary regelialia. 
+      It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
+    slides: [
+      'slide1.jpg',
+      'slide2.jpg',
+      'slide3.jpg'
+    ],
+    items: [
+      {
+        index: 0,
+        title: 'Lorem ipsum',
+        client: 'Client 1',
+        image: 'item1.jpg',
+      },
+      {
+        index: 1,
+        title: 'Aenean massa',
+        client: 'Client 2',
+        image: 'item2.jpg',
+      },
+      {
+        index: 2,
+        title: 'Vivamus elementum',
+        client: 'Client 3',
+        image: 'item3.jpg',
+      },
+      {
+        index: 3,
+        title: 'Curabitur',
+        client: 'Client 4',
+        image: 'item4.jpg',
+      }
+    ]
   },
-  'dannygonzales': {
+  {
     index: 2,
-    title: 'Danny<br/>Gonzales',
-    description: 'A portfolio site for a Los Angeles-based interior designer',
-    skills: 'web design & development',
-    desktopImage: 'danny-monitor-screen.png',
-    mobileImage: 'dg-mobile.png',
-    sun: 'sun-3.inline.svg',
-    link: 'http://dannygonzales.com',
-    bg: '#CE3B2F'
+    name: "Accessory",
+    info: `Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, 
+      there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. 
+      A small river named Duden flows by their place and supplies it with the necessary regelialia. 
+      It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
+    slides: [
+      'slide1.jpg',
+      'slide2.jpg',
+      'slide3.jpg'
+    ],
+    items: [
+      {
+        index: 0,
+        title: 'Lorem ipsum',
+        client: 'Client 1',
+        image: 'item1.jpg',
+      },
+      {
+        index: 1,
+        title: 'Aenean massa',
+        client: 'Client 2',
+        image: 'item2.jpg',
+      },
+      {
+        index: 2,
+        title: 'Vivamus elementum',
+        client: 'Client 3',
+        image: 'item3.jpg',
+      },
+      {
+        index: 3,
+        title: 'Curabitur',
+        client: 'Client 4',
+        image: 'item4.jpg',
+      }
+    ]
   },
-  'urbaneer': {
+  {
     index: 3,
-    title: 'Urbanner<br/>Creative',
-    description: 'A boutique creative consultancy focused on helping clients understand and engage the Millennial Generation',
-    skills: 'web design & development',
-    laptopImage: 'urbanner-monitor-screen.png',
-    desktopImage: 'danny-monitor-screen.png',
-    mobileImage: 'dg-mobile.png',
-    sun: 'sun-4.inline.svg',
-    link: 'http://urbaneercreative.com',
-    bg: '#9DB582'
+    name: "Jewelry",
+    info: `Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, 
+      there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. 
+      A small river named Duden flows by their place and supplies it with the necessary regelialia. 
+      It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
+    slides: [
+      'slide1.jpg',
+      'slide2.jpg',
+      'slide3.jpg'
+    ],
+    items: [
+      {
+        index: 0,
+        title: 'Lorem ipsum',
+        client: 'Client 1',
+        image: 'item1.jpg',
+      },
+      {
+        index: 1,
+        title: 'Aenean massa',
+        client: 'Client 2',
+        image: 'item2.jpg',
+      },
+      {
+        index: 2,
+        title: 'Vivamus elementum',
+        client: 'Client 3',
+        image: 'item3.jpg',
+      },
+      {
+        index: 3,
+        title: 'Curabitur',
+        client: 'Client 4',
+        image: 'item4.jpg',
+      }
+    ]
   },
-}
+  {
+    index: 4,
+    name: "Interiors",
+    info: `Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, 
+      there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. 
+      A small river named Duden flows by their place and supplies it with the necessary regelialia. 
+      It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
+    slides: [
+      'slide1.jpg',
+      'slide2.jpg',
+      'slide3.jpg'
+    ],
+    items: [
+      {
+        index: 0,
+        title: 'Lorem ipsum',
+        client: 'Client 1',
+        image: 'item1.jpg',
+      },
+      {
+        index: 1,
+        title: 'Aenean massa',
+        client: 'Client 2',
+        image: 'item2.jpg',
+      },
+      {
+        index: 2,
+        title: 'Vivamus elementum',
+        client: 'Client 3',
+        image: 'item3.jpg',
+      }
+    ]
+  }
+];

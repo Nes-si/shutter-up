@@ -1,17 +1,14 @@
-import store from 'index';
+import {store} from 'index';
+import {data} from 'store/fixtures';
 
-export const SET_SLIDE               = 'sunroof/portfolio/SET_SLIDE';
-export const MOVE_NEXT               = 'sunroof/portfolio/MOVE_NEXT';
-export const MOVE_PREV               = 'sunroof/portfolio/MOVE_PREV';
-export const SHOW_DESKTOP_PREVIEW    = 'sunroof/portfolio/SHOW_DESKTOP_PREVIEW';
-export const SHOW_MOBILE_PREVIEW     = 'sunroof/portfolio/SHOW_MOBILE_PREVIEW';
-export const HIDE_PREVIEW            = 'sunroof/portfolio/HIDE_PREVIEW';
-export const UNLOCK                  = 'sunroof/portfolio/UNLOCK';
-export const CLICK_MENU              = 'sunroof/portfolio/CLICK_MENU';
+export const CATEGORY_SET   = 'sunroof/portfolio/CATEGORY_SET';
+export const CATEGORY_NEXT  = 'sunroof/portfolio/CATEGORY_NEXT';
+export const CATEGORY_PREV  = 'sunroof/portfolio/CATEGORY_PREV';
+export const UNLOCK         = 'sunroof/portfolio/UNLOCK';
 
 const LOCK_TIME = 2000;
 
-var timer = null;
+let timer = null;
 
 export function unlock() {
   return {
@@ -23,11 +20,7 @@ function getIndex() {
   return store.store.getState().portfolio.index;
 }
 
-function getLength() {
-  return store.store.getState().portfolio.length;
-}
-
-export function setSlide(index) {
+ function setSlide(index) {
   return dispatch => {
     let length = getLength();
     if ((index == length) != (getIndex() == length))
@@ -47,7 +40,7 @@ export function setSlide(index) {
   }
 }
 
-export function nextSlide() {
+ function nextSlide() {
   return dispatch => {
     if (getIndex() == getLength() - 1)
       dispatch({type: CLICK_MENU});
@@ -63,7 +56,7 @@ export function nextSlide() {
   }
 }
 
-export function prevSlide() {
+ function prevSlide() {
   return dispatch => {
     if (getIndex() == getLength())
       dispatch({type: CLICK_MENU});
@@ -79,49 +72,27 @@ export function prevSlide() {
   }
 }
 
-export function clickMenu() {
-  return dispatch => {
-    dispatch({type: CLICK_MENU});
-    
-    if (!timer) {
-      timer = setTimeout(() => {
-        dispatch({type: UNLOCK});
-        timer = null;
-      }, LOCK_TIME);
-    }
-  };
-}
-
-export function showDesktopPreview() {
+export function setCategory(category) {
   return {
-    type: SHOW_DESKTOP_PREVIEW
-  };
+    type: CATEGORY_SET,
+    category
+  }
 }
 
-export function showMobilePreview() {
+export function nextCategory() {
   return {
-    type: SHOW_MOBILE_PREVIEW
-  };
+    type: CATEGORY_NEXT
+  }
 }
 
-export function hidePreview() {
+export function prevCategory() {
   return {
-    type: HIDE_PREVIEW
-  };
+    type: CATEGORY_PREV
+  }
 }
-
-let portfolioItems = require('../store/fixtures.js').portfolioItems;
-window.portfolioItems = portfolioItems;
 
 let initalState = {
-  index: 0,
-  lastIndex: 0,
-  length: Object.keys(portfolioItems).length,
-  currentView: 'PortfolioItems',
-  showPreview: false,
-  previewType: 'desktop',
-  items: portfolioItems,
-  direction: 'top',
+  category: 0,
   locked: true
 };
 
@@ -133,89 +104,36 @@ export default function portfolioReducer(state = initalState, action) {
         locked: false
       };
 
-    case SET_SLIDE:
-      if (state.locked || state.showPreview)
+    case CATEGORY_SET:
+      if (state.locked)
         return state;
       return {
         ...state,
-        index: action.index,
-        direction: state.index > action.index ? 'top' : 'bottom',
-        currentView: action.index === state.length ? 'PortfolioAbout' : 'PortfolioItems',
-        locked: true
+        category: action.category,
+        //locked: true
       };
 
-    case SHOW_DESKTOP_PREVIEW:
-      return {
-        ...state,
-        showPreview: true,
-        previewType: 'desktop'
-      };
-
-    case SHOW_MOBILE_PREVIEW:
-      return {
-        ...state,
-        showPreview: true,
-        previewType: 'mobile'
-      };
-
-    case HIDE_PREVIEW:
-      return {
-        ...state,
-        showPreview: false,
-        previewType: 'mobile'
-      };
-
-    case MOVE_NEXT:
-      if (state.locked ||
-          state.showPreview ||
-          state.index === state.length)
+    case CATEGORY_NEXT:
+      if (state.locked || state.category === data.length - 1)
         return state;
               
       return {
         ...state,
-        index: ++state.index,
-        direction: 'top',
-        locked: true
+        category: ++state.category,
+        //locked: true
       };
       
-    case MOVE_PREV:
-      if (state.locked ||
-          state.showPreview ||
-          state.index === 0)
+    case CATEGORY_PREV:
+      if (state.locked || state.category === 0)
         return state;
       
       return {
         ...state,
-        index: --state.index,
-        direction: 'bottom',
-        locked: true
-      };
-  
-    case CLICK_MENU:
-      if (state.locked ||
-          state.showPreview)
-        return state;
-      
-      if (state.currentView == 'PortfolioItems')
-        return {
-          ...state,
-          lastIndex: state.index,
-          index: state.length,
-          currentView: 'PortfolioAbout'
-        };
-        
-      let index = state.lastIndex;
-      if (action.index != undefined && action.index < state.length)
-        index = action.index;
-      
-      return {
-        ...state,
-        index,
-        currentView: 'PortfolioItems',
-        locked: true
+        category: --state.category,
+        //locked: true
       };
       
-    // do reducer stuff
-    default: return state;
+    default:
+      return state;
   }
 }

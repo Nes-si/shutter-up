@@ -9,31 +9,37 @@
 </template>
 
 <script>
-  const path = 'assets/img/slides/';
-  const slides = [
-    'slide1.jpg',
-    'slide2.jpg',
-    'slide3.jpg'
-  ];
+  import {store} from 'index';
+  import {data} from 'store/fixtures';
   
   export default {
     name: "HomeComponent",
     
     data: function () {
       return {
-        path,
-        slides,
+        portfolio: this.$select('portfolio'),
+        catData: null,
+        slides: [],
+        slidesPath: '',
         slideNum: 0
       }
     },
   
+    beforeMount: function () {
+      this.catData = data[this.portfolio.category];
+      this.slides = this.catData.slides;
+      this.path = `assets/data/${this.catData.name}/slides/`;
+    },
+    
     mounted: function () {
       setInterval(() => this.slideNext(), 5000);
     },
     
     methods: {
+      //...store.actions.portfolio,
+      
       slideNext: function () {
-        if (this.slideNum >= slides.length - 1)
+        if (this.slideNum >= this.slides.length - 1)
           this.slideNum = 0;
         else
           this.slideNum++;
@@ -41,7 +47,7 @@
   
       slidePrev: function () {
         if (this.slideNum == 0)
-          this.slideNum = slides.length - 1;
+          this.slideNum = this.slides.length - 1;
         else
           this.slideNum--;
       }

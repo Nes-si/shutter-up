@@ -11,7 +11,6 @@
 
 <style lang="scss" scoped rel="stylesheet/scss">
   .about {
-    margin-left: 216px;
     width: 100%;
     height: 100%;
     background: white;
