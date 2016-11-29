@@ -1,11 +1,15 @@
 <template lang="pug">
   .home
-    .container(
-      v-for="(slide, index) of slides"
-      v-bind:key="slide"
+    .category(
+      v-for="(category, index) of categories"
+      v-bind:key="index"
       )
-      transition(name="slide" appear)
-        .screen(v-show="index == slideNum" v-bind:style="{ backgroundImage: 'url(' + path + slide + ')' }")
+      .slide(
+        v-for="(slide, index) of category.slides"
+        v-bind:key="index"
+        )
+        transition(name="slide" appear)
+          .screen(v-show="index == slideNum" v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }")
 </template>
 
 <script>
@@ -19,6 +23,7 @@
     
     data: function () {
       return {
+        categories: data,
         scrollHandler: null,
         portfolio: this.$select('portfolio'),
         catData: null,
