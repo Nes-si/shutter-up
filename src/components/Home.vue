@@ -26,9 +26,7 @@
     },
   
     beforeMount: function () {
-      this.catData = data[this.portfolio.category];
-      this.slides = this.catData.slides;
-      this.path = `assets/data/${this.catData.name}/slides/`;
+      this.categoryUpdate();
     },
     
     mounted: function () {
@@ -36,20 +34,25 @@
     },
     
     methods: {
-      //...store.actions.portfolio,
+      categoryUpdate: function () {
+        this.catData = data[this.portfolio.category];
+        this.slides = this.catData.slides;
+        this.path = `assets/data/${this.catData.name}/slides/`;
+      },
       
       slideNext: function () {
         if (this.slideNum >= this.slides.length - 1)
           this.slideNum = 0;
         else
           this.slideNum++;
-      },
+      }
+    },
   
-      slidePrev: function () {
-        if (this.slideNum == 0)
-          this.slideNum = this.slides.length - 1;
-        else
-          this.slideNum--;
+    watch: {
+      'portfolio.category': {
+        handler: function () {
+          this.categoryUpdate();
+        }
       }
     }
   }

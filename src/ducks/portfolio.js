@@ -72,20 +72,20 @@ function getIndex() {
   }
 }
 
-export function setCategory(category) {
+export function categorySet(category) {
   return {
     type: CATEGORY_SET,
     category
   }
 }
 
-export function nextCategory() {
+export function categoryNext() {
   return {
     type: CATEGORY_NEXT
   }
 }
 
-export function prevCategory() {
+export function categoryPrev() {
   return {
     type: CATEGORY_PREV
   }
@@ -93,7 +93,7 @@ export function prevCategory() {
 
 let initalState = {
   category: 0,
-  locked: true
+  locked: false
 };
 
 export default function portfolioReducer(state = initalState, action) {
