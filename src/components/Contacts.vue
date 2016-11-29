@@ -1,22 +1,22 @@
 <template lang="pug">
   transition(appear)
-    .about Я пиздат!
+    .contacts Телефон, адрес, блабла
 </template>
 
 <script>
   export default {
-    name: "AboutComponent"
+    name: "ContactsComponent"
   }
 </script>
 
 <style lang="scss" scoped rel="stylesheet/scss">
-  .about {
+  .contacts {
     margin-left: 216px;
     width: 100%;
     height: 100%;
-    background: white;
+    background: #f5f5f5;
   }
-
+  
   .v-enter-active, .v-leave-active {
     transition: transform 1s;
   }

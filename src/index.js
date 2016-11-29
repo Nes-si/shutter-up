@@ -6,6 +6,7 @@ import configureStore from 'store/configureStore';
 import App from './App';
 import Home from 'components/Home';
 import About from 'components/About';
+import Contacts from 'components/Contacts';
 
 
 export const store = configureStore();
@@ -22,6 +23,10 @@ const router = new VueRouter({
     {
       path: '/about',
       component: About
+    },
+    {
+      path: '/contacts',
+      component: Contacts
     }
   ]
 });

@@ -6,6 +6,8 @@
         router-link(to="/") Home
       li
         router-link(to="/about") About
+      li
+        router-link(to="/contacts") Contact
 </template>
 
 <script>

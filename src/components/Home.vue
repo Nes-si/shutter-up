@@ -1,12 +1,11 @@
 <template lang="pug">
   .home
-    .index-view
-      .cont(
-        v-for="(slide, index) of slides"
-        v-bind:key="slide"
-        )
-        transition(name="slide")
-          .screen(v-show="index == slideNum" v-bind:style="{ backgroundImage: 'url(' + path + slide + ')' }")
+    .container(
+      v-for="(slide, index) of slides"
+      v-bind:key="slide"
+      )
+      transition(name="slide" appear)
+        .screen(v-show="index == slideNum" v-bind:style="{ backgroundImage: 'url(' + path + slide + ')' }")
 </template>
 
 <script>
@@ -53,21 +52,13 @@
 </script>
 
 <style lang="scss" scoped rel="stylesheet/scss">
-  .index-view {
+  .screen {
     position: absolute;
     top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  
-    .screen {
-      position: absolute;
-      top: 0;
-      left: 175px;
-      width: 100%;
-      height: 100%;
-      background: center center no-repeat / cover;
-    }
+    left: 175px;
+    width: 100%;
+    height: 100%;
+    background: center center no-repeat / cover;
   }
 </style>
 
