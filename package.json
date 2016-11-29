@@ -9,10 +9,12 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "lethargy": "^1.0.4",
     "prerender-spa-plugin": "^1.1.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "revue": "git://github.com/CasperSleep/revue.git#2.0",
+    "throttle-debounce": "^1.0.1",
     "vue": "^2.0.1",
     "vue-router": "^2.0.1",
     "whatwg-fetch": "^1.0.0"

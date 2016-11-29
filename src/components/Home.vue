@@ -11,12 +11,15 @@
 <script>
   import {store} from 'index';
   import {data} from 'store/fixtures';
+  import ScrollHandler from 'utils/scrollhandler';
+  
   
   export default {
     name: "HomeComponent",
     
     data: function () {
       return {
+        scrollHandler: null,
         portfolio: this.$select('portfolio'),
         catData: null,
         slides: [],
@@ -31,6 +34,15 @@
     
     mounted: function () {
       setInterval(() => this.slideNext(), 5000);
+  
+      this.scrollHandler = new ScrollHandler(
+        store.actions.portfolio.categoryNext,
+        store.actions.portfolio.categoryPrev
+      );
+    },
+    
+    beforeDestroy: function () {
+      this.scrollHandler.destroy();
     },
     
     methods: {

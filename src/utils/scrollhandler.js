@@ -1,7 +1,7 @@
-import { Lethargy } from 'lethargy';
-import { throttle, debounce } from 'throttle-debounce';
+import {Lethargy} from 'lethargy';
+import {throttle, debounce} from 'throttle-debounce';
 
-var lethargy = new Lethargy;
+let lethargy = new Lethargy();
 
 
 export default class ScrollHandler {
@@ -13,7 +13,6 @@ export default class ScrollHandler {
 
     this.isTouchDevice = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|playbook|silk|BlackBerry|BB10|Windows Phone|Tizen|Bada|webOS|IEMobile|Opera Mini)/);
     this.isTouch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0) || (navigator.maxTouchPoints));
-
 
 
     this.touchStartY = 0;
@@ -30,8 +29,6 @@ export default class ScrollHandler {
 
     this.createScrollListener();
     this.addTouchHandler();
-
-
   }
 
   move(direction) {
@@ -44,30 +41,29 @@ export default class ScrollHandler {
   }
 
   handleScroll(e) {
-    e = e || window.event
+    e = e || window.event;
 
-    var scrollInfo = lethargy.check(e)
+    let scrollInfo = lethargy.check(e);
     if (scrollInfo != false) {
-      if (scrollInfo === -1) {
+      if (scrollInfo === -1)
         this.move('next');
-      } else {
+      else
         this.move('prev');
-      }
     }
 
-    this.preventDefault(e)
+    this.preventDefault(e);
   }
 
   createScrollListener () {
     let elem = this.container;
     if (elem.addEventListener) {
-      if ('onScroll' in document) {
+      if ('onScroll' in document)
         return elem.addEventListener("wheel", this.scrollHandler);
-      } else if ('onmousewheel' in document) {
+      else if ('onmousewheel' in document)
         return elem.addEventListener("mousewheel", this.scrollHandler);
-      } else {
+      else
         return elem.addEventListener("MozMousePixelScroll", this.scrollHandler);
-      }
+      
     } else {
       return elem.attachEvent("onmousewheel", this.scrollHandler);
     }
@@ -76,18 +72,17 @@ export default class ScrollHandler {
   destroyScrollListener () {
     let elem = this.container;
     if (elem.removeEventListener) {
-      if ('onScroll' in document) {
+      if ('onScroll' in document)
         return elem.removeEventListener("wheel", this.scrollHandler);
-      } else if ('onmousewheel' in document) {
+      else if ('onmousewheel' in document)
         return elem.removeEventListener("mousewheel", this.scrollHandler);
-      } else {
+      else
         return elem.removeEventListener("MozMousePixelScroll", this.scrollHandler);
-      }
+      
     } else {
       return elem.detachEvent("onmousewheel", this.scrollHandler);
     }
   }
-
 
   touchMoveHandler(event) {
     let e = event || window.event || e || e.originalEvent;
@@ -98,24 +93,19 @@ export default class ScrollHandler {
     }
   }
 
-
   handleTouchMove(e) {
     let touchEvents = this.getEventsPage(e);
     this.touchEndY = touchEvents.y;
     this.touchEndX = touchEvents.x;
-    let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+    let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     if (Math.abs(this.touchStartX - this.touchEndX) < Math.abs(this.touchStartY - this.touchEndY)) {
       if (Math.abs(this.touchStartY - this.touchEndY) > (h / 100) * 5) {
-        if (this.touchStartY > this.touchEndY) {
+        if (this.touchStartY > this.touchEndY)
           this.move('next');
-        } else if (this.touchEndY > this.touchStartY) {
+        else if (this.touchEndY > this.touchStartY)
           this.move('prev');
-        }
       }
     }
-
-
-
   }
 
   isReallyTouch(e) {
@@ -183,12 +173,12 @@ export default class ScrollHandler {
     let i = 0;
     let iLen = evts.length;
     while (i < iLen) {
-      if (document.addEventListener) {
+      if (document.addEventListener)
         el.addEventListener(evts[i], fn, false);
-      } else {
+      else
         el.attachEvent(evts[i], fn, false);
-      }
-        //IE 6/7/8
+      
+      //IE 6/7/8
       i++;
     }
   }
@@ -198,12 +188,12 @@ export default class ScrollHandler {
     let i = 0;
     let iLen = evts.length;
     while (i < iLen) {
-      if (document.addEventListener) {
+      if (document.addEventListener)
         el.removeEventListener(evts[i], fn, false);
-      } else {
+      else
         el.deattachEvent(evts[i], fn, false);
-      }
-        //IE 6/7/8
+      
+      //IE 6/7/8
       i++;
     }
   }
@@ -219,11 +209,8 @@ export default class ScrollHandler {
     return events;
   }
 
-
   preventDefault(event) {
     if (event.preventDefault) { return event.preventDefault(); } else { return event.returnValue = false; }
   }
-
-
 
 }
