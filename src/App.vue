@@ -20,7 +20,28 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
+  @font-face {
+  	font-family: 'Marvel';
+  	src: url('~assets/fonts/Marvel-Regular.eot');
+  	src: url('~assets/fonts/Marvel-Regular.eot?#iefix') format('embedded-opentype'),
+  		url('~assets/fonts/Marvel-Regular.woff') format('woff'),
+  		url('~assets/fonts/Marvel-Regular.ttf') format('truetype');
+  	font-weight: normal;
+  	font-style: normal;
+  }
+
+  @font-face {
+  	font-family: 'Marvel';
+  	src: url('~assets/fonts/Marvel-Bold.eot');
+  	src: url('~assets/fonts/Marvel-Bold.eot?#iefix') format('embedded-opentype'),
+  		url('~assets/fonts/Marvel-Bold.woff') format('woff'),
+  		url('~assets/fonts/Marvel-Bold.ttf') format('truetype');
+  	font-weight: bold;
+  	font-style: normal;
+  }
+
   @import 'normalize.css';
+  @import url('https://fonts.googleapis.com/css?family=Work+Sans:100,300,400,500,700');
 
   * {
     box-sizing: border-box;
@@ -32,8 +53,12 @@
 
   body {
     -webkit-font-smoothing: antialiased;
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Work Sans', sans-serif;
     overflow: hidden;
+  }
+
+  a {
+    text-decoration: none;
   }
 
   #app {
