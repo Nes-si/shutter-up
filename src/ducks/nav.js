@@ -1,27 +1,26 @@
-export const OPEN_PAGE    = 'app/nav/OPEN_PAGE';
-export const OPEN_MENU    = 'app/nav/OPEN_MENU';
-export const CLOSE_MENU   = 'app/nav/CLOSE_MENU';
+import {PAGE_HOME, PAGE_CONTACTS} from 'index';
 
-export const PAGE_HOME    = 'app/nav/pages/PAGE_HOME';
-export const PAGE_ABOUT   = 'app/nav/pages/PAGE_ABOUT';
-
+export const PAGE_OPEN    = 'app/nav/PAGE_OPEN';
+export const MENU_OPEN    = 'app/nav/MENU_OPEN';
+export const MENU_CLOSE   = 'app/nav/MENU_CLOSE';
 
 
-export function openPage(pageType) {
+export function pageOpen(to, from) {
   return {
-    type: OPEN_PAGE,
-    pageType
+    type: PAGE_OPEN,
+    to,
+    from
   };
 }
 
-export function openMenu() {
+export function menuOpen() {
   return {
-    type: OPEN_MENU
+    type: MENU_OPEN
   };
 }
-export function closeMenu() {
+export function menuClose() {
   return {
-    type: CLOSE_MENU
+    type: MENU_CLOSE
   };
 }
 
@@ -34,17 +33,21 @@ const initialState = {
 
 export default function navReducer(state = initialState, action) {
   switch (action.type) {
-    case OPEN_PAGE:
+    case PAGE_OPEN:
+      let openedMenu = false;
+      if (action.to.name == PAGE_HOME || action.to.name == PAGE_CONTACTS)
+        openedMenu = true;
+      
       return {
         ...state,
-        openedPage: action.pageType,
-        openedMenu: false
+        openedPage: action.to.name,
+        openedMenu
       };
   
-    case OPEN_MENU:
+    case MENU_OPEN:
       return {...state, openedMenu: true};
       
-    case CLOSE_MENU:
+    case MENU_CLOSE:
       return {...state, openedMenu: false};
       
     default:

@@ -9,6 +9,7 @@ export default {
     portfolio: portfolio.default,
   }),
   actions: {
+    nav,
     portfolio
   }
 };

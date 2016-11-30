@@ -2,19 +2,34 @@
   #app
     .curtain
     router-view.router-view
-    menu-component
+    menu-component(v-if="nav.openedMenu")
+    .menu(v-if="!nav.openedMenu" @click="onMenuOpen") Menu
 </template>
 
 <script>
   import 'whatwg-fetch';
 
   import MenuComponent from 'components/Menu';
+  import {store} from 'index';
+  
 
   export default {
     name: "App",
 
     components: {
       MenuComponent
+    },
+    
+    data: function () {
+      return {
+        nav: this.$select('nav')
+      }
+    },
+    
+    methods: {
+      onMenuOpen() {
+        store.actions.nav.menuOpen();
+      }
     }
   }
 </script>
@@ -60,7 +75,9 @@
   a {
     text-decoration: none;
   }
+</style>
 
+<style lang="scss" rel="stylesheet/scss">
   #app {
     position: absolute;
     top: 0;
@@ -71,11 +88,8 @@
 
   .menu {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 216px;
-    background: #F5F5F5;
+    top: 20px;
+    left: 20px;
   }
 
   .router-view {
