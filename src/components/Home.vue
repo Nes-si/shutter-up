@@ -7,24 +7,26 @@
       .dot
       .dot
       .dot
-
-    .category(
-      v-for="(category, catIndex) of categories"
-      v-bind:key="catIndex"
-      )
-      .slide(
-        v-for="(slide, slIndex) of category.slides"
-        v-bind:key="slIndex"
+  
+    transition(name="scroll")
+      .category(
+        v-for="(category, catIndex) of categories"
+        v-bind:key="catIndex"
+        v-if="catIndex == portfolio.category"
         )
-        .bg
-        .product
-          | Product
-          span Title 1
-        transition(name="slide" appear)
-          .screen(
-            v-show="slIndex == slideNum && catIndex == portfolio.category"
-            v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }"
-            )
+        .slide(
+          v-for="(slide, slIndex) of category.slides"
+          v-bind:key="slIndex"
+          )
+          .bg
+          .product
+            | Product
+            span Title 1
+          transition(name="slide" appear)
+            .screen(
+              v-show="slIndex == slideNum"
+              v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }"
+              )
 </template>
 <script>
   import {TweenLite} from 'gsap';
@@ -79,7 +81,7 @@
     watch: {
       'portfolio.category': {
         handler: function () {
-          TweenLite.to(this.mainElm, 1, {scrollTo: this.portfolio.category * this.height});
+          //TweenLite.to(this.mainElm, 1, {scrollTo: this.portfolio.category * this.height});
         }
       }
     }
@@ -87,13 +89,10 @@
 </script>
 <style lang="scss" scoped rel="stylesheet/scss">
   .home {
-    overflow-y: hidden;
-    overflow-x: hidden;
-
     .category {
       height: 100vh;
       width: 100%;
-      position: relative;
+      position: absolute;
       margin-left: 216px;
 
       .bg {
@@ -140,7 +139,7 @@
       .screen {
         position: absolute;
         top: 0;
-        left: 0px;
+        left: 0;
         width: 100%;
         height: 100%;
         background: center center no-repeat / cover;
@@ -191,5 +190,22 @@
 
   .slide-leave-active {
     opacity: 0;
+  }
+
+  
+  .scroll-enter-active {
+    transition: transform 2s linear;
+  }
+
+  .scroll-leave-active {
+    transition: transform 2s linear;
+  }
+
+  .scroll-enter {
+    transform: translate3d(0, 100%, 0);
+  }
+
+  .scroll-leave-active {
+    transform: translate3d(0, -100%, 0);
   }
 </style>
