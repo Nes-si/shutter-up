@@ -40,10 +40,6 @@
       }
     },
   
-    beforeMount: function () {
-      this.categoryUpdate();
-    },
-    
     mounted: function () {
       setInterval(() => this.slideNext(), 5000);
   
@@ -61,10 +57,6 @@
     },
     
     methods: {
-      categoryUpdate: function () {
-        
-      },
-      
       slideNext: function () {
         if (this.slideNum >= this.slidesLength - 1)
           this.slideNum = 0;
@@ -76,7 +68,6 @@
     watch: {
       'portfolio.category': {
         handler: function () {
-          //this.categoryUpdate();
           TweenLite.to(this.mainElm, 1, {scrollTo: this.portfolio.category * this.height});
         }
       }
