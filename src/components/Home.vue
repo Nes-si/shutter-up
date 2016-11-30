@@ -8,13 +8,16 @@
         v-for="(slide, slIndex) of category.slides"
         v-bind:key="slIndex"
         )
+        .bg
+        .product
+          | Product
+          span Title 1
         transition(name="slide" appear)
           .screen(
             v-show="slIndex == slideNum && catIndex == portfolio.category"
             v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }"
             )
 </template>
-
 <script>
   import {TweenLite} from 'gsap';
   import ScrollToPlugin from 'gsap/src/uncompressed/plugins/ScrollToPlugin';
@@ -73,10 +76,7 @@
       }
     }
   }
-
-
 </script>
-
 <style lang="scss" scoped rel="stylesheet/scss">
   .home {
     overflow-y: hidden;
@@ -86,11 +86,53 @@
       height: 100vh;
       width: 100%;
       position: relative;
+      margin-left: 216px;
+
+      .bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        opacity: 0.2;
+
+        z-index: 9;
+      }
+
+      .product {
+        font-family: 'Marvel', sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        color: #FFFFFF;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+
+        display: flex;
+        flex-flow: column nowrap;
+
+        position: absolute;
+        left: 78px;
+        bottom: 134px;
+
+        z-index: 10;
+
+        span {
+          text-transform: none;
+          margin-top: 6px;
+
+          font-family: 'Work Sans', sans-serif;
+          font-weight: 500;
+          font-size: 22px;
+          color: rgba(255,255,255,0.70);
+          letter-spacing: 1px;
+        }
+      }
 
       .screen {
         position: absolute;
         top: 0;
-        left: 175px;
+        left: 0px;
         width: 100%;
         height: 100%;
         background: center center no-repeat / cover;

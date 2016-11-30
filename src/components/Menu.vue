@@ -1,13 +1,12 @@
 <template lang="pug">
   .menu
-    .logo
-      | DOUG HOLT
-      .logo-inner
-        | PHOTOGRAPHY
+    router-link(to="/")
+      .logo
+        | DOUG HOLT
+        .logo-inner
+          | PHOTOGRAPHY
 
     .nav
-      .nav-item
-        router-link(to="/") Home
       .nav-item.nav-work
         .nav-workLabel
           | Work
