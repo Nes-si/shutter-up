@@ -16,12 +16,11 @@
     height: 100%;
     background: #f5f5f5;
   }
-  
+
   .v-enter-active, .v-leave-active {
     transition: transform 1s;
   }
   .v-enter, .v-leave-active {
     transform: translate3d(0, 100vh, 0);
   }
-
 </style>

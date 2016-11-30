@@ -19,10 +19,10 @@
 
 <script>
   import {data} from 'store/fixtures';
-  
+
   export default {
     name: "MenuComponent",
-  
+
     data: function () {
       return {
         categories: data

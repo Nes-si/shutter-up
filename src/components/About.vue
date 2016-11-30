@@ -22,5 +22,4 @@
   .v-enter, .v-leave-active {
     transform: translate3d(0, 100vh, 0);
   }
-
 </style>
