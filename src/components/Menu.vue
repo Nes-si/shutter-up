@@ -5,14 +5,29 @@
       li
         router-link(to="/") Home
       li
+        | Work
+        ul
+          li(
+            v-for="(category, index) of categories"
+            v-bind:key="index")
+            | {{category.name}}
+      li
         router-link(to="/about") About
       li
         router-link(to="/contacts") Contact
 </template>
 
 <script>
+  import {data} from 'store/fixtures';
+  
   export default {
-    name: "MenuComponent"
+    name: "MenuComponent",
+  
+    data: function () {
+      return {
+        categories: data
+      }
+    }
   }
 </script>
 
