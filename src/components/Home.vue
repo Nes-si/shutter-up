@@ -29,7 +29,10 @@
         catData: null,
         slides: [],
         slidesPath: '',
-        slideNum: 0
+        slideNum: 0,
+        
+        height: 0,
+        mainElm: null
       }
     },
   
@@ -44,6 +47,9 @@
         store.actions.portfolio.categoryNext,
         store.actions.portfolio.categoryPrev
       );
+      
+      this.height = window.innerHeight;
+      this.mainElm = document.querySelector('.home');
     },
     
     beforeDestroy: function () {
@@ -68,7 +74,8 @@
     watch: {
       'portfolio.category': {
         handler: function () {
-          this.categoryUpdate();
+          //this.categoryUpdate();
+          this.mainElm.scrollTop = this.portfolio.category * this.height;
         }
       }
     }
@@ -78,13 +85,24 @@
 </script>
 
 <style lang="scss" scoped rel="stylesheet/scss">
-  .screen {
-    position: absolute;
-    top: 0;
-    left: 175px;
-    width: 100%;
-    height: 100%;
-    background: center center no-repeat / cover;
+  .home {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    
+    .category {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+    
+      .screen {
+        position: absolute;
+        top: 0;
+        left: 175px;
+        width: 100%;
+        height: 100%;
+        background: center center no-repeat / cover;
+      }
+    }
   }
 </style>
 
