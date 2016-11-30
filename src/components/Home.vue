@@ -99,19 +99,19 @@
   }
 
   .slide-enter-active {
-    transition: opacity 1s ease, transform 4s ease
+    transition: opacity 1s ease, transform 4s ease;
   }
 
   .slide-leave-active {
-    transition: opacity 1s ease-in, transform 4s ease
+    transition: opacity 1s ease-in, transform 4s ease;
   }
 
   .slide-enter {
-    opacity: 0
-    transform: translate3d(-175px, 0, 0)
+    opacity: 0;
+    transform: translate3d(-175px, 0, 0);
   }
 
   .slide-leave-active {
-    opacity: 0
+    opacity: 0;
   }
 </style>
