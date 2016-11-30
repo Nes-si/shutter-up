@@ -7,18 +7,23 @@ import App from './App';
 import Home from 'components/Home';
 import About from 'components/About';
 import Contacts from 'components/Contacts';
+import Gallery from 'components/Gallery';
 
 
 export const store = configureStore();
 
 Vue.use(VueRouter);
 
-const router = new VueRouter({
+export const router = new VueRouter({
   mode: 'history',
   routes: [
     {
       path: '/',
       component: Home
+    },
+    {
+      path: '/gallery/:cat',
+      component: Gallery
     },
     {
       path: '/about',
@@ -29,6 +34,10 @@ const router = new VueRouter({
       component: Contacts
     }
   ]
+});
+
+router.afterEach((to, from) => {
+  // ...
 });
 
 new Vue({
