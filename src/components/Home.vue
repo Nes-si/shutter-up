@@ -1,18 +1,24 @@
 <template lang="pug">
   .home
     .category(
-      v-for="(category, index) of categories"
-      v-bind:key="index"
+      v-for="(category, catIndex) of categories"
+      v-bind:key="catIndex"
       )
       .slide(
-        v-for="(slide, index) of category.slides"
-        v-bind:key="index"
+        v-for="(slide, slIndex) of category.slides"
+        v-bind:key="slIndex"
         )
         transition(name="slide" appear)
-          .screen(v-show="index == slideNum" v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }")
+          .screen(
+            v-show="slIndex == slideNum && catIndex == portfolio.category"
+            v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }"
+            )
 </template>
 
 <script>
+  import {TweenLite} from 'gsap';
+  import ScrollToPlugin from 'gsap/src/uncompressed/plugins/ScrollToPlugin';
+  
   import {store} from 'index';
   import {data} from 'store/fixtures';
   import ScrollHandler from 'utils/scrollhandler';
@@ -26,10 +32,8 @@
         categories: data,
         scrollHandler: null,
         portfolio: this.$select('portfolio'),
-        catData: null,
-        slides: [],
-        slidesPath: '',
         slideNum: 0,
+        slidesLength: 3,
         
         height: 0,
         mainElm: null
@@ -58,13 +62,11 @@
     
     methods: {
       categoryUpdate: function () {
-        this.catData = data[this.portfolio.category];
-        this.slides = this.catData.slides;
-        this.path = `assets/data/${this.catData.name}/slides/`;
+        
       },
       
       slideNext: function () {
-        if (this.slideNum >= this.slides.length - 1)
+        if (this.slideNum >= this.slidesLength - 1)
           this.slideNum = 0;
         else
           this.slideNum++;
@@ -75,7 +77,7 @@
       'portfolio.category': {
         handler: function () {
           //this.categoryUpdate();
-          this.mainElm.scrollTop = this.portfolio.category * this.height;
+          TweenLite.to(this.mainElm, 1, {scrollTo: this.portfolio.category * this.height});
         }
       }
     }

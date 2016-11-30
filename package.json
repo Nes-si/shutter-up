@@ -9,6 +9,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "gsap": "^1.19.0",
     "lethargy": "^1.0.4",
     "prerender-spa-plugin": "^1.1.0",
     "redux": "^3.6.0",
