@@ -1,5 +1,13 @@
 <template lang="pug">
   .home
+    .dots
+      .dot.dot-active
+      .dot
+      .dot
+      .dot
+      .dot
+      .dot
+
     .category(
       v-for="(category, catIndex) of categories"
       v-bind:key="catIndex"
@@ -136,6 +144,34 @@
         width: 100%;
         height: 100%;
         background: center center no-repeat / cover;
+      }
+    }
+  }
+
+  .dots {
+    position: absolute;
+    top: 50%;
+    right: 36px;
+    transform: translateY(-50%);
+
+    z-index: 10;
+
+    .dot {
+      border: 1px solid #FFFFFF;
+      height: 8px;
+      width: 8px;
+      cursor: pointer;
+      border-radius: 100px;
+
+      margin-bottom: 24px;
+
+      &:last-child {
+        margin-bottom: 0;
+        border-radius: 0;
+      }
+
+      &.dot-active {
+        background: #FFFFFF;
       }
     }
   }
