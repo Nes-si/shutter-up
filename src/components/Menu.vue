@@ -1,6 +1,6 @@
 <template lang="pug">
   .menu
-    .back(@click="onBack")
+    .back(@click="onBack" v-if="showBack")
       | Back
   
     router-link(to="/")
@@ -30,7 +30,7 @@
 
 <script>
   import {data} from 'store/fixtures';
-  import {store} from 'index';
+  import {store, PAGE_HOME, PAGE_CONTACTS} from 'index';
   
 
   export default {
@@ -39,9 +39,15 @@
     data: function () {
       return {
         categories: data,
-        showCats: false,
+        nav: this.$select('nav'),
         
-        mouseOnNav: false
+        showCats: false
+      }
+    },
+    
+    computed: {
+      showBack: function () {
+        return this.nav.openedPage != PAGE_HOME && this.nav.openedPage != PAGE_CONTACTS;
       }
     },
     
