@@ -1,5 +1,8 @@
 <template lang="pug">
   .menu
+    .back(@click="onBack")
+      | Back
+  
     router-link(to="/")
       .logo
         | DOUG HOLT
@@ -27,6 +30,8 @@
 
 <script>
   import {data} from 'store/fixtures';
+  import {store} from 'index';
+  
 
   export default {
     name: "MenuComponent",
@@ -47,6 +52,10 @@
       
       onNavLeave: function () {
         this.showCats = false;
+      },
+  
+      onBack: function () {
+        store.actions.nav.menuClose();
       }
     }
   }
@@ -62,7 +71,13 @@
     background: #F5F5F5;
 
     padding: 10vh 36px;
-
+  
+    .back {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      cursor: pointer;
+    }
 
     .logo {
       font-weight: 500;

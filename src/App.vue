@@ -90,6 +90,7 @@
     position: absolute;
     top: 20px;
     left: 20px;
+    cursor: pointer;
   }
 
   .router-view {
