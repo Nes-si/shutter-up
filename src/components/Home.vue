@@ -88,7 +88,7 @@
   
       scrollBeforeEnter: function (el) {
         let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
-        el.style.transform = `translateY(${value})`;
+        el.style.transform = `translate3d(0, ${value}, 0)`;
       },
       scrollEnter: function (el, done) {
         let value = this.portfolio.direction === 'down' ? '99%' : "-99%";
