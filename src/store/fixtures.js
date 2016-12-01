@@ -7,9 +7,18 @@ export const data = [
       A small river named Duden flows by their place and supplies it with the necessary regelialia. 
       It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
     slides: [
-      'slide1.jpg',
-      'slide2.jpg',
-      'slide3.jpg'
+      {
+        name: 'Ice-Cream Sandwitch',
+        img: 'slide1.jpg'
+      },
+      {
+        name: 'Jelly Bean',
+        img: 'slide2.jpg'
+      },
+      {
+        name: 'Kit-Kat',
+        img: 'slide3.jpg'
+      }
     ],
     items: [
       {
@@ -58,9 +67,18 @@ export const data = [
       A small river named Duden flows by their place and supplies it with the necessary regelialia. 
       It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
     slides: [
-      'slide1.jpg',
-      'slide2.jpg',
-      'slide3.jpg'
+      {
+        name: 'Lolipop',
+        img: 'slide1.jpg'
+      },
+      {
+        name: 'Marshmallow',
+        img: 'slide2.jpg'
+      },
+      {
+        name: 'Nougat',
+        img: 'slide3.jpg'
+      }
     ],
     items: [
       {
@@ -97,9 +115,18 @@ export const data = [
       A small river named Duden flows by their place and supplies it with the necessary regelialia. 
       It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
     slides: [
-      'slide1.jpg',
-      'slide2.jpg',
-      'slide3.jpg'
+      {
+        name: 'Lolipop',
+        img: 'slide1.jpg'
+      },
+      {
+        name: 'Marshmallow',
+        img: 'slide2.jpg'
+      },
+      {
+        name: 'Nougat',
+        img: 'slide3.jpg'
+      }
     ],
     items: [
       {
@@ -136,9 +163,18 @@ export const data = [
       A small river named Duden flows by their place and supplies it with the necessary regelialia. 
       It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
     slides: [
-      'slide1.jpg',
-      'slide2.jpg',
-      'slide3.jpg'
+      {
+        name: 'Lolipop',
+        img: 'slide1.jpg'
+      },
+      {
+        name: 'Marshmallow',
+        img: 'slide2.jpg'
+      },
+      {
+        name: 'Nougat',
+        img: 'slide3.jpg'
+      }
     ],
     items: [
       {
@@ -175,9 +211,18 @@ export const data = [
       A small river named Duden flows by their place and supplies it with the necessary regelialia. 
       It is a paradisematic country, in which roasted parts of sentences fly into your mouth.`,
     slides: [
-      'slide1.jpg',
-      'slide2.jpg',
-      'slide3.jpg'
+      {
+        name: 'Lolipop',
+        img: 'slide1.jpg'
+      },
+      {
+        name: 'Marshmallow',
+        img: 'slide2.jpg'
+      },
+      {
+        name: 'Nougat',
+        img: 'slide3.jpg'
+      }
     ],
     items: [
       {

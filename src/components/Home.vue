@@ -1,12 +1,12 @@
 <template lang="pug">
   .home
     .dots
-      .dot.dot-active
-      .dot
-      .dot
-      .dot
-      .dot
-      .dot
+      .dot(
+        v-for="(category, catIndexD) of categories"
+        v-bind:class="{'dot-active': catIndexD == portfolio.category}"
+        @click="onDotClick(catIndexD)"
+        )
+      .dot.dot-square
   
     transition(
       v-bind:css="false"
@@ -19,18 +19,20 @@
         v-bind:key="catIndex"
         v-if="catIndex == portfolio.category"
         )
+  
+        .bg
         .slide(
           v-for="(slide, slIndex) of category.slides"
           v-bind:key="slIndex"
           )
-          .bg
-          .product
-            | Product
-            span Title 1
+          transition(name="title")
+            .product(v-show="slIndex == slideNum")
+              | {{category.name}}
+              span {{slide.name}}
           transition(name="slide")
             .screen(
               v-show="slIndex == slideNum"
-              v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }"
+              v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide.img + ')' }"
               v-bind:class="{'screen-start': !newCat}"
               )
 </template>
@@ -100,8 +102,21 @@
       scrollLeave: function (el, done) {
         let value = this.portfolio.direction === 'down' ? '-100%' : "100%";
         Velocity(el, { translateY: value, translateZ: 0 }, { duration: 400, complete: done });
-      }
+      },
   
+      onDotClick: function (catIndex) {
+        console.log(catIndex);
+        let diff = catIndex - this.portfolio.category;
+        if (diff < 0) {
+          for (let i = 0; i < -diff; i++) {
+            setTimeout(store.actions.portfolio.categoryPrev, i*100);
+          }
+        } else if (diff > 0) {
+          for (let i = 0; i < diff; i++) {
+            setTimeout(store.actions.portfolio.categoryNext, i*100);
+          }
+        }
+      }
     },
 
     watch: {
@@ -212,7 +227,7 @@
 
       margin-bottom: 24px;
 
-      &:last-child {
+      &.dot-square {
         margin-bottom: 0;
         border-radius: 0;
       }
@@ -237,6 +252,24 @@
   }
 
   .slide-leave-active {
+    opacity: 0;
+  }
+
+  
+  .title-enter-active {
+    transition: opacity 1s ease 1s, transform 1s ease 1s;
+  }
+
+  .title-leave-active {
+    transition: opacity 1s;
+  }
+
+  .title-enter {
+    opacity: 0;
+    transform: translate3d(0, 50px, 0);
+  }
+
+  .title-leave-active {
     opacity: 0;
   }
 
