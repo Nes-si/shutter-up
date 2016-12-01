@@ -60,7 +60,7 @@
     },
 
     mounted: function () {
-      //setInterval(() => this.slideNext(), 5000);
+      setInterval(() => this.slideNext(), 5000);
 
       this.scrollHandler = new ScrollHandler(
         store.actions.portfolio.categoryNext,
@@ -84,14 +84,17 @@
       },
   
       beforeEnter: function (el) {
-        el.style.transform = "translateY(100%)";
+        let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
+        el.style.transform = `translateY(${value})`;
       },
       enter: function (el, done) {
-        Velocity(el, { translateY: [0, '99%'], translateZ: 0 }, { duration: 400, complete: done });
+        let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
+        Velocity(el, { translateY: [0, value], translateZ: 0 }, { duration: 400, complete: done });
         //done();
       },
       leave: function (el, done) {
-        Velocity(el, { translateY: '-100%', translateZ: 0 }, { duration: 400, complete: done });
+        let value = this.portfolio.direction === 'down' ? '-100%' : "100%";
+        Velocity(el, { translateY: value, translateZ: 0 }, { duration: 400, complete: done });
         //done();
       }
   
