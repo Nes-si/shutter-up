@@ -25,7 +25,7 @@
           v-for="(slide, slIndex) of category.slides"
           v-bind:key="slIndex"
           )
-          transition(name="title")
+          transition(name="title" appear)
             .product(v-show="slIndex == slideNum")
               | {{category.name}}
               span {{slide.name}}
@@ -33,7 +33,6 @@
             .screen(
               v-show="slIndex == slideNum"
               v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide.img + ')' }"
-              v-bind:class="{'screen-start': !newCat}"
               )
 </template>
 <script>
@@ -59,9 +58,7 @@
         
         timer: 0,
   
-        scrollHandler: null,
-        
-        newCat: false
+        scrollHandler: null
       }
     },
 
@@ -109,11 +106,11 @@
         let diff = catIndex - this.portfolio.category;
         if (diff < 0) {
           for (let i = 0; i < -diff; i++) {
-            setTimeout(store.actions.portfolio.categoryPrev, i*100);
+            setTimeout(store.actions.portfolio.categoryPrev, i*400);
           }
         } else if (diff > 0) {
           for (let i = 0; i < diff; i++) {
-            setTimeout(store.actions.portfolio.categoryNext, i*100);
+            setTimeout(store.actions.portfolio.categoryNext, i*400);
           }
         }
       }
@@ -122,7 +119,6 @@
     watch: {
       'portfolio.category': {
         handler: function () {
-          this.newCat = true;
           clearInterval(this.timer);
           this.onCatUpdate();
         }
@@ -186,9 +182,7 @@
         width: 100%;
         height: 100%;
         background: center center no-repeat / cover;
-      }
-      
-      .screen-start {
+  
         animation-name: starting;
         animation-duration: 4s;
         animation-fill-mode: backwards;
@@ -198,11 +192,7 @@
 
   @keyframes starting {
     0% {
-      opacity: .01;
       transform: translate3d(-175px, 0, 0);
-    }
-    25% {
-      opacity: 1;
     }
     100% {
       transform: translate3d(0, 0, 0);
