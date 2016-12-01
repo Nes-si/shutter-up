@@ -6,12 +6,12 @@
         .logo-inner
           | PHOTOGRAPHY
 
-    .nav
-      .nav-item.nav-work
+    .nav(@mouseleave="onNavLeave")
+      .nav-item.nav-work(@mouseenter="onWorksEnter")
         .nav-workLabel
           | Work
-          .nav-arrow
-        .nav-inner
+          .nav-arrow(v-bind:class="{'arrow-up': showCats}")
+        .nav-inner(v-show="showCats")
           .nav-innerItem(
             v-for="(category, index) of categories"
             v-bind:key="index")
@@ -33,7 +33,20 @@
 
     data: function () {
       return {
-        categories: data
+        categories: data,
+        showCats: false,
+        
+        mouseOnNav: false
+      }
+    },
+    
+    methods: {
+      onWorksEnter: function () {
+        this.showCats = true;
+      },
+      
+      onNavLeave: function () {
+        this.showCats = false;
       }
     }
   }
@@ -82,6 +95,8 @@
 
       &-item {
         margin-top: 24px;
+        
+        cursor: pointer;
 
         &:hover > a {
           color: #000000;
@@ -89,17 +104,6 @@
       }
 
       &-work {
-
-        &:hover {
-          .nav-inner {
-            display: block;
-          }
-
-          .nav-arrow {
-            transform: rotate(180deg);
-          }
-        }
-
         &Label {
           display: flex;
           flex-flow: row nowrap;
@@ -115,6 +119,10 @@
           transition: transform 0.2s ease;
           will-change: transform;
         }
+  
+        .arrow-up {
+          transform: rotate(180deg);
+        }
       }
 
       &-inner {
@@ -125,8 +133,6 @@
         letter-spacing: 1.55px;
         line-height: 18px;
         text-transform: uppercase;
-
-        display: none;
 
         &Item {
           margin-top: 12px;
