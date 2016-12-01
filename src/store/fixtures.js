@@ -9,15 +9,15 @@ export const data = [
     slides: [
       {
         name: 'Ice-Cream Sandwitch',
-        img: 'slide1.jpg'
+        image: 'slide1.jpg'
       },
       {
         name: 'Jelly Bean',
-        img: 'slide2.jpg'
+        image: 'slide2.jpg'
       },
       {
         name: 'Kit-Kat',
-        img: 'slide3.jpg'
+        image: 'slide3.jpg'
       }
     ],
     items: [
@@ -69,15 +69,15 @@ export const data = [
     slides: [
       {
         name: 'Lolipop',
-        img: 'slide1.jpg'
+        image: 'slide1.jpg'
       },
       {
         name: 'Marshmallow',
-        img: 'slide2.jpg'
+        image: 'slide2.jpg'
       },
       {
         name: 'Nougat',
-        img: 'slide3.jpg'
+        image: 'slide3.jpg'
       }
     ],
     items: [
@@ -117,15 +117,15 @@ export const data = [
     slides: [
       {
         name: 'Lolipop',
-        img: 'slide1.jpg'
+        image: 'slide1.jpg'
       },
       {
         name: 'Marshmallow',
-        img: 'slide2.jpg'
+        image: 'slide2.jpg'
       },
       {
         name: 'Nougat',
-        img: 'slide3.jpg'
+        image: 'slide3.jpg'
       }
     ],
     items: [
@@ -165,15 +165,15 @@ export const data = [
     slides: [
       {
         name: 'Lolipop',
-        img: 'slide1.jpg'
+        image: 'slide1.jpg'
       },
       {
         name: 'Marshmallow',
-        img: 'slide2.jpg'
+        image: 'slide2.jpg'
       },
       {
         name: 'Nougat',
-        img: 'slide3.jpg'
+        image: 'slide3.jpg'
       }
     ],
     items: [
@@ -213,15 +213,15 @@ export const data = [
     slides: [
       {
         name: 'Lolipop',
-        img: 'slide1.jpg'
+        image: 'slide1.jpg'
       },
       {
         name: 'Marshmallow',
-        img: 'slide2.jpg'
+        image: 'slide2.jpg'
       },
       {
         name: 'Nougat',
-        img: 'slide3.jpg'
+        image: 'slide3.jpg'
       }
     ],
     items: [

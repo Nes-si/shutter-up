@@ -32,12 +32,10 @@
           transition(name="slide")
             .screen(
               v-show="slIndex == slideNum"
-              v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide.img + ')' }"
+              v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide.image + ')' }"
               )
 </template>
 <script>
-  import {TweenLite} from 'gsap';
-  import ScrollToPlugin from 'gsap/src/uncompressed/plugins/ScrollToPlugin';
   import Velocity from 'velocity-animate';
 
   import {store} from 'index';

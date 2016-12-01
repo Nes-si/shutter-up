@@ -1,19 +1,16 @@
 <template lang="pug">
-  .home
-    .slide(
-      v-for="(slide, slIndex) of category.slides"
-      v-bind:key="slIndex"
+  .gallery
+    transition(
+      v-bind:css="false"
+      v-on:before-enter="scrollBeforeEnter"
+      v-on:enter="scrollEnter"
+      v-on:leave="scrollLeave"
       )
-      transition(name="slide" appear)
-        .screen(
-          v-show="slIndex == slideNum && catIndex == portfolio.category"
-          v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }"
-          )
+      .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/data/' + category.name + '/items/' + category.items[itemNum].image + ')' }")
 </template>
 
 <script>
-  import {TweenLite} from 'gsap';
-  import ScrollToPlugin from 'gsap/src/uncompressed/plugins/ScrollToPlugin';
+  import Velocity from 'velocity-animate';
   
   import {store} from 'index';
   import {data} from 'store/fixtures';
@@ -25,28 +22,20 @@
     
     data: function () {
       return {
-        categories: data,
-        category: data[0],
-        scrollHandler: null,
         portfolio: this.$select('portfolio'),
-        slideNum: 0,
-        slidesLength: 3,
+        category: data[this.$select('portfolio').category],
+  
+        itemNum: 0,
+        direction: 'right',
         
-        height: 0,
-        mainElm: null
+        scrollHandler: null
       }
     },
   
     mounted: function () {
-      setInterval(() => this.slideNext(), 5000);
-  
       this.scrollHandler = new ScrollHandler(
-        store.actions.portfolio.categoryNext,
-        store.actions.portfolio.categoryPrev
+        this.itemNext, this.itemPrev
       );
-      
-      this.height = window.innerHeight;
-      this.mainElm = document.querySelector('.home');
     },
     
     beforeDestroy: function () {
@@ -54,20 +43,31 @@
     },
     
     methods: {
-      slideNext: function () {
-        if (this.slideNum >= this.slidesLength - 1)
-          this.slideNum = 0;
-        else
-          this.slideNum++;
-      }
-    },
-  
-    watch: {
-      'portfolio.category': {
-        handler: function () {
-          TweenLite.to(this.mainElm, 1, {scrollTo: this.portfolio.category * this.height});
-        }
-      }
+      itemNext: function () {
+        if (this.itemNum >= this.category.items.length - 1)
+          return;
+        this.itemNum++;
+        this.direction = 'right';
+      },
+      itemPrev: function () {
+        if (this.itemNum <= 0)
+          return;
+        this.itemNum--;
+        this.direction = 'left';
+      },
+      
+      scrollBeforeEnter: function (el) {
+        let value = this.direction === 'right' ? '100%' : "-100%";
+        el.style.transform = `translateX(${value})`;
+      },
+      scrollEnter: function (el, done) {
+        let value = this.direction === 'right' ? '99%' : "-99%";
+        Velocity(el, { translateX: [0, value], translateZ: 0 }, { duration: 400, complete: done });
+      },
+      scrollLeave: function (el, done) {
+        let value = this.direction === 'right' ? '-100%' : "100%";
+        Velocity(el, { translateX: value, translateZ: 0 }, { duration: 400, complete: done });
+      },
     }
   }
   
@@ -75,39 +75,15 @@
 </script>
 
 <style lang="scss" scoped rel="stylesheet/scss">
-  .home {
-    overflow-y: hidden;
-    overflow-x: hidden;
+  .gallery {
     
-    .category {
-      height: 100vh;
+    .item-pic {
+      position: absolute;
+      top: 0;
+      left: 175px;
       width: 100%;
-      position: relative;
-    
-      .screen {
-        position: absolute;
-        top: 0;
-        left: 175px;
-        width: 100%;
-        height: 100%;
-        background: center center no-repeat / cover;
-      }
+      height: 100%;
+      background: center center no-repeat / cover;
     }
   }
-</style>
-
-<style lang="sss" scoped rel="stylesheet/sass">
-  .slide-enter-active
-    transition: opacity 1s ease, transform 4s ease
-    
-  .slide-leave-active
-    transition: opacity 1s ease-in, transform 4s ease
-  
-  .slide-enter
-    opacity: 0
-    transform: translate3d(-175px, 0, 0)
-  
-  .slide-leave-active
-    opacity: 0
-  
 </style>
