@@ -15,7 +15,7 @@
           .nav-innerItem(
             v-for="(category, index) of categories"
             v-bind:key="index")
-              router-link(to="/")
+              router-link(v-bind:to="'/gallery/' + category.name")
                 | {{category.name}}
       .nav-item
         router-link(to="/about") About

@@ -201,3 +201,12 @@ export const data = [
     ]
   }
 ];
+
+
+export function getCatByName(name) {
+  for (let cat of data) {
+    if (cat.name === name)
+      return cat;
+  }
+  return null;
+}

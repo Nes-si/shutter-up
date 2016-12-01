@@ -1,4 +1,6 @@
-import {PAGE_HOME, PAGE_CONTACTS} from 'index';
+import {store, PAGE_HOME, PAGE_CONTACTS, PAGE_GALLERY} from 'index';
+import {getCatByName} from 'store/fixtures';
+import {categorySet} from './portfolio';
 
 export const PAGE_OPEN    = 'app/nav/PAGE_OPEN';
 export const MENU_OPEN    = 'app/nav/MENU_OPEN';
@@ -6,10 +8,19 @@ export const MENU_CLOSE   = 'app/nav/MENU_CLOSE';
 
 
 export function pageOpen(to, from) {
-  return {
-    type: PAGE_OPEN,
-    to,
-    from
+  return dispatch => {
+    dispatch({
+      type: PAGE_OPEN,
+      to,
+      from
+    });
+    
+    if (to.name == PAGE_GALLERY) {
+      let cat = getCatByName(to.params.cat);
+      store.dispatch(categorySet(cat.index));
+    } else if (to.name !== PAGE_CONTACTS && to.name !== from.name) {
+      store.dispatch(categorySet(0));
+    }
   };
 }
 

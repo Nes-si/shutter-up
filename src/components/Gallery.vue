@@ -26,6 +26,7 @@
     data: function () {
       return {
         categories: data,
+        category: data[0],
         scrollHandler: null,
         portfolio: this.$select('portfolio'),
         slideNum: 0,
