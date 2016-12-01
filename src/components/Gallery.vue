@@ -39,7 +39,7 @@
   
     mounted: function () {
       this.scrollHandler = new ScrollHandler(
-        this.itemNext, this.itemPrev
+        this.itemNext, this.itemPrev, 'h'
       );
     },
     
