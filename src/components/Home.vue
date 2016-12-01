@@ -7,8 +7,13 @@
       .dot
       .dot
       .dot
-
-    transition(name="scroll")
+  
+    transition(
+      v-bind:css="false"
+      v-on:before-enter="beforeEnter"
+      v-on:enter="enter"
+      v-on:leave="leave"
+      )
       .category(
         v-for="(category, catIndex) of categories"
         v-bind:key="catIndex"
@@ -31,6 +36,7 @@
 <script>
   import {TweenLite} from 'gsap';
   import ScrollToPlugin from 'gsap/src/uncompressed/plugins/ScrollToPlugin';
+  import Velocity from 'velocity-animate';
 
   import {store} from 'index';
   import {data} from 'store/fixtures';
@@ -54,7 +60,7 @@
     },
 
     mounted: function () {
-      setInterval(() => this.slideNext(), 5000);
+      //setInterval(() => this.slideNext(), 5000);
 
       this.scrollHandler = new ScrollHandler(
         store.actions.portfolio.categoryNext,
@@ -75,7 +81,20 @@
           this.slideNum = 0;
         else
           this.slideNum++;
+      },
+  
+      beforeEnter: function (el) {
+        el.style.transform = "translateY(100%)";
+      },
+      enter: function (el, done) {
+        Velocity(el, { translateY: [0, '100%'], translateZ: 0 }, { duration: 400, complete: done });
+        //done();
+      },
+      leave: function (el, done) {
+        Velocity(el, { translateY: '-100%', translateZ: 0 }, { duration: 400, complete: done });
+        //done();
       }
+  
     },
 
     watch: {
