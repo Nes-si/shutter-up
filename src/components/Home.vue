@@ -14,10 +14,11 @@
       v-on:enter="scrollEnter"
       v-on:leave="scrollLeave"
       )
-      .category(
+      router-link.category(
         v-for="(category, catIndex) of categories"
         v-bind:key="catIndex"
         v-if="catIndex == portfolio.category"
+        v-bind:to="'/gallery/' + category.name"
         )
   
         .bg
@@ -131,6 +132,7 @@
       width: 100%;
       position: absolute;
       margin-left: 216px;
+      display: block;
 
       .bg {
         position: absolute;
