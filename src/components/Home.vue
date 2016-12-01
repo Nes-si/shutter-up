@@ -10,9 +10,9 @@
   
     transition(
       v-bind:css="false"
-      v-on:before-enter="beforeEnter"
-      v-on:enter="enter"
-      v-on:leave="leave"
+      v-on:before-enter="scrollBeforeEnter"
+      v-on:enter="scrollEnter"
+      v-on:leave="scrollLeave"
       )
       .category(
         v-for="(category, catIndex) of categories"
@@ -31,6 +31,7 @@
             .screen(
               v-show="slIndex == slideNum"
               v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }"
+              v-bind:class="{'screen-start': !newCat}"
               )
 </template>
 <script>
@@ -49,26 +50,26 @@
     data: function () {
       return {
         categories: data,
-        scrollHandler: null,
         portfolio: this.$select('portfolio'),
+        
         slideNum: 0,
-        slidesLength: 3,
-
-        height: 0,
-        mainElm: null
+        slidesLength: 1,
+        
+        timer: 0,
+  
+        scrollHandler: null,
+        
+        newCat: false
       }
     },
 
     mounted: function () {
-      setInterval(() => this.slideNext(), 5000);
+      this.onCatUpdate();
 
       this.scrollHandler = new ScrollHandler(
         store.actions.portfolio.categoryNext,
         store.actions.portfolio.categoryPrev
       );
-
-      this.height = window.innerHeight;
-      this.mainElm = document.querySelector('.home');
     },
 
     beforeDestroy: function () {
@@ -76,6 +77,11 @@
     },
 
     methods: {
+      onCatUpdate: function () {
+        this.slidesLength = this.categories[this.portfolio.category].slides.length;
+        this.timer = setInterval(() => this.slideNext(), 5000);
+      },
+      
       slideNext: function () {
         if (this.slideNum >= this.slidesLength - 1)
           this.slideNum = 0;
@@ -83,19 +89,17 @@
           this.slideNum++;
       },
   
-      beforeEnter: function (el) {
+      scrollBeforeEnter: function (el) {
         let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
         el.style.transform = `translateY(${value})`;
       },
-      enter: function (el, done) {
-        let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
+      scrollEnter: function (el, done) {
+        let value = this.portfolio.direction === 'down' ? '99%' : "-99%";
         Velocity(el, { translateY: [0, value], translateZ: 0 }, { duration: 400, complete: done });
-        //done();
       },
-      leave: function (el, done) {
+      scrollLeave: function (el, done) {
         let value = this.portfolio.direction === 'down' ? '-100%' : "100%";
         Velocity(el, { translateY: value, translateZ: 0 }, { duration: 400, complete: done });
-        //done();
       }
   
     },
@@ -103,7 +107,9 @@
     watch: {
       'portfolio.category': {
         handler: function () {
-          //TweenLite.to(this.mainElm, 1, {scrollTo: this.portfolio.category * this.height});
+          this.newCat = true;
+          clearInterval(this.timer);
+          this.onCatUpdate();
         }
       }
     }
@@ -166,8 +172,28 @@
         height: 100%;
         background: center center no-repeat / cover;
       }
+      
+      .screen-start {
+        animation-name: starting;
+        animation-duration: 4s;
+        animation-fill-mode: backwards;
+      }
     }
   }
+
+  @keyframes starting {
+    0% {
+      opacity: .01;
+      transform: translate3d(-175px, 0, 0);
+    }
+    25% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
 
   .dots {
     position: absolute;
