@@ -5,24 +5,24 @@ let lethargy = new Lethargy();
 
 
 export default class ScrollHandler {
-  constructor(moveNextAction, movePrevAction) {
+  touchStartY = 0;
+  touchStartX = 0;
+  touchEndY = 0;
+  touchEndX = 0;
+  
+  mode = 'v';
+  
+  isTouchDevice = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|playbook|silk|BlackBerry|BB10|Windows Phone|Tizen|Bada|webOS|IEMobile|Opera Mini)/);
+  isTouch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0) || (navigator.maxTouchPoints));
+  
+  container = document.body;
+  
+  
+  //mode: 'v' — vertical, 'h' — horizontal
+  constructor(moveNextAction, movePrevAction, mode = 'v') {
     this['next'] = moveNextAction;
     this['prev'] = movePrevAction;
-
-    this.container = document.body;
-
-    this.isTouchDevice = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|playbook|silk|BlackBerry|BB10|Windows Phone|Tizen|Bada|webOS|IEMobile|Opera Mini)/);
-    this.isTouch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0) || (navigator.maxTouchPoints));
-
-
-    this.touchStartY = 0;
-    this.touchStartX = 0;
-    this.touchEndY = 0;
-    this.touchEndX = 0;
-
-    this.scrollHandler = this.handleScroll.bind(this);
-    this.boundTouchStartHandler = this.touchStartHandler.bind(this);
-    this.boundTouchMoveHandler = this.touchMoveHandler.bind(this);
+    this.mode = mode;
 
     this.move = throttle(200, this.move, true);
     this.handleTouchMove = debounce(100, this.handleTouchMove);
@@ -32,15 +32,15 @@ export default class ScrollHandler {
   }
 
   move(direction) {
-    this[direction]()
+    this[direction]();
   }
 
   destroy() {
     this.destroyScrollListener();
     this.removeTouchHandler();
   }
-
-  handleScroll(e) {
+  
+  scrollHandler = e => {
     e = e || window.event;
 
     let scrollInfo = lethargy.check(e);
@@ -52,7 +52,7 @@ export default class ScrollHandler {
     }
 
     this.preventDefault(e);
-  }
+  };
 
   createScrollListener () {
     let elem = this.container;
@@ -84,25 +84,28 @@ export default class ScrollHandler {
     }
   }
 
-  touchMoveHandler(event) {
-    let e = event || window.event || e || e.originalEvent;
-    this.preventDefault(e);
-    if (this.isReallyTouch(e)) {
-      this.preventDefault(e);
-      return this.handleTouchMove(e);
-    }
-  }
-
   handleTouchMove(e) {
     let touchEvents = this.getEventsPage(e);
     this.touchEndY = touchEvents.y;
     this.touchEndX = touchEvents.x;
-    let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    if (Math.abs(this.touchStartX - this.touchEndX) < Math.abs(this.touchStartY - this.touchEndY)) {
-      if (Math.abs(this.touchStartY - this.touchEndY) > (h / 100) * 5) {
+    
+    let dX = Math.abs(this.touchStartX - this.touchEndX);
+    let dY = Math.abs(this.touchStartY - this.touchEndY);
+    
+    if (this.mode == 'h') {
+      let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      if (dX > dY && dX > (w / 100) * 5) {
+        if (this.touchStartX > this.touchEndX)
+          this.move('next');
+        else
+          this.move('prev');
+      }
+    } else {
+      let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+      if (dX < dY && dY > (h / 100) * 5) {
         if (this.touchStartY > this.touchEndY)
           this.move('next');
-        else if (this.touchEndY > this.touchStartY)
+        else
           this.move('prev');
       }
     }
@@ -112,14 +115,23 @@ export default class ScrollHandler {
     return typeof e.pointerType === 'undefined' || e.pointerType !== 'mouse';
   }
 
-  touchStartHandler(event) {
+  touchStartHandler = event => {
     let e = event || window.event || e || e.originalEvent;
     if (this.isReallyTouch(e)) {
       let touchEvents = this.getEventsPage(e);
       this.touchStartY = touchEvents.y;
       this.touchStartX = touchEvents.x;
     }
-  }
+  };
+  
+  touchMoveHandler = event => {
+    let e = event || window.event || e || e.originalEvent;
+    this.preventDefault(e);
+    if (this.isReallyTouch(e)) {
+      this.preventDefault(e);
+      return this.handleTouchMove(e);
+    }
+  };
 
 
   addTouchHandler() {
@@ -127,12 +139,12 @@ export default class ScrollHandler {
       let wrapper = this.container;
       if (document.addEventListener) {
         let MSPointer = this.getMSPointer();
-        wrapper.removeEventListener('touchstart', this.boundTouchStartHandler);
-        wrapper.removeEventListener(MSPointer.down, this.boundTouchStartHandler);
-        wrapper.removeEventListener('touchmove', this.boundTouchMoveHandler);
-        wrapper.removeEventListener(MSPointer.move, this.boundTouchMoveHandler);
-        this.addListenerMulti(wrapper, `touchstart ${MSPointer.down}`, this.boundTouchStartHandler);
-        this.addListenerMulti(wrapper, `touchmove ${MSPointer.move}`, this.boundTouchMoveHandler);
+        wrapper.removeEventListener('touchstart', this.touchStartHandler);
+        wrapper.removeEventListener(MSPointer.down, this.touchStartHandler);
+        wrapper.removeEventListener('touchmove', this.touchMoveHandler);
+        wrapper.removeEventListener(MSPointer.move, this.touchMoveHandler);
+        this.addListenerMulti(wrapper, `touchstart ${MSPointer.down}`, this.touchStartHandler);
+        this.addListenerMulti(wrapper, `touchmove ${MSPointer.move}`, this.touchMoveHandler);
       }
     }
   }
@@ -142,12 +154,12 @@ export default class ScrollHandler {
       let wrapper = this.container;
       if (document.addEventListener) {
         let MSPointer = this.getMSPointer();
-        wrapper.removeEventListener('touchstart', this.boundTouchStartHandler);
-        wrapper.removeEventListener(MSPointer.down, this.boundTouchStartHandler);
-        wrapper.removeEventListener('touchmove', this.boundTouchMoveHandler);
-        wrapper.removeEventListener(MSPointer.move, this.boundTouchMoveHandler);
-        this.removeListenerMulti(wrapper, `touchstart ${MSPointer.down}`, this.boundTouchStartHandler);
-        this.removeListenerMulti(wrapper, `touchmove ${MSPointer.move}`, this.boundTouchMoveHandler);
+        wrapper.removeEventListener('touchstart', this.touchStartHandler);
+        wrapper.removeEventListener(MSPointer.down, this.touchStartHandler);
+        wrapper.removeEventListener('touchmove', this.touchMoveHandler);
+        wrapper.removeEventListener(MSPointer.move, this.touchMoveHandler);
+        this.removeListenerMulti(wrapper, `touchstart ${MSPointer.down}`, this.touchStartHandler);
+        this.removeListenerMulti(wrapper, `touchmove ${MSPointer.move}`, this.touchMoveHandler);
       }
     }
   }
@@ -210,7 +222,9 @@ export default class ScrollHandler {
   }
 
   preventDefault(event) {
-    if (event.preventDefault) { return event.preventDefault(); } else { return event.returnValue = false; }
+    if (event.preventDefault)
+      return event.preventDefault();
+    return event.returnValue = false;
   }
 
 }
