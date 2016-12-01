@@ -7,7 +7,7 @@
       .dot
       .dot
       .dot
-  
+
     transition(name="scroll")
       .category(
         v-for="(category, catIndex) of categories"
@@ -22,7 +22,7 @@
           .product
             | Product
             span Title 1
-          transition(name="slide" appear)
+          transition(name="slide")
             .screen(
               v-show="slIndex == slideNum"
               v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide + ')' }"
@@ -192,13 +192,13 @@
     opacity: 0;
   }
 
-  
+
   .scroll-enter-active {
     transition: transform 2s linear;
   }
 
   .scroll-leave-active {
-    transition: transform 2s linear;
+    transition: transform 2s linear .05s;
   }
 
   .scroll-enter {
