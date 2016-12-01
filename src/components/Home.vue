@@ -87,7 +87,7 @@
         el.style.transform = "translateY(100%)";
       },
       enter: function (el, done) {
-        Velocity(el, { translateY: [0, '100%'], translateZ: 0 }, { duration: 400, complete: done });
+        Velocity(el, { translateY: [0, '99%'], translateZ: 0 }, { duration: 400, complete: done });
         //done();
       },
       leave: function (el, done) {
