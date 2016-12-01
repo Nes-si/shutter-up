@@ -68,6 +68,15 @@
         let value = this.direction === 'right' ? '-100%' : "100%";
         Velocity(el, { translateX: value, translateZ: 0 }, { duration: 400, complete: done });
       },
+    },
+  
+    watch: {
+      'portfolio.category': {
+        handler: function () {
+          this.category = data[this.portfolio.category];
+          this.itemNum = 0;
+        }
+      }
     }
   }
   

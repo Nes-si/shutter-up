@@ -146,12 +146,6 @@ export const data = [
         title: 'Vivamus elementum',
         client: 'Client 3',
         image: 'item3.jpg',
-      },
-      {
-        index: 3,
-        title: 'Curabitur',
-        client: 'Client 4',
-        image: 'item4.jpg',
       }
     ]
   },
@@ -194,12 +188,6 @@ export const data = [
         title: 'Vivamus elementum',
         client: 'Client 3',
         image: 'item3.jpg',
-      },
-      {
-        index: 3,
-        title: 'Curabitur',
-        client: 'Client 4',
-        image: 'item4.jpg',
       }
     ]
   },
