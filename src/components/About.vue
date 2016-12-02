@@ -383,6 +383,7 @@
     }
   }
 
+
   .v-enter-active {
     transition: transform 1s ease 1s;
   }

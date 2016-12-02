@@ -4,10 +4,10 @@
       @click="onMenuToggle"
       v-html="require('assets/images/burger-right.inline.svg')"
       )
-  
+
     transition(name="curtain")
       .menu-curtain(v-if="nav.menuGalleryOpened")
-    
+
     transition(name="menu")
       .menu(v-if="nav.menuGalleryOpened")
         .menu-title
@@ -36,7 +36,7 @@
     .content(v-bind:class="{'content-menu': nav.menuGalleryOpened}")
       .title
         | {{ category.name }}
-      
+
       transition(
         v-bind:css="false"
         v-on:before-enter="scrollBeforeEnter"
@@ -49,7 +49,7 @@
           v-if="i == itemNum"
           )
           .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/data/' + category.name + '/items/' + item.image + ')' }")
-      
+
       .count
         .count-index-wrapper(v-bind:style="{ minWidth: counterWidth + 'px' }")
           transition(
@@ -76,6 +76,7 @@
               v-bind:key="i"
               v-if="i == itemNum"
               ) {{ item.title }}
+    .info
 </template>
 
 <script>
@@ -97,7 +98,6 @@
 
         itemNum: 0,
         direction: 'right',
-        
         burgerLines13: null,
         burgerArrow: null,
 
@@ -113,7 +113,7 @@
       );
       if (this.category.items.length > 9)
         this.counterWidth = 24;
-  
+
       this.burgerLines13 = document.querySelectorAll('.gallery .menu-burger .line13');
       this.burgerArrow = document.querySelector('.gallery .menu-burger .arrow');
     },
@@ -135,7 +135,7 @@
         this.itemNum--;
         this.direction = 'left';
       },
-  
+
       onMenuToggle() {
         if (this.nav.menuGalleryOpened)
           store.actions.nav.menuGalleryClose();
@@ -203,33 +203,33 @@
       top: 26px;
       right: 26px;
       cursor: pointer;
-  
+
       width: 35px;
       height: 14px;
-  
+
       opacity: 0.38;
       transition: opacity 0.2s ease;
-  
+
       z-index: 20;
-  
+
       &:hover {
         opacity: 1;
       }
-  
+
       .line13 {
         transition: transform .6s;
       }
-  
+
       .arrow {
         transform: scale(0);
         transform-origin: 100% 50%;
         transition: transform .6s;
       }
-  
+
       .line13-show {
         transform: translate3d(-11px, 0, 0);
       }
-  
+
       .arrow-show {
         transform: scale(1);
       }
@@ -239,82 +239,82 @@
 
 <style lang="scss" scoped rel="stylesheet/scss">
   .gallery {
-    
+
     .content {
       position: absolute;
       top: 0;
       right: 0;
       width: 100%;
       height: 100%;
-      
+
       transition: transform .5s;
-      
+
       .title {
         font-size: 18px;
         color: rgba(0, 0, 0, 0.87);
         letter-spacing: 1.5px;
-  
+
         position: absolute;
         top: 26px;
         left: 0;
-  
+
         width: 100%;
         text-align: center;
       }
-  
+
       .count {
         position: absolute;
         bottom: 26px;
         height: 20px;
         overflow: hidden;
-  
+
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
-  
+
         font-size: 18px;
         color: rgba(0, 0, 0, 0.87);
         letter-spacing: 1.5px;
-  
+
         width: 100%;
         padding: 0 26px;
-  
+
         &-index-wrapper {
           min-width: 13px;
           min-height: 20px;
           position: relative;
         }
-  
+
         &-index {
           text-align: right;
           width: 100%;
           position: absolute;
         }
-  
+
         &-items {
           margin-left: 10px;
         }
-  
+
         &-name-wrapper {
           min-width: 303px;
           min-height: 20px;
           position: relative;
         }
-  
+
         &-name {
           margin-left: 34px;
           position: absolute;
           white-space: nowrap;
         }
       }
-  
+
       .item {
         position: absolute;
         top: 20%;
         left: 10%;
         width: 80%;
         height: 60%;
-  
+
         &-pic {
           position: absolute;
           top: 0;
@@ -325,37 +325,35 @@
         }
       }
     }
-  
+
     .content-menu {
       transform: translate3d(-175px, 0, 0);
     }
-  
+
     .menu-enter-active, .menu-leave-active {
       transition: transform .5s;
     }
     .menu-enter, .menu-leave-active {
       transform: translate3d(100%, 0, 0);
     }
-  
+
     .menu-curtain {
       position: absolute;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
-    
       background: rgba(255, 255, 255, .7);
-      
       z-index: 4;
     }
-    
+
     .menu {
       position: absolute;
       right: 0;
       top: 0;
-  
+
       background: #FFFFFF;
-  
+
       width: 502px;
       height: 100%;
       padding: 36px 80px;
@@ -437,6 +435,26 @@
           width: 100%;
           height: 100%;
         }
+      }
+    }
+
+    .info {
+      background: url('~assets/images/info.svg') no-repeat center center / contain;
+      height: 23px;
+      width: 22px;
+      position: absolute;
+      right: 26px;
+      bottom: 26px;
+
+      opacity: 0.7;
+
+      transition: opacity 0.2s ease;
+      will-change: opacity;
+
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
       }
     }
   }
