@@ -146,7 +146,6 @@
 
     .count {
       position: absolute;
-      left: 26px;
       bottom: 26px;
       height: 20px;
       overflow: hidden;
@@ -158,6 +157,9 @@
       font-size: 18px;
       color: rgba(0,0,0,0.87);
       letter-spacing: 1.5px;
+
+      width: 100%;
+      padding: 0 26px;
 
       &-index-wrapper {
         min-width: 13px;
@@ -175,7 +177,7 @@
       &-items {
         margin-left: 10px;
       }
-  
+
       &-name-wrapper {
         min-width: 303px;
         min-height: 20px;
@@ -185,6 +187,7 @@
       &-name {
         margin-left: 34px;
         position: absolute;
+        white-space: nowrap;
       }
     }
 
