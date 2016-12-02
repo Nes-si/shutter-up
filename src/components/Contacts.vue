@@ -1,6 +1,7 @@
 <template lang="pug">
   transition
     .contacts
+      .contacts-close
       .contacts-studio
         | Doug Holt Photography Studio
       .contacts-address
@@ -143,6 +144,15 @@
       &:hover {
         opacity: 1;
       }
+    }
+
+    &-close {
+      background: url('~assets/images/cross-black.svg') no-repeat center center / contain;
+      height: 24px;
+      width: 24px;
+      position: absolute;
+      top: 12vh;
+      left: 78px;
     }
   }
 
