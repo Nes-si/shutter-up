@@ -87,17 +87,10 @@
     bottom: 0;
   }
 
-  // .menu {
-  //   position: absolute;
-  //   // top: 20px;
-  //   // left: 20px;
-  //   cursor: pointer;
-  // }
-
   .menu-burger {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 26px;
+    left: 26px;
     cursor: pointer;
 
     background: url('~assets/images/burger.svg') no-repeat center center / contain;

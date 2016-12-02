@@ -119,8 +119,8 @@
 
     .back {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 26px;
+      left: 26px;
       cursor: pointer;
 
       background: url('~assets/images/back.svg') no-repeat center center / contain;

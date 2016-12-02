@@ -1,5 +1,7 @@
 <template lang="pug">
   .gallery
+    .title
+      | {{ category.name }}
     transition(
       v-bind:css="false"
       v-on:before-enter="scrollBeforeEnter"
@@ -12,41 +14,51 @@
         v-if="i == itemNum"
         )
         .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/data/' + category.name + '/items/' + item.image + ')' }")
+    .count(
+      v-for="(item, i) of category.items"
+      v-bind:key="i"
+      v-if="i == itemNum"
+      )
+      .count-content
+        .count-index {{ i + 1 }}
+        | /
+        .count-items {{ category.items.length }}
+        .count-name {{ item.title }}
 </template>
 
 <script>
   import Velocity from 'velocity-animate';
-  
+
   import {store} from 'index';
   import {data} from 'store/fixtures';
   import ScrollHandler from 'utils/scrollhandler';
-  
-  
+
+
   export default {
     name: "GalleryComponent",
-    
+
     data: function () {
       return {
         portfolio: this.$select('portfolio'),
         category: data[this.$select('portfolio').category],
-  
+
         itemNum: 0,
         direction: 'right',
-        
+
         scrollHandler: null
       }
     },
-  
+
     mounted: function () {
       this.scrollHandler = new ScrollHandler(
         this.itemNext, this.itemPrev, 'h'
       );
     },
-    
+
     beforeDestroy: function () {
       this.scrollHandler.destroy();
     },
-    
+
     methods: {
       itemNext: function () {
         if (this.itemNum >= this.category.items.length - 1)
@@ -60,21 +72,21 @@
         this.itemNum--;
         this.direction = 'left';
       },
-      
+
       scrollBeforeEnter: function (el) {
         let value = this.direction === 'right' ? '100%' : "-100%";
-        el.style.transform = `translate3d(${value}, 0, 0)`;
+        el.style.transform = `translate3d(${value}, -50%, 0)`;
       },
       scrollEnter: function (el, done) {
         let value = this.direction === 'right' ? '99%' : "-99%";
-        Velocity(el, { translateX: [0, value], translateZ: 0 }, { duration: 400, complete: done });
+        Velocity(el, { translateX: [0, value], translateZ: 0, translateY: '-50%' }, { duration: 400, complete: done });
       },
       scrollLeave: function (el, done) {
         let value = this.direction === 'right' ? '-100%' : "100%";
-        Velocity(el, { translateX: value, translateZ: 0 }, { duration: 400, complete: done });
+        Velocity(el, { translateX: value, translateZ: 0, translateY: '-50%' }, { duration: 400, complete: done });
       },
     },
-  
+
     watch: {
       'portfolio.category': {
         handler: function () {
@@ -84,19 +96,63 @@
       }
     }
   }
-  
-  
+
+
 </script>
 
 <style lang="scss" scoped rel="stylesheet/scss">
   .gallery {
+    .title {
+      font-size: 18px;
+      color: rgba(0,0,0,0.87);
+      letter-spacing: 1.5px;
+
+      position: absolute;
+      top: 26px;
+      left: 0;
+
+      width: 100%;
+      text-align: center;
+    }
+
+    .count {
+      position: absolute;
+      left: 26px;
+      bottom: 26px;
+
+      &-content {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+
+        font-size: 18px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 1.5px;
+      }
+
+      &-index {
+        margin-right: 10px;
+        min-width: 13px;
+        text-align: center;
+      }
+
+      &-items {
+        margin-left: 10px;
+      }
+
+      &-name {
+        margin-left: 34px;
+      }
+    }
+
     .cont {
       position: absolute;
-      top: 10%;
+      top: 50%;
+      transform: translateY(-50%);
       left: 10%;
       width: 80%;
-      height: 80%;
-      
+      height: 60%;
+
       .item-pic {
         position: absolute;
         top: 0;
@@ -106,6 +162,6 @@
         background: center center no-repeat / contain;
       }
     }
-    
+
   }
 </style>
