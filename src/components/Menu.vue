@@ -24,6 +24,8 @@
           router-link(to="/journal") Journal
         .nav-item
           router-link(to="/contacts") Contact
+
+    .lock
 </template>
 
 <script>
@@ -103,6 +105,26 @@
     padding: 10vh 36px;
 
     z-index: 5;
+
+    .lock {
+      background: url('~assets/images/lock.svg') no-repeat center center / contain;
+      height: 13px;
+      width: 10px;
+      position: absolute;
+      left: 36px;
+      bottom: 38px;
+
+      opacity: 0.7;
+
+      transition: opacity 0.2s ease;
+      will-change: opacity;
+
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
 
     .logo {
       font-weight: 500;
