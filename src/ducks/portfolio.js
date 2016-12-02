@@ -27,37 +27,41 @@ export function categoryPrev() {
 
 let initalState = {
   category: 0,
+  showContacts: false,
   direction: 'down'
 };
 
 export default function portfolioReducer(state = initalState, action) {
+  let showContacts;
+  
   switch (action.type) {
     case CATEGORY_SET:
       let direction = action.category < state.category ? 'up' : 'down';
+      showContacts = action.category === data.length;
       return {
-        ...state,
         category: action.category,
-        direction
+        direction,
+        showContacts
       };
 
     case CATEGORY_NEXT:
-      if (state.category === data.length - 1)
+      if (state.category === data.length)
         return state;
-              
+      showContacts = state.category === data.length - 1;
       return {
-        ...state,
-        category: ++state.category,
-        direction: 'down'
+        category: state.category + 1,
+        direction: 'down',
+        showContacts
       };
       
     case CATEGORY_PREV:
       if (state.category === 0)
         return state;
-      
+      showContacts = false;
       return {
-        ...state,
         category: --state.category,
-        direction: 'up'
+        direction: 'up',
+        showContacts
       };
       
     default:

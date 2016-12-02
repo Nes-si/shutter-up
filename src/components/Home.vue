@@ -1,12 +1,15 @@
 <template lang="pug">
   .home
-    .dots
+    .dots(v-bind:class="{'dots-inverse': portfolio.showContacts}")
       .dot(
         v-for="(category, catIndexD) of categories"
         v-bind:class="{'dot-active': catIndexD == portfolio.category}"
         @click="onDotClick(catIndexD)"
         )
-      router-link.dot.dot-square(to="/contacts")
+      .dot.dot-square(
+        v-bind:class="{'dot-active': portfolio.showContacts}"
+        @click="onDotClick(categories.length)"
+      )
   
     transition(
       v-bind:css="false"
@@ -35,6 +38,7 @@
               v-show="slIndex == slideNum"
               v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide.image + ')' }"
               )
+      contacts-component(v-if="portfolio.showContacts")
 </template>
 <script>
   import Velocity from 'velocity-animate';
@@ -42,10 +46,15 @@
   import {store} from 'index';
   import {data} from 'store/fixtures';
   import ScrollHandler from 'utils/scrollhandler';
+  import ContactsComponent from 'components/Contacts';
 
 
   export default {
     name: "HomeComponent",
+  
+    components: {
+      ContactsComponent
+    },
 
     data: function () {
       return {
@@ -76,6 +85,8 @@
 
     methods: {
       onCatUpdate: function () {
+        if (this.portfolio.showContacts)
+          return;
         this.slidesLength = this.categories[this.portfolio.category].slides.length;
         this.timer = setInterval(() => this.slideNext(), 5000);
       },
@@ -101,7 +112,6 @@
       },
   
       onDotClick: function (catIndex) {
-        console.log(catIndex);
         let diff = catIndex - this.portfolio.category;
         if (diff < 0) {
           for (let i = 0; i < -diff; i++) {
@@ -217,6 +227,8 @@
 
       margin-bottom: 24px;
       display: block;
+      
+      transition: background-color .5s, border-color .5s;
 
       &.dot-square {
         margin-bottom: 0;
@@ -225,6 +237,16 @@
 
       &.dot-active {
         background: #FFFFFF;
+      }
+    }
+  }
+  
+  .dots-inverse {
+    .dot {
+      border-color: #707070;
+  
+      &.dot-active {
+        background: #707070;
       }
     }
   }

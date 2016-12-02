@@ -34,6 +34,7 @@
 <style lang="scss" scoped rel="stylesheet/scss">
   .contacts {
     margin-left: 216px;
+    position: absolute;
     width: 100%;
     height: 100%;
     background: #f5f5f5;
