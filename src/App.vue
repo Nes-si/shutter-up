@@ -1,5 +1,6 @@
 <template lang="pug">
   #app
+    //- loader-component
     transition(name="curtain")
       .curtain(v-if="nav.openedMenu && !nav.showingMenu")
     router-view.router-view(v-bind:class="{'router-view-menu': nav.openedMenu && !nav.showingMenu}")
@@ -16,6 +17,7 @@
   import 'whatwg-fetch';
 
   import MenuComponent from 'components/Menu';
+  import LoaderComponent from 'components/Loader';
   import {store} from 'index';
 
 
@@ -23,19 +25,20 @@
     name: "App",
 
     components: {
-      MenuComponent
+      MenuComponent,
+      LoaderComponent
     },
 
     data: function () {
       return {
         nav: this.$select('nav'),
-        
+
         burgerLines1: null,
         burgerLines3: null,
         burgerArrow: null
       }
     },
-    
+
     mounted: function () {
       this.burgerLine1 = document.querySelector('.app-menu-burger .line1');
       this.burgerLine3 = document.querySelector('.app-menu-burger .line3');
@@ -50,7 +53,7 @@
           store.actions.nav.menuOpen();
       }
     },
-  
+
     watch: {
       'nav.openedMenu': {
         handler: function () {
@@ -124,27 +127,27 @@
 
     opacity: 0.38;
     transition: opacity 0.2s ease;
-    
+
     z-index: 20;
 
     &:hover {
       opacity: 1;
     }
-    
+
     .line1, .line3 {
       transition: transform .6s;
     }
-    
+
     .arrow {
       transform: scale(0);
       transform-origin: 0 50%;
       transition: transform .6s;
     }
-  
+
     .line13-show {
       transform: translate3d(11px, 0, 0);
     }
-  
+
     .arrow-show {
       transform: scale(1);
     }
@@ -159,7 +162,7 @@
     right: 0;
     bottom: 0;
   }
-  
+
   .curtain {
     position: absolute;
     top: 0;
