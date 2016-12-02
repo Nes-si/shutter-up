@@ -3,7 +3,8 @@
     .curtain
     router-view.router-view
     menu-component(v-if="nav.openedMenu")
-    .menu(v-if="!nav.openedMenu" @click="onMenuOpen") Menu
+    .menu(v-if="!nav.openedMenu")
+    .menu-burger(@click="onMenuOpen")
 </template>
 
 <script>
@@ -11,7 +12,7 @@
 
   import MenuComponent from 'components/Menu';
   import {store} from 'index';
-  
+
 
   export default {
     name: "App",
@@ -19,13 +20,13 @@
     components: {
       MenuComponent
     },
-    
+
     data: function () {
       return {
         nav: this.$select('nav')
       }
     },
-    
+
     methods: {
       onMenuOpen() {
         store.actions.nav.menuOpen();
@@ -86,11 +87,29 @@
     bottom: 0;
   }
 
-  .menu {
+  // .menu {
+  //   position: absolute;
+  //   // top: 20px;
+  //   // left: 20px;
+  //   cursor: pointer;
+  // }
+
+  .menu-burger {
     position: absolute;
     top: 20px;
     left: 20px;
     cursor: pointer;
+
+    background: url('~assets/images/burger.svg') no-repeat center center / contain;
+    width: 24px;
+    height: 14px;
+
+    opacity: 0.38;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   .router-view {

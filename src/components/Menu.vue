@@ -1,8 +1,7 @@
 <template lang="pug">
   .menu
     .back(@click="onBack" v-if="showBack")
-      | Back
-  
+
     router-link(to="/")
       .logo
         | DOUG HOLT
@@ -31,10 +30,10 @@
 
 <script>
   import Velocity from 'velocity-animate';
-  
+
   import {data} from 'store/fixtures';
   import {store, PAGE_HOME, PAGE_CONTACTS} from 'index';
-  
+
 
   export default {
     name: "MenuComponent",
@@ -43,27 +42,27 @@
       return {
         categories: data,
         nav: this.$select('nav'),
-        
+
         showCats: false,
-  
+
         catsHeight: 0,
         bottomCont: null
       }
     },
-    
+
     computed: {
       showBack: function () {
         return this.nav.openedPage != PAGE_HOME && this.nav.openedPage != PAGE_CONTACTS;
       }
     },
-    
+
     mounted: function () {
       let cats = document.querySelector('.menu .nav-inner');
       this.catsHeight = cats.getBoundingClientRect().height;
-      
+
       this.bottomCont = document.querySelector('.menu .nav-bottom-cont');
     },
-    
+
     methods: {
       onWorksEnter: function () {
         if (!this.showCats) {
@@ -71,18 +70,18 @@
           this.catsOpen();
         }
       },
-      
+
       onNavLeave: function () {
         if (this.showCats) {
           this.showCats = false;
           this.catsClose();
         }
       },
-  
+
       onBack: function () {
         store.actions.nav.menuClose();
       },
-  
+
       catsOpen: function () {
         Velocity(
           this.bottomCont,
@@ -115,12 +114,26 @@
     background: #F5F5F5;
 
     padding: 10vh 36px;
-  
+
+    z-index: 5;
+
     .back {
       position: absolute;
       top: 20px;
       left: 20px;
       cursor: pointer;
+
+      background: url('~assets/images/back.svg') no-repeat center center / contain;
+      width: 35px;
+      height: 14px;
+
+      opacity: 0.54;
+      transition: opacity 0.2s ease;
+      will-change: opacity;
+
+      &:hover {
+        opacity: 1;
+      }
     }
 
     .logo {
@@ -155,14 +168,14 @@
       &-item {
         padding-top: 4px;
         padding-bottom: 20px;
-        
+
         cursor: pointer;
 
         &:hover > a {
           color: #000000;
         }
       }
-  
+
       &-bottom-cont {
         position: relative;
         z-index: 10;
@@ -171,7 +184,7 @@
 
       &-work {
         position: relative;
-        
+
         &Label {
           display: flex;
           flex-flow: row nowrap;
@@ -187,7 +200,7 @@
           transition: transform 0.2s ease;
           will-change: transform;
         }
-  
+
         .arrow-up {
           transform: rotate(180deg);
         }
