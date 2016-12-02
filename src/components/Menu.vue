@@ -1,7 +1,5 @@
 <template lang="pug">
   .menu
-    .back(@click="onBack" v-if="showBack")
-
     router-link(to="/")
       .logo
         | DOUG HOLT
@@ -32,7 +30,6 @@
   import Velocity from 'velocity-animate';
 
   import {data} from 'store/fixtures';
-  import {store, PAGE_HOME, PAGE_CONTACTS} from 'index';
 
 
   export default {
@@ -47,12 +44,6 @@
 
         catsHeight: 0,
         bottomCont: null
-      }
-    },
-
-    computed: {
-      showBack: function () {
-        return this.nav.openedPage != PAGE_HOME && this.nav.openedPage != PAGE_CONTACTS;
       }
     },
 
@@ -76,10 +67,6 @@
           this.showCats = false;
           this.catsClose();
         }
-      },
-
-      onBack: function () {
-        store.actions.nav.menuClose();
       },
 
       catsOpen: function () {

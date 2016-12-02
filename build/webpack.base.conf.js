@@ -43,7 +43,19 @@ module.exports = {
         loader: 'pug'
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.inline.svg$/,
+        loader: 'svg-inline'
+      },
+      {
+        test: /^((?!\.inline).)*\.svg$/,
+        loader: 'url',
+        query: {
+          limit: 3000,
+          name: 'assets/images/[name].[hash:7].[ext]'
+        }
+      },
+      {
+        test: /\.(png|jpe?g|gif)(\?.*)?$/,
         loader: 'url',
         query: {
           limit: 3000,

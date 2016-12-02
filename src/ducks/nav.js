@@ -38,7 +38,9 @@ export function menuClose() {
 
 const initialState = {
   openedPage: PAGE_HOME,
-  openedMenu: true
+  openedMenu: true,
+  
+  showingMenu: true
 };
 
 
@@ -52,7 +54,8 @@ export default function navReducer(state = initialState, action) {
       return {
         ...state,
         openedPage: action.to.name,
-        openedMenu
+        openedMenu,
+        showingMenu: openedMenu
       };
   
     case MENU_OPEN:

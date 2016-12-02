@@ -4,7 +4,7 @@
     router-view.router-view
     transition(name="menu")
       menu-component(v-if="nav.openedMenu")
-    .menu-burger(@click="onMenuOpen")
+    .menu-burger(@click="onMenuToggle" v-if="!nav.showingMenu" v-html="require('assets/images/burger-new.inline.svg')")
 </template>
 
 <script>
@@ -23,13 +23,42 @@
 
     data: function () {
       return {
-        nav: this.$select('nav')
+        nav: this.$select('nav'),
+        
+        burgerLines1: null,
+        burgerLines3: null,
+        burgerArrow: null
       }
+    },
+    
+    mounted: function () {
+      this.burgerLine1 = document.querySelector('.menu-burger .line1');
+      this.burgerLine3 = document.querySelector('.menu-burger .line3');
+      this.burgerArrow = document.querySelector('.menu-burger .arrow');
     },
 
     methods: {
-      onMenuOpen() {
-        store.actions.nav.menuOpen();
+      onMenuToggle() {
+        if (this.nav.openedMenu)
+          store.actions.nav.menuClose();
+        else
+          store.actions.nav.menuOpen();
+      }
+    },
+  
+    watch: {
+      'nav.openedMenu': {
+        handler: function () {
+          if (this.nav.openedMenu) {
+            this.burgerArrow.classList.add('arrow-show');
+            this.burgerLine1.classList.add('line13-show');
+            this.burgerLine3.classList.add('line13-show');
+          } else {
+            this.burgerArrow.classList.remove('arrow-show');
+            this.burgerLine1.classList.remove('line13-show');
+            this.burgerLine3.classList.remove('line13-show');
+          }
+        }
       }
     }
   }
@@ -93,14 +122,34 @@
     left: 26px;
     cursor: pointer;
 
-    background: url('~assets/images/burger.svg') no-repeat center center / contain;
-    width: 24px;
+    width: 35px;
     height: 14px;
 
     opacity: 0.38;
     transition: opacity 0.2s ease;
+    
+    z-index: 20;
 
     &:hover {
+      opacity: 1;
+    }
+    
+    .line1, .line3 {
+      transition: transform 1s;
+    }
+    
+    .arrow {
+      opacity: .01;
+      transform: scale(0);
+      transition: transform 1s, opacity 1s;
+    }
+  
+    .line13-show {
+      transform: translate3d(11px, 0, 0);
+    }
+  
+    .arrow-show {
+      transform: scale(1);
       opacity: 1;
     }
   }
