@@ -1,5 +1,5 @@
 <template lang="pug">
-  transition(appear)
+  transition
     .about
       .about-title
         | About
@@ -383,7 +383,10 @@
     }
   }
 
-  .v-enter-active, .v-leave-active {
+  .v-enter-active {
+    transition: transform 1s ease 1s;
+  }
+  .v-leave-active {
     transition: transform 1s;
   }
   .v-enter, .v-leave-active {

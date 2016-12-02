@@ -1,5 +1,5 @@
 <template lang="pug">
-  transition(appear)
+  transition
     .contacts
       .contacts-studio
         | Doug Holt Photography Studio
@@ -145,7 +145,10 @@
     }
   }
 
-  .v-enter-active, .v-leave-active {
+  .v-enter-active {
+    transition: transform 1s ease 1s;
+  }
+  .v-leave-active {
     transition: transform 1s;
   }
   .v-enter, .v-leave-active {
