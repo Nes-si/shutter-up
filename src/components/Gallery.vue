@@ -4,12 +4,12 @@
       @click="onMenuToggle"
       v-html="require('assets/images/burger-right.inline.svg')"
       )
-    
+  
     transition(name="curtain")
-      .menu-curtain(v-if="menuOpened")
+      .menu-curtain(v-if="nav.menuGalleryOpened")
     
     transition(name="menu")
-      .menu(v-if="menuOpened")
+      .menu(v-if="nav.menuGalleryOpened")
         .menu-title
           | {{ category.name }} List
         .menu-list
@@ -33,7 +33,7 @@
             .menu-client
               | {{ item.client }}
 
-    .content(v-bind:class="{'content-menu': menuOpened}")
+    .content(v-bind:class="{'content-menu': nav.menuGalleryOpened}")
       .title
         | {{ category.name }}
       
@@ -93,11 +93,11 @@
       return {
         portfolio: this.$select('portfolio'),
         category: data[this.$select('portfolio').category],
+        nav: this.$select('nav'),
 
         itemNum: 0,
         direction: 'right',
         
-        menuOpened: false,
         burgerLines13: null,
         burgerArrow: null,
 
@@ -137,16 +137,10 @@
       },
   
       onMenuToggle() {
-        this.menuOpened = !this.menuOpened;
-        if (this.menuOpened) {
-          this.burgerArrow.classList.add('arrow-show');
-          for (let i = 0; i < this.burgerLines13.length; i++)
-            this.burgerLines13[i].classList.add('line13-show');
-        } else {
-          this.burgerArrow.classList.remove('arrow-show');
-          for (let i = 0; i < this.burgerLines13.length; i++)
-            this.burgerLines13[i].classList.remove('line13-show');
-        }
+        if (this.nav.menuGalleryOpened)
+          store.actions.nav.menuGalleryClose();
+        else
+          store.actions.nav.menuGalleryOpen();
       },
 
       scrollBeforeEnter: function (el) {
@@ -181,6 +175,19 @@
         handler: function () {
           this.category = data[this.portfolio.category];
           this.itemNum = 0;
+        }
+      },
+      'nav.menuGalleryOpened': {
+        handler: function () {
+          if (this.nav.menuGalleryOpened) {
+            this.burgerArrow.classList.add('arrow-show');
+            for (let i = 0; i < this.burgerLines13.length; i++)
+              this.burgerLines13[i].classList.add('line13-show');
+          } else {
+            this.burgerArrow.classList.remove('arrow-show');
+            for (let i = 0; i < this.burgerLines13.length; i++)
+              this.burgerLines13[i].classList.remove('line13-show');
+          }
         }
       }
     }
@@ -337,8 +344,7 @@
       width: 100%;
       height: 100%;
     
-      background: #FFFFFF;
-      opacity: 0.7;
+      background: rgba(255, 255, 255, .7);
       
       z-index: 4;
     }
