@@ -2,8 +2,8 @@
   #app
     .curtain
     router-view.router-view
-    menu-component(v-if="nav.openedMenu")
-    .menu(v-if="!nav.openedMenu")
+    transition(name="menu")
+      menu-component(v-if="nav.openedMenu")
     .menu-burger(@click="onMenuOpen")
 </template>
 
@@ -112,4 +112,12 @@
     width: 100%;
     height: 100%;
   }
+
+  .menu-enter-active, .menu-leave-active {
+    transition: transform .5s;
+  }
+  .menu-enter, .menu-leave-active {
+    transform: translate3d(-100%, 0, 0);
+  }
+
 </style>
