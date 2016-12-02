@@ -1,10 +1,11 @@
 <template lang="pug">
   #app
-    .curtain
-    router-view.router-view
+    transition(name="curtain")
+      .curtain(v-if="nav.openedMenu && !nav.showingMenu")
+    router-view.router-view(v-bind:class="{'router-view-menu': nav.openedMenu && !nav.showingMenu}")
     transition(name="menu")
       menu-component(v-if="nav.openedMenu")
-    .menu-burger(@click="onMenuToggle" v-if="!nav.showingMenu" v-html="require('assets/images/burger-new.inline.svg')")
+    .menu-burger(@click="onMenuToggle" v-show="!nav.showingMenu" v-html="require('assets/images/burger-new.inline.svg')")
 </template>
 
 <script>
@@ -115,6 +116,17 @@
     right: 0;
     bottom: 0;
   }
+  
+  .curtain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: .4;
+    z-index: 3;
+  }
 
   .menu-burger {
     position: absolute;
@@ -159,6 +171,11 @@
     left: 0;
     width: 100%;
     height: 100%;
+    transition: transform .5s;
+  }
+
+  .router-view-menu {
+    transform: translate3d(175px, 0, 0);
   }
 
   .menu-enter-active, .menu-leave-active {
@@ -166,6 +183,13 @@
   }
   .menu-enter, .menu-leave-active {
     transform: translate3d(-100%, 0, 0);
+  }
+
+  .curtain-enter-active, .curtain-leave-active {
+    transition: opacity .5s;
+  }
+  .curtain-enter, .curtain-leave-active {
+    opacity: .01;
   }
 
 </style>
