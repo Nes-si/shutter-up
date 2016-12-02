@@ -75,15 +75,15 @@
 
       scrollBeforeEnter: function (el) {
         let value = this.direction === 'right' ? '100%' : "-100%";
-        el.style.transform = `translate3d(${value}, -50%, 0)`;
+        el.style.transform = `translate3d(${value}, 0, 0)`;
       },
       scrollEnter: function (el, done) {
         let value = this.direction === 'right' ? '99%' : "-99%";
-        Velocity(el, { translateX: [0, value], translateZ: 0, translateY: '-50%' }, { duration: 400, complete: done });
+        Velocity(el, { translateX: [0, value], translateZ: 0 }, { duration: 400, complete: done });
       },
       scrollLeave: function (el, done) {
         let value = this.direction === 'right' ? '-100%' : "100%";
-        Velocity(el, { translateX: value, translateZ: 0, translateY: '-50%' }, { duration: 400, complete: done });
+        Velocity(el, { translateX: value, translateZ: 0}, { duration: 400, complete: done });
       },
     },
 
@@ -147,8 +147,7 @@
 
     .cont {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 20%;
       left: 10%;
       width: 80%;
       height: 60%;
