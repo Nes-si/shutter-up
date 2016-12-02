@@ -14,21 +14,24 @@
         .nav-workLabel
           | Work
           .nav-arrow(v-bind:class="{'arrow-up': showCats}")
-        .nav-inner(v-show="showCats")
+        .nav-inner
           .nav-innerItem(
             v-for="(category, index) of categories"
             v-bind:key="index")
               router-link(v-bind:to="'/gallery/' + category.name")
                 | {{category.name}}
-      .nav-item
-        router-link(to="/about") About
-      .nav-item
-        router-link(to="/journal") Journal
-      .nav-item
-        router-link(to="/contacts") Contact
+      .nav-bottom-cont
+        .nav-item
+          router-link(to="/about") About
+        .nav-item
+          router-link(to="/journal") Journal
+        .nav-item
+          router-link(to="/contacts") Contact
 </template>
 
 <script>
+  import Velocity from 'velocity-animate';
+  
   import {data} from 'store/fixtures';
   import {store, PAGE_HOME, PAGE_CONTACTS} from 'index';
   
@@ -41,7 +44,10 @@
         categories: data,
         nav: this.$select('nav'),
         
-        showCats: false
+        showCats: false,
+  
+        catsHeight: 0,
+        bottomCont: null
       }
     },
     
@@ -51,18 +57,50 @@
       }
     },
     
+    mounted: function () {
+      let cats = document.querySelector('.menu .nav-inner');
+      this.catsHeight = cats.getBoundingClientRect().height;
+      
+      this.bottomCont = document.querySelector('.menu .nav-bottom-cont');
+    },
+    
     methods: {
       onWorksEnter: function () {
-        this.showCats = true;
+        if (!this.showCats) {
+          this.showCats = true;
+          this.catsOpen();
+        }
       },
       
       onNavLeave: function () {
-        this.showCats = false;
+        if (this.showCats) {
+          this.showCats = false;
+          this.catsClose();
+        }
       },
   
       onBack: function () {
         store.actions.nav.menuClose();
-      }
+      },
+  
+      catsOpen: function () {
+        Velocity(
+          this.bottomCont,
+          {translateY: this.catsHeight, translateZ: 0},
+          {duration: 300, complete: () =>
+            Velocity(this.bottomCont, {translateY: 0, marginTop: this.catsHeight}, {duration: 30})
+          }
+        );
+      },
+      catsClose: function (el, done) {
+        Velocity(
+          this.bottomCont,
+          {translateY: this.catsHeight, marginTop: 0},
+          {duration: 30, complete: () =>
+            Velocity(this.bottomCont, {translateY: 0, translateZ: 0}, {duration: 300})
+          }
+        );
+      },
     }
   }
 </script>
@@ -115,7 +153,8 @@
       }
 
       &-item {
-        margin-top: 24px;
+        padding-top: 4px;
+        padding-bottom: 20px;
         
         cursor: pointer;
 
@@ -123,8 +162,16 @@
           color: #000000;
         }
       }
+  
+      &-bottom-cont {
+        position: relative;
+        z-index: 10;
+        background: #F5F5F5;
+      }
 
       &-work {
+        position: relative;
+        
         &Label {
           display: flex;
           flex-flow: row nowrap;
@@ -147,6 +194,7 @@
       }
 
       &-inner {
+        position: absolute;
         font-family: 'Marvel', sans-serif;
         font-weight: bold;
         font-size: 16px;
@@ -154,6 +202,7 @@
         letter-spacing: 1.55px;
         line-height: 18px;
         text-transform: uppercase;
+        z-index: 9;
 
         &Item {
           margin-top: 12px;
@@ -170,4 +219,5 @@
       }
     }
   }
+
 </style>
