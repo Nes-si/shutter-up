@@ -135,13 +135,13 @@
     }
     
     .line1, .line3 {
-      transition: transform 1s;
+      transition: transform .6s;
     }
     
     .arrow {
-      opacity: .01;
       transform: scale(0);
-      transition: transform 1s, opacity 1s;
+      transform-origin: 0 50%;
+      transition: transform .6s;
     }
   
     .line13-show {
@@ -150,7 +150,6 @@
   
     .arrow-show {
       transform: scale(1);
-      opacity: 1;
     }
   }
 
