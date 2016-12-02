@@ -2,6 +2,34 @@
   .gallery
     .title
       | {{ category.name }}
+
+    .menu-burger
+    .menu
+      .menu-bg
+      .menu-inner
+        .menu-title
+          | {{ category.name }} List
+        .menu-list
+          .menu-header
+            .menu-order
+              | Order
+            .menu-name
+              | Title
+            .menu-client
+              | Client
+          .menu-item(v-for="(item, i) of category.items")
+            .menu-order
+              | {{ i + 1 }}
+            .menu-name
+              .menu-dot
+                .menu-dotBg(
+                  v-bind:key="i"
+                  v-if="i == itemNum"
+                  )
+              | {{ item.title }}
+            .menu-client
+              | {{ item.client }}
+
     transition(
       v-bind:css="false"
       v-on:before-enter="scrollBeforeEnter"
@@ -62,7 +90,7 @@
         direction: 'right',
 
         scrollHandler: null,
-        
+
         counterWidth: 13
       }
     },
@@ -211,5 +239,114 @@
       }
     }
 
+    .menu {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+
+      z-index: 500;
+
+      &-inner {
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        background: #FFFFFF;
+
+        width: 502px;
+        height: 100%;
+        padding: 36px 80px;
+      }
+
+      &-bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+
+        background: #FFFFFF;
+        opacity: 0.7;
+      }
+
+      &-title {
+        font-size: 18px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 1px;
+      }
+
+      &-header,
+      &-item {
+        display: flex;
+        flex-flow: row nowrap;
+      }
+
+      &-list {
+        margin-top: 105px;
+      }
+
+      &-header {
+        font-family: 'Marvel', sans-serif;
+        font-weight: bold;
+        font-size: 13px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 1.26px;
+        line-height: 13px;
+
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(0,0,0,0.24);
+      }
+
+      &-item {
+        font-size: 14px;
+        color: rgba(0,0,0,0.87);
+        letter-spacing: 0.5px;
+        line-height: 20px;
+
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.24);
+
+        .menu-order {
+          text-align: center;
+        }
+      }
+
+      &-order {
+        flex: 0 0 10%;
+      }
+
+      &-name {
+        flex: 0 0 50%;
+        margin-left: 8%;
+
+        position: relative;
+      }
+
+      &-client {
+        flex: 0 0 32%;
+      }
+
+      &-dot {
+        position: absolute;
+        left: -14px;
+        top: 8px;
+
+        width: 6px;
+        height: 6px;
+        border: 1px rgba(0,0,0,0.87) solid;
+        border-radius: 100px;
+
+        &Bg {
+          background: rgba(0,0,0,0.87);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
   }
 </style>
