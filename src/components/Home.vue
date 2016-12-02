@@ -6,7 +6,7 @@
         v-bind:class="{'dot-active': catIndexD == portfolio.category}"
         @click="onDotClick(catIndexD)"
         )
-      .dot.dot-square
+      router-link.dot.dot-square(to="/contacts")
   
     transition(
       v-bind:css="false"
@@ -216,6 +216,7 @@
       border-radius: 100px;
 
       margin-bottom: 24px;
+      display: block;
 
       &.dot-square {
         margin-bottom: 0;
