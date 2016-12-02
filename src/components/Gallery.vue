@@ -160,18 +160,31 @@
       letter-spacing: 1.5px;
 
       &-index-wrapper {
+        min-width: 13px;
+        min-height: 20px;
         position: relative;
-        margin-right: 10px;
-        width: 13px;
-        text-align: center;
       }
 
       &-index {
-        will-change: transform;
+        margin-right: 10px;
+        min-width: 13px;
+        text-align: center;
+        position: absolute;
       }
 
+      &-items {
+        margin-left: 10px;
+      }
+  
       &-name-wrapper {
+        min-width: 303px;
+        min-height: 20px;
+        position: relative;
+      }
+
+      &-name {
         margin-left: 34px;
+        position: absolute;
       }
     }
 
