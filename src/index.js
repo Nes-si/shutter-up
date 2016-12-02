@@ -8,12 +8,14 @@ import Home from 'components/Home';
 import About from 'components/About';
 import Contacts from 'components/Contacts';
 import Gallery from 'components/Gallery';
+import Journal from 'components/Journal';
 import {pageOpen} from 'ducks/nav';
 
 
 export const PAGE_HOME      = 'home';
 export const PAGE_GALLERY   = 'gallery';
 export const PAGE_ABOUT     = 'about';
+export const PAGE_JOURNAL   = 'journal';
 export const PAGE_CONTACTS  = 'contacts';
 
 export const store = configureStore();
@@ -37,6 +39,11 @@ export const router = new VueRouter({
       name: PAGE_ABOUT,
       path: '/about',
       component: About
+    },
+    {
+      name: PAGE_JOURNAL,
+      path: '/journal',
+      component: Journal
     },
     {
       name: PAGE_CONTACTS,
