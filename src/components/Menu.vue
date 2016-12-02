@@ -104,25 +104,6 @@
 
     z-index: 5;
 
-    .back {
-      position: absolute;
-      top: 26px;
-      left: 26px;
-      cursor: pointer;
-
-      background: url('~assets/images/back.svg') no-repeat center center / contain;
-      width: 35px;
-      height: 14px;
-
-      opacity: 0.54;
-      transition: opacity 0.2s ease;
-      will-change: opacity;
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-
     .logo {
       font-weight: 500;
       font-size: 18px;

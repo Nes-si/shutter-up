@@ -5,7 +5,11 @@
     router-view.router-view(v-bind:class="{'router-view-menu': nav.openedMenu && !nav.showingMenu}")
     transition(name="menu")
       menu-component(v-if="nav.openedMenu")
-    .menu-burger(@click="onMenuToggle" v-show="!nav.showingMenu" v-html="require('assets/images/burger-new.inline.svg')")
+    .app-menu-burger(
+      @click="onMenuToggle"
+      v-show="!nav.showingMenu"
+      v-html="require('assets/images/burger.inline.svg')"
+      )
 </template>
 
 <script>
@@ -33,9 +37,9 @@
     },
     
     mounted: function () {
-      this.burgerLine1 = document.querySelector('.menu-burger .line1');
-      this.burgerLine3 = document.querySelector('.menu-burger .line3');
-      this.burgerArrow = document.querySelector('.menu-burger .arrow');
+      this.burgerLine1 = document.querySelector('.app-menu-burger .line1');
+      this.burgerLine3 = document.querySelector('.app-menu-burger .line3');
+      this.burgerArrow = document.querySelector('.app-menu-burger .arrow');
     },
 
     methods: {
@@ -109,26 +113,7 @@
 </style>
 
 <style lang="scss" rel="stylesheet/scss">
-  #app {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-  
-  .curtain {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    opacity: .4;
-    z-index: 3;
-  }
-
-  .menu-burger {
+  .app-menu-burger {
     position: absolute;
     top: 26px;
     left: 26px;
@@ -163,6 +148,27 @@
     .arrow-show {
       transform: scale(1);
     }
+  }
+</style>
+
+<style lang="scss" scoped rel="stylesheet/scss">
+  #app {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .curtain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: .4;
+    z-index: 3;
   }
 
   .router-view {
