@@ -15,7 +15,7 @@
         )
         .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/data/' + category.name + '/items/' + item.image + ')' }")
     .count
-      .count-index-wrapper
+      .count-index-wrapper(v-bind:style="{ minWidth: counterWidth + 'px' }")
         transition(
           v-bind:css="false"
           v-on:before-enter="counterBeforeEnter"
@@ -61,7 +61,9 @@
         itemNum: 0,
         direction: 'right',
 
-        scrollHandler: null
+        scrollHandler: null,
+        
+        counterWidth: 13
       }
     },
 
@@ -69,6 +71,8 @@
       this.scrollHandler = new ScrollHandler(
         this.itemNext, this.itemPrev, 'h'
       );
+      if (this.category.items.length > 9)
+        this.counterWidth = 24;
     },
 
     beforeDestroy: function () {
@@ -168,9 +172,8 @@
       }
 
       &-index {
-        margin-right: 10px;
-        min-width: 13px;
-        text-align: center;
+        text-align: right;
+        width: 100%;
         position: absolute;
       }
 

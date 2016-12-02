@@ -104,6 +104,54 @@ export const data = [
         title: 'Curabitur',
         client: 'Client 4',
         image: 'item4.jpg',
+      },
+      {
+        index: 4,
+        title: 'Lorem ipsum',
+        client: 'Client 1',
+        image: 'item1.jpg',
+      },
+      {
+        index: 5,
+        title: 'Aenean massa',
+        client: 'Client 2',
+        image: 'item2.jpg',
+      },
+      {
+        index: 6,
+        title: 'Vivamus elementum',
+        client: 'Client 3',
+        image: 'item3.jpg',
+      },
+      {
+        index: 7,
+        title: 'Curabitur',
+        client: 'Client 4',
+        image: 'item4.jpg',
+      },
+      {
+        index: 8,
+        title: 'Lorem ipsum',
+        client: 'Client 1',
+        image: 'item1.jpg',
+      },
+      {
+        index: 9,
+        title: 'Aenean massa',
+        client: 'Client 2',
+        image: 'item2.jpg',
+      },
+      {
+        index: 10,
+        title: 'Vivamus elementum',
+        client: 'Client 3',
+        image: 'item3.jpg',
+      },
+      {
+        index: 11,
+        title: 'Curabitur',
+        client: 'Client 4',
+        image: 'item4.jpg',
       }
     ]
   },
