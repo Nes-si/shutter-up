@@ -15,29 +15,31 @@
         )
         .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/data/' + category.name + '/items/' + item.image + ')' }")
     .count
-      transition(
-        v-bind:css="false"
-        v-on:before-enter="counterBeforeEnter"
-        v-on:enter="counterEnter"
-        v-on:leave="counterLeave"
-        )
-        .count-index(
-          v-for="(item, i) of category.items"
-          v-bind:key="i"
-          v-if="i == itemNum"
-          ) {{ i + 1 }}
+      .count-index-wrapper
+        transition(
+          v-bind:css="false"
+          v-on:before-enter="counterBeforeEnter"
+          v-on:enter="counterEnter"
+          v-on:leave="counterLeave"
+          )
+          .count-index(
+            v-for="(item, i) of category.items"
+            v-bind:key="i"
+            v-if="i == itemNum"
+            ) {{ i + 1 }}
       .count-items / {{ category.items.length }}
-      transition(
-        v-bind:css="false"
-        v-on:before-enter="counterBeforeEnter"
-        v-on:enter="counterEnter"
-        v-on:leave="counterLeave"
-        )
-        .count-name(
-          v-for="(item, i) of category.items"
-          v-bind:key="i"
-          v-if="i == itemNum"
-          ) {{ item.title }}
+      .count-name-wrapper
+        transition(
+          v-bind:css="false"
+          v-on:before-enter="counterBeforeEnter"
+          v-on:enter="counterEnter"
+          v-on:leave="counterLeave"
+          )
+          .count-name(
+            v-for="(item, i) of category.items"
+            v-bind:key="i"
+            v-if="i == itemNum"
+            ) {{ item.title }}
 </template>
 
 <script>
@@ -99,7 +101,7 @@
         let value = this.direction === 'right' ? '-100%' : "100%";
         Velocity(el, { translateX: value, translateZ: 0}, { duration: 400, complete: done });
       },
-  
+
       counterBeforeEnter: function (el) {
         let value = this.direction === 'right' ? '100%' : "-100%";
         el.style.transform = `translate3d(0, ${value}, 0)`;
@@ -148,26 +150,27 @@
       bottom: 26px;
       height: 20px;
       overflow: hidden;
-  
+
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
-  
+
       font-size: 18px;
       color: rgba(0,0,0,0.87);
       letter-spacing: 1.5px;
 
-      &-index {
+      &-index-wrapper {
+        position: relative;
         margin-right: 10px;
-        min-width: 13px;
+        width: 13px;
         text-align: center;
       }
 
-      &-items {
-        margin-left: 10px;
+      &-index {
+        will-change: transform;
       }
 
-      &-name {
+      &-name-wrapper {
         margin-left: 34px;
       }
     }
