@@ -5,7 +5,7 @@
     .loader-subtitle
       | Photography
 
-    .loader-bar(v-bind:style="{width: nav.loadProgress + '%'}")
+    .loader-bar(v-bind:style="{width: progress + '%'}")
       .loader-bar-line
 </template>
 
@@ -15,7 +15,19 @@
   
     data: function () {
       return {
-        nav: this.$select('nav')
+        nav: this.$select('nav'),
+        progress: 0
+      }
+    },
+    
+    mounted: function () {
+      if (window.requestAnimationFrame) {
+        let animate = () => {
+          if (this.progress < this.nav.loadProgress)
+            this.progress++;
+          window.requestAnimationFrame(animate);
+        };
+        animate();
       }
     }
   }
