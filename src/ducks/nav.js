@@ -11,7 +11,7 @@ export const MENU_GALLERY_CLOSE = 'app/nav/MENU_GALLERY_CLOSE';
 export const ON_LOAD            = 'app/nav/ON_LOAD';
 
 
-export function pageOpen(to, from) {
+export function pageOpen(to, from, next) {
   return dispatch => {
     dispatch({
       type: PAGE_OPEN,
@@ -25,6 +25,8 @@ export function pageOpen(to, from) {
     } else if (to.name !== PAGE_CONTACTS && to.name !== from.name) {
       store.dispatch(categorySet(0));
     }
+    
+    next();
   };
 }
 
@@ -77,7 +79,10 @@ export default function navReducer(state = initialState, action) {
       if (action.to.name == PAGE_HOME || action.to.name == PAGE_CONTACTS)
         menuOpened = true;
       
-      let loadProgress = action.to.name == PAGE_CONTACTS ? 100 : 0;
+      let loadProgress = 0;
+      if (action.to.name == PAGE_CONTACTS || action.from.name == PAGE_CONTACTS)
+        loadProgress = 100;
+      
       let pagePrev = action.from.name ? action.from.name : state.pagePrev;
       
       return {
@@ -103,7 +108,10 @@ export default function navReducer(state = initialState, action) {
       return {...state, menuGalleryOpened: false};
       
     case ON_LOAD:
-      return {...state, loadProgress: action.progress};
+      if (action.progress > state.loadProgress)
+        return {...state, loadProgress: action.progress};
+      else
+        return state;
       
     default:
       return state;

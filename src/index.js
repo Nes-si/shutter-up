@@ -53,8 +53,8 @@ export const router = new VueRouter({
   ]
 });
 
-router.afterEach((to, from) => {
-  store.dispatch(pageOpen(to, from));
+router.beforeEach((to, from, next) => {
+  store.dispatch(pageOpen(to, from, next));
 });
 
 new Vue({
