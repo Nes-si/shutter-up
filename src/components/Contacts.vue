@@ -1,41 +1,52 @@
 <template lang="pug">
-  transition
-    .contacts
-      .contacts-close
-      .contacts-studio
-        | Doug Holt Photography Studio
-      .contacts-address
-        | 51-02 21st Street Studio 3E
-        br
-        | Long Island City, NY 1110
+  .contacts
+    .contacts-close(@click="onClose")
+    .contacts-studio
+      | Doug Holt Photography Studio
+    .contacts-address
+      | 51-02 21st Street Studio 3E
+      br
+      | Long Island City, NY 1110
 
-      .contacts-info
-        | Contact
-        a.contacts-infoItem(href="tel:+19176501132")
-          | +1 (917) 650 1132
-        a.contacts-infoItem(href="mailto:douglaslessholt@gmail.com")
-          | douglaslessholt@gmail.com
+    .contacts-info
+      | Contact
+      a.contacts-infoItem(href="tel:+19176501132")
+        | +1 (917) 650 1132
+      a.contacts-infoItem(href="mailto:douglaslessholt@gmail.com")
+        | douglaslessholt@gmail.com
 
-      .contacts-follow
-        | Follow
-        .contacts-socials
-          a.contacts-ig(href="http://instagram.com")
-          | /
-          a.contacts-fb(href="http://facebook.com")
-          | /
-          a.contacts-tw(href="http://twitter.com")
+    .contacts-follow
+      | Follow
+      .contacts-socials
+        a.contacts-ig(href="http://instagram.com")
+        | /
+        a.contacts-fb(href="http://facebook.com")
+        | /
+        a.contacts-tw(href="http://twitter.com")
 </template>
 
 <script>
   import {onLoad} from 'ducks/nav';
-  import {store} from 'index';
+  import {store, router} from 'index';
   
   
   export default {
     name: "ContactsComponent",
+    
+    data: function () {
+      return {
+        nav: this.$select('nav')
+      }
+    },
   
     mounted: function () {
       store.dispatch(onLoad(100));
+    },
+    
+    methods: {
+      onClose: function () {
+        router.push({name: this.nav.pagePrev});
+      }
     }
   }
 </script>
@@ -47,6 +58,8 @@
     width: 100%;
     height: 100%;
     background: #f5f5f5;
+    
+    opacity: 1;
 
     font-size: 28px;
     color: rgba(0,0,0,0.87);
@@ -58,6 +71,8 @@
     justify-content: center;
 
     padding: 0 78px;
+    
+    z-index: 50;
 
     &-studio {
       font-weight: 600;
@@ -161,14 +176,19 @@
       position: absolute;
       top: 12vh;
       left: 78px;
+      cursor: pointer;
+      
+      &:hover {
+        opacity: .6;
+      }
     }
   }
 
   .v-enter-active {
-    transition: transform 1s ease 1s;
+    transition: transform.5s;
   }
   .v-leave-active {
-    transition: transform 1s;
+    transition: transform .5s;
   }
   .v-enter, .v-leave-active {
     transform: translate3d(0, 100vh, 0);
