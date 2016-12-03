@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    //- loader-component
+    loader-component(v-if="nav.loadProgress < 100")
     transition(name="curtain")
       .curtain(v-if="nav.openedMenu && !nav.showingMenu")
     router-view.router-view(v-bind:class="{'router-view-menu': nav.openedMenu && !nav.showingMenu}")

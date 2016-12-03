@@ -5,13 +5,19 @@
     .loader-subtitle
       | Photography
 
-    .loader-bar
+    .loader-bar(v-bind:style="{width: nav.loadProgress + '%'}")
       .loader-bar-line
 </template>
 
 <script>
   export default {
-    name: 'LoaderComponent'
+    name: 'LoaderComponent',
+  
+    data: function () {
+      return {
+        nav: this.$select('nav')
+      }
+    }
   }
 </script>
 

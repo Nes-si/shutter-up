@@ -45,6 +45,7 @@
 
   import {store} from 'index';
   import {data} from 'store/fixtures';
+  import {onLoad} from 'ducks/nav';
   import ScrollHandler from 'utils/scrollhandler';
   import ContactsComponent from 'components/Contacts';
 
@@ -61,6 +62,7 @@
         categories: data,
         portfolio: this.$select('portfolio'),
         
+        category: null,
         slideNum: 0,
         slidesLength: 1,
         
@@ -77,6 +79,19 @@
         store.actions.portfolio.categoryNext,
         store.actions.portfolio.categoryPrev
       );
+      
+      let loadCnt = 0;
+      for (let slide of this.category.slides) {
+        let img = new Image();
+        img.onload = () => {
+          loadCnt++;
+          if (loadCnt == this.slidesLength)
+            store.dispatch(onLoad(100));
+          else
+            store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
+        };
+        img.src = 'assets/data/' + this.category.name + '/slides/' + slide.image;
+      }
     },
 
     beforeDestroy: function () {
@@ -87,7 +102,8 @@
       onCatUpdate: function () {
         if (this.portfolio.showContacts)
           return;
-        this.slidesLength = this.categories[this.portfolio.category].slides.length;
+        this.category = this.categories[this.portfolio.category];
+        this.slidesLength = this.category.slides.length;
         this.timer = setInterval(() => this.slideNext(), 5000);
       },
       

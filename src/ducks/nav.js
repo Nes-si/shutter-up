@@ -8,6 +8,8 @@ export const MENU_CLOSE         = 'app/nav/MENU_CLOSE';
 export const MENU_GALLERY_OPEN  = 'app/nav/MENU_GALLERY_OPEN';
 export const MENU_GALLERY_CLOSE = 'app/nav/MENU_GALLERY_CLOSE';
 
+export const ON_LOAD            = 'app/nav/ON_LOAD';
+
 
 export function pageOpen(to, from) {
   return dispatch => {
@@ -48,13 +50,22 @@ export function menuGalleryClose() {
   };
 }
 
+export function onLoad(progress) {
+  return {
+    type: ON_LOAD,
+    progress
+  };
+}
+
 const initialState = {
   openedPage: PAGE_HOME,
   openedMenu: true,
   
   showingMenu: true,
   
-  menuGalleryOpened: false
+  menuGalleryOpened: false,
+  
+  loadProgress: 0
 };
 
 
@@ -70,7 +81,8 @@ export default function navReducer(state = initialState, action) {
         openedPage: action.to.name,
         openedMenu,
         showingMenu: openedMenu,
-        menuGalleryOpened: false
+        menuGalleryOpened: false,
+        loadProgress: 0
       };
   
     case MENU_OPEN:
@@ -84,6 +96,9 @@ export default function navReducer(state = initialState, action) {
   
     case MENU_GALLERY_CLOSE:
       return {...state, menuGalleryOpened: false};
+      
+    case ON_LOAD:
+      return {...state, loadProgress: action.progress};
       
     default:
       return state;

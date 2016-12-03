@@ -246,8 +246,16 @@
 </template>
 
 <script>
+  import {onLoad} from 'ducks/nav';
+  import {store} from 'index';
+  
+  
   export default {
-    name: "AboutComponent"
+    name: "AboutComponent",
+    
+    mounted: function () {
+      store.dispatch(onLoad(100));
+    }
   }
 </script>
 

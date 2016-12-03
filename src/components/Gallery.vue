@@ -86,6 +86,7 @@
   import Velocity from 'velocity-animate';
 
   import {store} from 'index';
+  import {onLoad} from 'ducks/nav';
   import {data} from 'store/fixtures';
   import ScrollHandler from 'utils/scrollhandler';
 
@@ -119,6 +120,8 @@
 
       this.burgerLines13 = document.querySelectorAll('.gallery .menu-burger .line13');
       this.burgerArrow = document.querySelector('.gallery .menu-burger .arrow');
+  
+      store.dispatch(onLoad(100));
     },
 
     beforeDestroy: function () {
