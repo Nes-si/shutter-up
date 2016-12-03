@@ -20,7 +20,10 @@
               | Title
             .menu-client
               | Client
-          .menu-item(v-for="(item, i) of category.items")
+          .menu-item(
+            v-for="(item, i) of category.items"
+            @click="onMenuItemClick(i)"
+            )
             .menu-order
               | {{ i + 1 }}
             .menu-name
@@ -142,6 +145,12 @@
         else
           store.actions.nav.menuGalleryOpen();
       },
+  
+      onMenuItemClick(i) {
+        store.actions.nav.menuGalleryClose();
+        this.direction = i > this.itemNum ? 'right' : 'left';
+        this.itemNum = i;
+      },
 
       scrollBeforeEnter: function (el) {
         let value = this.direction === 'right' ? '100%' : "-100%";
@@ -167,7 +176,7 @@
       counterLeave: function (el, done) {
         let value = this.direction === 'right' ? '-100%' : "100%";
         Velocity(el, { translateY: value, translateZ: 0}, { duration: 400, complete: done });
-      },
+      }
     },
 
     watch: {
@@ -365,15 +374,15 @@
         color: rgba(0,0,0,0.87);
         letter-spacing: 1px;
       }
+  
+      &-list {
+        margin-top: 105px;
+      }
 
       &-header,
       &-item {
         display: flex;
         flex-flow: row nowrap;
-      }
-
-      &-list {
-        margin-top: 105px;
       }
 
       &-header {
@@ -396,9 +405,15 @@
 
         padding: 8px 0;
         border-bottom: 1px solid rgba(0,0,0,0.24);
+        
+        cursor: pointer;
 
         .menu-order {
           text-align: center;
+        }
+        
+        &:hover {
+          background: #f8f8f8;
         }
       }
 
