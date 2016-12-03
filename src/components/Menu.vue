@@ -28,7 +28,7 @@
     .lock
 </template>
 
-<script>
+<script type="text/babel">
   import Velocity from 'velocity-animate';
 
   import {data} from 'store/fixtures';

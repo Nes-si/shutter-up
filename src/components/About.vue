@@ -245,7 +245,7 @@
             span W Magazine
 </template>
 
-<script>
+<script type="text/babel">
   import {onLoad} from 'ducks/nav';
   import {store} from 'index';
   

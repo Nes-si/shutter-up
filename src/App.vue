@@ -2,13 +2,13 @@
   #app
     loader-component(v-if="nav.loadProgress < 100")
     transition(name="curtain")
-      .curtain(v-if="nav.openedMenu && !nav.showingMenu")
-    router-view.router-view(v-bind:class="{'router-view-menu': nav.openedMenu && !nav.showingMenu}")
+      .curtain(v-if="nav.menuOpened && !nav.menuFixed")
+    router-view.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
     transition(name="menu")
-      menu-component(v-if="nav.openedMenu")
+      menu-component(v-if="nav.menuOpened")
     .app-menu-burger(
       @click="onMenuToggle"
-      v-show="!nav.showingMenu"
+      v-show="!nav.menuFixed"
       v-html="require('assets/images/burger.inline.svg')"
       )
 </template>
@@ -47,7 +47,7 @@
 
     methods: {
       onMenuToggle() {
-        if (this.nav.openedMenu)
+        if (this.nav.menuOpened)
           store.actions.nav.menuClose();
         else
           store.actions.nav.menuOpen();
@@ -55,9 +55,9 @@
     },
 
     watch: {
-      'nav.openedMenu': {
+      'nav.menuOpened': {
         handler: function () {
-          if (this.nav.openedMenu) {
+          if (this.nav.menuOpened) {
             this.burgerArrow.classList.add('arrow-show');
             this.burgerLine1.classList.add('line13-show');
             this.burgerLine3.classList.add('line13-show');

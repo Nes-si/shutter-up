@@ -58,38 +58,43 @@ export function onLoad(progress) {
 }
 
 const initialState = {
-  openedPage: PAGE_HOME,
-  openedMenu: true,
+  pageCurrent: PAGE_HOME,
+  pagePrev: PAGE_HOME,
   
-  showingMenu: true,
+  loadProgress: 0,
   
-  menuGalleryOpened: false,
+  menuOpened: true,
+  menuFixed: true,
   
-  loadProgress: 0
+  menuGalleryOpened: false
 };
 
 
 export default function navReducer(state = initialState, action) {
   switch (action.type) {
     case PAGE_OPEN:
-      let openedMenu = false;
+      let menuOpened = false;
       if (action.to.name == PAGE_HOME || action.to.name == PAGE_CONTACTS)
-        openedMenu = true;
+        menuOpened = true;
+      
+      let loadProgress = action.to.name == PAGE_CONTACTS ? 100 : 0;
+      let pagePrev = action.from.name ? action.from.name : state.pagePrev;
       
       return {
         ...state,
-        openedPage: action.to.name,
-        openedMenu,
-        showingMenu: openedMenu,
-        menuGalleryOpened: false,
-        loadProgress: 0
+        pageCurrent: action.to.name,
+        pagePrev,
+        loadProgress,
+        menuOpened,
+        menuFixed: menuOpened,
+        menuGalleryOpened: false
       };
   
     case MENU_OPEN:
-      return {...state, openedMenu: true, menuGalleryOpened: false};
+      return {...state, menuOpened: true, menuGalleryOpened: false};
       
     case MENU_CLOSE:
-      return {...state, openedMenu: false};
+      return {...state, menuOpened: false};
   
     case MENU_GALLERY_OPEN:
       return {...state, menuGalleryOpened: true};
