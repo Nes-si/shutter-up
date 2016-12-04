@@ -10,7 +10,7 @@
         v-bind:class="{'dot-active': portfolio.showContacts}"
         @click="onDotClick(categories.length)"
       )
-  
+
     transition(
       v-bind:css="false"
       v-on:before-enter="scrollBeforeEnter"
@@ -23,7 +23,7 @@
         v-if="catIndex == portfolio.category"
         v-bind:to="'/gallery/' + category.name"
         )
-  
+
         .bg
         .slide(
           v-for="(slide, slIndex) of category.slides"
@@ -52,7 +52,7 @@
 
   export default {
     name: "HomeComponent",
-  
+
     components: {
       ContactsComponent
     },
@@ -61,13 +61,13 @@
       return {
         categories,
         portfolio: this.$select('portfolio'),
-        
+
         category: null,
         slideNum: 0,
         slidesLength: 1,
-        
+
         timer: 0,
-  
+
         scrollHandler: null
       }
     },
@@ -79,7 +79,7 @@
         store.actions.portfolio.categoryNext,
         store.actions.portfolio.categoryPrev
       );
-      
+
       let loadCnt = 0;
       for (let slide of this.category.slides) {
         let img = new Image();
@@ -106,14 +106,14 @@
         this.slidesLength = this.category.slides.length;
         this.timer = setInterval(() => this.slideNext(), 5000);
       },
-      
+
       slideNext () {
         if (this.slideNum >= this.slidesLength - 1)
           this.slideNum = 0;
         else
           this.slideNum++;
       },
-  
+
       scrollBeforeEnter (el) {
         let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
         el.style.transform = `translate3d(0, ${value}, 0)`;
@@ -126,7 +126,7 @@
         let value = this.portfolio.direction === 'down' ? '-100%' : "100%";
         Velocity(el, { translateY: value, translateZ: 0 }, { duration: 400, complete: done });
       },
-  
+
       onDotClick (catIndex) {
         let diff = catIndex - this.portfolio.category;
         if (diff < 0) {
@@ -167,7 +167,7 @@
         width: 100%;
         height: 100%;
         background: #000;
-        opacity: 0.2;
+        opacity: 0.38;
 
         z-index: 9;
       }
@@ -208,7 +208,7 @@
         width: 100%;
         height: 100%;
         background: center center no-repeat / cover;
-  
+
         animation-name: starting;
         animation-duration: 4s;
         animation-fill-mode: backwards;
@@ -243,7 +243,7 @@
 
       margin-bottom: 24px;
       display: block;
-      
+
       transition: background-color .5s, border-color .5s;
 
       &.dot-square {
@@ -256,11 +256,11 @@
       }
     }
   }
-  
+
   .dots-inverse {
     .dot {
       border-color: #707070;
-  
+
       &.dot-active {
         background: #707070;
       }
@@ -284,7 +284,7 @@
     opacity: 0;
   }
 
-  
+
   .title-enter-active {
     transition: opacity 1s ease 1s, transform 1s ease 1s;
   }
