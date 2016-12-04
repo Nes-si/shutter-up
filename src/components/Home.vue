@@ -86,7 +86,7 @@
         img.onload = () => {
           loadCnt++;
           if (loadCnt == this.slidesLength)
-            setTimeout(() => store.dispatch(onLoad(100)), 3000);
+            store.dispatch(onLoad(100));
           else
             store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
         };

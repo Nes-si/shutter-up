@@ -34,15 +34,15 @@
         loaderCan1: true,
         loaderCan2: false,
   
-        leaveActClass: 'leave-active-menu'
+        leaveActClass: 'main-leave-active-menu'
       }
     },
     
     mounted () {
       if (this.nav.pageCurrent == PAGE_HOME)
-        this.leaveActClass = 'leave-active-menu';
+        this.leaveActClass = 'main-leave-active-menu';
       else
-        this.leaveActClass = 'leave-active-norm';
+        this.leaveActClass = 'main-leave-active-norm';
       
       this.timeout = setTimeout(() => {
         this.showContent = true;
@@ -91,9 +91,9 @@
       'nav.pageCurrent': {
         handler() {
           if (this.nav.pageCurrent == PAGE_HOME)
-            this.leaveActClass = 'leave-active-menu';
+            this.leaveActClass = 'main-leave-active-menu';
           else
-            this.leaveActClass = 'leave-active-norm';
+            this.leaveActClass = 'main-leave-active-norm';
         }
       }
     }
@@ -155,12 +155,12 @@
     transform: translate3d(0, -100%, 0);
   }
 
-  .leave-active-menu {
+  .main-leave-active-menu {
     transition: transform 1s ease;
     transform: translate3d(-100%, 0, 0);
     z-index: 20;
   }
-  .leave-active-norm {
+  .main-leave-active-norm {
     transition: transform 1s ease-in-out;
     transform: translate3d(0, -100%, 0);
   }
