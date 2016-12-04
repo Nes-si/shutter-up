@@ -2,13 +2,13 @@ import {store, PAGE_HOME, PAGE_CONTACTS, PAGE_GALLERY} from 'index';
 import {getCatByName} from 'store/fixtures';
 import {categorySet} from './portfolio';
 
-export const PAGE_OPEN          = 'app/nav/PAGE_OPEN';
-export const MENU_OPEN          = 'app/nav/MENU_OPEN';
-export const MENU_CLOSE         = 'app/nav/MENU_CLOSE';
-export const MENU_GALLERY_OPEN  = 'app/nav/MENU_GALLERY_OPEN';
-export const MENU_GALLERY_CLOSE = 'app/nav/MENU_GALLERY_CLOSE';
+export const PAGE_OPEN        = 'app/nav/PAGE_OPEN';
+export const MENU_OPEN        = 'app/nav/MENU_OPEN';
+export const MENU_CLOSE       = 'app/nav/MENU_CLOSE';
+export const MENU_RIGHT_OPEN  = 'app/nav/MENU_RIGHT_OPEN';
+export const MENU_RIGHT_CLOSE = 'app/nav/MENU_RIGHT_CLOSE';
 
-export const ON_LOAD            = 'app/nav/ON_LOAD';
+export const ON_LOAD          = 'app/nav/ON_LOAD';
 
 
 export function pageOpen(to, from, next) {
@@ -41,14 +41,14 @@ export function menuClose() {
   };
 }
 
-export function menuGalleryOpen() {
+export function menuRightOpen() {
   return {
-    type: MENU_GALLERY_OPEN
+    type: MENU_RIGHT_OPEN
   };
 }
-export function menuGalleryClose() {
+export function menuRightClose() {
   return {
-    type: MENU_GALLERY_CLOSE
+    type: MENU_RIGHT_CLOSE
   };
 }
 
@@ -68,7 +68,7 @@ const initialState = {
   menuOpened: true,
   menuFixed: true,
   
-  menuGalleryOpened: false
+  menuRightOpened: false
 };
 
 
@@ -92,20 +92,20 @@ export default function navReducer(state = initialState, action) {
         loadProgress,
         menuOpened,
         menuFixed: menuOpened,
-        menuGalleryOpened: false
+        menuRightOpened: false
       };
   
     case MENU_OPEN:
-      return {...state, menuOpened: true, menuGalleryOpened: false};
+      return {...state, menuOpened: true, menuRightOpened: false};
       
     case MENU_CLOSE:
       return {...state, menuOpened: false};
   
-    case MENU_GALLERY_OPEN:
-      return {...state, menuGalleryOpened: true};
+    case MENU_RIGHT_OPEN:
+      return {...state, menuRightOpened: true};
   
-    case MENU_GALLERY_CLOSE:
-      return {...state, menuGalleryOpened: false};
+    case MENU_RIGHT_CLOSE:
+      return {...state, menuRightOpened: false};
       
     case ON_LOAD:
       if (action.progress > state.loadProgress)

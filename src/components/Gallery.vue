@@ -7,10 +7,10 @@
       )
 
     transition(name="curtain")
-      .menu-curtain(v-if="nav.menuGalleryOpened")
+      .menu-curtain(v-if="nav.menuRightOpened")
 
     transition(name="menu")
-      .menu(v-if="nav.menuGalleryOpened")
+      .menu(v-if="nav.menuRightOpened")
         .menu-title
           | {{ category.name }} List
         .menu-list
@@ -37,7 +37,7 @@
             .menu-client
               | {{ item.client }}
 
-    .content(v-bind:class="{'content-menu': nav.menuGalleryOpened}")
+    .content(v-bind:class="{'content-menu': nav.menuRightOpened}")
       .title
         | {{ category.name }}
 
@@ -153,14 +153,14 @@
       },
 
       onMenuToggle () {
-        if (this.nav.menuGalleryOpened)
-          store.actions.nav.menuGalleryClose();
+        if (this.nav.menuRightOpened)
+          store.actions.nav.menuRightClose();
         else
-          store.actions.nav.menuGalleryOpen();
+          store.actions.nav.menuRightOpen();
       },
 
       onMenuItemClick (i) {
-        store.actions.nav.menuGalleryClose();
+        store.actions.nav.menuRightClose();
         this.direction = i > this.itemNum ? 'right' : 'left';
         this.itemNum = i;
       },
@@ -199,9 +199,9 @@
           this.itemNum = 0;
         }
       },
-      'nav.menuGalleryOpened': {
+      'nav.menuRightOpened': {
         handler () {
-          if (this.nav.menuGalleryOpened) {
+          if (this.nav.menuRightOpened) {
             this.burgerArrow.classList.add('arrow-show');
             for (let i = 0; i < this.burgerLines13.length; i++)
               this.burgerLines13[i].classList.add('line13-show');
