@@ -39,6 +39,11 @@
     },
     
     mounted () {
+      if (this.nav.pageCurrent == PAGE_HOME)
+        this.leaveActClass = 'leave-active-menu';
+      else
+        this.leaveActClass = 'leave-active-norm';
+      
       this.timeout = setTimeout(() => {
         this.showContent = true;
   
@@ -85,11 +90,10 @@
       },
       'nav.pageCurrent': {
         handler() {
-          if (this.nav.pageCurrent == PAGE_HOME) {
+          if (this.nav.pageCurrent == PAGE_HOME)
             this.leaveActClass = 'leave-active-menu';
-          } else {
+          else
             this.leaveActClass = 'leave-active-norm';
-          }
         }
       }
     }
