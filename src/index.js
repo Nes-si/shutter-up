@@ -56,7 +56,12 @@ export const router = new VueRouter({
       name: PAGE_CONTACTS,
       path: '/contacts',
       component: Contacts
-    }
+    },
+    {
+      name: PAGE_HOME,
+      path: '*',
+      component: Home
+    },
   ]
 });
 

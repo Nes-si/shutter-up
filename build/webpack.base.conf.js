@@ -7,7 +7,7 @@ const projectRoot = path.resolve(__dirname, '../');
 
 module.exports = {
   entry: {
-    index: './src/index.js'
+    index: ['./src/index.js']
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
