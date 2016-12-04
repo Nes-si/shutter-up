@@ -72,6 +72,7 @@
       },
 
       catsOpen: function () {
+        Velocity(this.bottomCont, "stop");
         Velocity(
           this.bottomCont,
           {translateY: this.catsHeight, translateZ: 0},
@@ -81,6 +82,7 @@
         );
       },
       catsClose: function (el, done) {
+        Velocity(this.bottomCont, "stop");
         Velocity(
           this.bottomCont,
           {translateY: this.catsHeight, marginTop: 0},
