@@ -2,7 +2,7 @@
   transition(appear)
     .about
       .about-title
-        | Journal
+        | Journal Item
 
       .about-item
         .about-image
@@ -49,7 +49,7 @@
         .about-image
           img(src="~assets/images/about-studio-7.jpg")
 
-      router-link.about-item-image(to="/journal/item8")
+      .about-item-image
         img(src="~assets/images/about-studio-8.jpg")
 </template>
 
@@ -59,9 +59,9 @@
   
   
   export default {
-    name: "JournalComponent",
-  
-    mounted () {
+    name: "JournalItemComponent",
+    
+    mounted: function () {
       store.dispatch(onLoad(100));
     }
   }
@@ -72,64 +72,64 @@
     width: 100%;
     height: 100%;
     background: white;
-
+    
     overflow-y: scroll;
-
+    
     padding: 0 10% 11vw;
-
+    
     &-title {
       margin-top: 14vw;
-
+      
       font-size: 2.2vw;
       color: rgba(0,0,0,0.87);
       letter-spacing: 2px;
       line-height: 3vw;
-
+      
       text-align: center;
     }
-
+    
     &-item {
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
-
+      
       margin-top: 11vw;
-
+      
       font-family: 'Marvel', sans-serif;
       font-weight: bold;
       font-size: 1.25vw;
       color: rgba(0,0,0,0.87);
       letter-spacing: 1.55px;
       line-height: 1.35vw;
-
+      
       &:first-child {
         margin-top: 165px;
       }
-
+      
       img {
         width: 100%;
       }
     }
-
+    
     &-item-image {
       display: flex;
       flex-flow: column nowrap;
       align-items: flex-end;
-
+      
       margin-top: 140px;
-
+      
       padding-left: 24%;
-
+      
       img {
         width: 100%;
       }
     }
-
+    
     &-image,
     &-copy {
       flex: 0 0 40%;
     }
-
+    
     &-largeText {
       font-family: 'Work Sans', sans-serif;
       font-weight: 400;
@@ -138,7 +138,7 @@
       color: rgba(0,0,0,0.87);
       letter-spacing: 2px;
     }
-
+    
     &-text {
       font-family: 'Work Sans', sans-serif;
       font-weight: 400;
@@ -147,39 +147,39 @@
       letter-spacing: 1px;
       line-height: 2vw;
     }
-
+    
     &-margin-1vw {
       margin-top: 1vw;
     }
-
+    
     &-margin-5vw {
       margin-top: 5vw;
     }
   }
-
+  
   .clients {
     margin-top: 165px;
     border-top: 1px solid rgba(0,0,0,0.24);
-
+    
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-
+    
     &-column {
       flex: 1;
-
+      
       &:first-child {
         flex: 0 0 25%;
       }
     }
-
+    
     &-item {
       margin-top: 1vw;
-
+      
       display: flex;
       flex-flow: column nowrap;
     }
-
+    
     &-letter {
       font-family: 'Marvel', sans-serif;
       font-weight: bold;
@@ -187,10 +187,10 @@
       line-height: 1.25vw;
       color: rgba(0,0,0,0.87);
       letter-spacing: 1.55px;
-
+      
       margin-bottom: 1vw;
     }
-
+    
     span {
       font-size: 0.9vw;
       color: rgba(0,0,0,0.54);
@@ -198,7 +198,7 @@
       line-height: 1.45vw;
     }
   }
-
+  
   .v-enter-active {
     transition: transform 1s ease 1s;
   }
