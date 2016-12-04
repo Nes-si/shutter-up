@@ -1,6 +1,7 @@
 <template lang="pug">
   .gallery
     .menu-burger(
+      ref="burgerGallery"
       @click="onMenuToggle"
       v-html="require('assets/images/burger-right.inline.svg')"
       )
@@ -118,8 +119,8 @@
       if (this.category.items.length > 9)
         this.counterWidth = 24;
 
-      this.burgerLines13 = document.querySelectorAll('.gallery .menu-burger .line13');
-      this.burgerArrow = document.querySelector('.gallery .menu-burger .arrow');
+      this.burgerLines13 = this.$refs.burgerGallery.querySelectorAll('.line13');
+      this.burgerArrow = this.$refs.burgerGallery.querySelector('.arrow');
   
       store.dispatch(onLoad(100));
     },

@@ -26,6 +26,7 @@
       name="menu-burger"
       )
       .app-menu-burger(
+        ref="burgerMain"
         @click="onMenuToggle"
         v-show="!nav.menuFixed"
         v-html="require('assets/images/burger.inline.svg')"
@@ -76,10 +77,9 @@
     },
 
     mounted () {
-      this.burgerLine1 = document.querySelector('.app-menu-burger .line1');
-      this.burgerLine3 = document.querySelector('.app-menu-burger .line3');
-      this.burgerArrow = document.querySelector('.app-menu-burger .arrow');
-
+      this.burgerLine1 = this.$refs.burgerMain.querySelector('.line1');
+      this.burgerLine3 = this.$refs.burgerMain.querySelector('.line3');
+      this.burgerArrow = this.$refs.burgerMain.querySelector('.arrow');
     },
 
     methods: {

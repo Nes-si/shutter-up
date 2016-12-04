@@ -11,13 +11,13 @@
         .nav-workLabel
           | Work
           .nav-arrow(v-bind:class="{'arrow-up': showCats}")
-        .nav-inner
+        .nav-inner(ref="cats")
           .nav-innerItem(
             v-for="(category, index) of categories"
             v-bind:key="index")
               router-link(v-bind:to="'/gallery/' + category.name")
                 | {{category.name}}
-      .nav-bottom-cont
+      .nav-bottom-cont(ref="bottom")
         .nav-item
           router-link(to="/about") About
         .nav-item
@@ -50,10 +50,7 @@
     },
 
     mounted: function () {
-      let cats = document.querySelector('.menu .nav-inner');
-      this.catsHeight = cats.getBoundingClientRect().height;
-
-      this.bottomCont = document.querySelector('.menu .nav-bottom-cont');
+      this.catsHeight = this.$refs.cats.getBoundingClientRect().height;
     },
 
     methods: {
@@ -72,22 +69,22 @@
       },
 
       catsOpen: function () {
-        Velocity(this.bottomCont, "stop");
+        Velocity(this.$refs.bottom, "stop");
         Velocity(
-          this.bottomCont,
+          this.$refs.bottom,
           {translateY: this.catsHeight, translateZ: 0},
           {duration: 300, complete: () =>
-            Velocity(this.bottomCont, {translateY: 0, marginTop: this.catsHeight}, {duration: 30})
+            Velocity(this.$refs.bottom, {translateY: 0, marginTop: this.catsHeight}, {duration: 30})
           }
         );
       },
       catsClose: function (el, done) {
-        Velocity(this.bottomCont, "stop");
+        Velocity(this.$refs.bottom, "stop");
         Velocity(
-          this.bottomCont,
+          this.$refs.bottom,
           {translateY: this.catsHeight, marginTop: 0},
           {duration: 30, complete: () =>
-            Velocity(this.bottomCont, {translateY: 0, translateZ: 0}, {duration: 300})
+            Velocity(this.$refs.bottom, {translateY: 0, translateZ: 0}, {duration: 300})
           }
         );
       },
