@@ -283,6 +283,37 @@ export const categories = [
   }
 ];
 
+export const posts = [
+  {
+    index: 0,
+    title: 'Short & sweet',
+    image: 'post4.jpg',
+    author: "Doug Holt",
+    date: '2015-12-01'
+  },
+  {
+    index: 1,
+    title: 'Blog post 3: Not all title need a colon',
+    image: 'post3.jpg',
+    author: "Doug Holt",
+    date: '2016-03-01'
+  },
+  {
+    index: 2,
+    title: 'Blog post 2: New blog title',
+    image: 'post2.jpg',
+    author: "Doug Holt",
+    date: '2016-08-01'
+  },
+  {
+    index: 3,
+    title: 'Blog post 1: A few of your favourite things',
+    image: 'post1.jpg',
+    author: "Doug Holt",
+    date: '2016-10-01'
+  }
+];
+
 
 export function getCatByName(name) {
   for (let cat of categories) {

@@ -56,6 +56,7 @@
 <script>
   import {onLoad} from 'ducks/nav';
   import {store} from 'index';
+  import {posts} from 'store/fixtures';
   
   
   export default {
