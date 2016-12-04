@@ -119,7 +119,7 @@
 
       this.burgerLines13 = this.$refs.burgerGallery.querySelectorAll('.line13');
       this.burgerArrow = this.$refs.burgerGallery.querySelector('.arrow');
-  
+
       let loadCnt = 0;
       for (let item of this.category.items) {
         let img = new Image();
@@ -158,7 +158,7 @@
         else
           store.actions.nav.menuGalleryOpen();
       },
-  
+
       onMenuItemClick (i) {
         store.actions.nav.menuGalleryClose();
         this.direction = i > this.itemNum ? 'right' : 'left';
@@ -387,7 +387,7 @@
         color: rgba(0,0,0,0.87);
         letter-spacing: 1px;
       }
-  
+
       &-list {
         margin-top: 105px;
       }
@@ -418,13 +418,16 @@
 
         padding: 8px 0;
         border-bottom: 1px solid rgba(0,0,0,0.24);
-        
+
         cursor: pointer;
+
+        transition: background 0.2s ease;
+        will-change: background;
 
         .menu-order {
           text-align: center;
         }
-        
+
         &:hover {
           background: #f8f8f8;
         }
