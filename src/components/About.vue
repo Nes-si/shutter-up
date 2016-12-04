@@ -6,7 +6,7 @@
 
       .about-item
         .about-image
-          img(src="~assets/images/about-studio-1.jpg")
+          img(src="~assets/images/about-studio-1.jpg" v-on:load="onImgLoaded")
         .about-copy
           | THE STUDIO
           .about-largeText.about-margin-1vw
@@ -15,21 +15,21 @@
             | The distinction enjoyed by Doug Holt’s Commercial Photography Studio lies in the fact that the Studio demands energy and collaboration. More than just a product photography studio, art direction, styling and retouching can be done in-house (by arrangement).
 
       .about-item-image
-        img(src="~assets/images/about-studio-2.jpg")
+        img(src="~assets/images/about-studio-2.jpg" v-on:load="onImgLoaded")
 
       .about-item
         .about-copy
           .about-text
             | You’ll notice, no one spends much time on my comfortable couches. Everyone is standing close to the Set, looking at the shot being taken, discussing what is appearing on the digital monitors; focusing together to capture one excellent image, after another, after another.
         .about-image
-          img(src="~assets/images/about-studio-3.jpg")
+          img(src="~assets/images/about-studio-3.jpg" v-on:load="onImgLoaded")
 
       .about-item-image
-        img(src="~assets/images/about-studio-4.jpg")
+        img(src="~assets/images/about-studio-4.jpg" v-on:load="onImgLoaded")
 
       .about-item
         .about-image
-          img(src="~assets/images/about-studio-5.jpg")
+          img(src="~assets/images/about-studio-5.jpg" v-on:load="onImgLoaded")
         .about-copy
           .about-text
             | The studio collaborates with graphics designers, web engineers and social media experts, stylists, models, agenices as well as advertising and marketing professionals. We produce in-studio and on-location photo shoots as well as commercials and documentaries.
@@ -37,7 +37,7 @@
             | And in the end, we just have FUN!
 
       .about-item-image
-        img(src="~assets/images/about-studio-6.jpg")
+        img(src="~assets/images/about-studio-6.jpg" v-on:load="onImgLoaded")
 
 
       .about-item
@@ -47,10 +47,10 @@
           .about-text.about-margin-5vw
             | Coming to the calling after several years as a risk analyst on Wall St. His career’s arc fuses good business sense with a talent for enhancing luxury brands and is apparent in the long client list of Doug Holt Photography.
         .about-image
-          img(src="~assets/images/about-studio-7.jpg")
+          img(src="~assets/images/about-studio-7.jpg" v-on:load="onImgLoaded")
 
       .about-item-image
-        img(src="~assets/images/about-studio-8.jpg")
+        img(src="~assets/images/about-studio-8.jpg" v-on:load="onImgLoaded")
 
       .clients
         .clients-column
@@ -250,11 +250,26 @@
   import {store} from 'index';
   
   
+  //images on page
+  const IMG_CNT = 8;
+  
   export default {
     name: "AboutComponent",
     
-    mounted: function () {
-      setTimeout(() => store.dispatch(onLoad(100)), 4000);
+    data () {
+      return {
+        imgLoaded: 0
+      }
+    },
+    
+    methods: {
+      onImgLoaded () {
+        this.imgLoaded++;
+        if (this.imgLoaded == IMG_CNT)
+          store.dispatch(onLoad(100));
+        else
+          store.dispatch(onLoad(this.imgLoaded * 100 / IMG_CNT));
+      }
     }
   }
 </script>
