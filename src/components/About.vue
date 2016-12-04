@@ -254,7 +254,7 @@
     name: "AboutComponent",
     
     mounted: function () {
-      store.dispatch(onLoad(100));
+      setTimeout(() => store.dispatch(onLoad(100)), 4000);
     }
   }
 </script>

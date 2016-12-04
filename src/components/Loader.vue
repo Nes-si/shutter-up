@@ -1,12 +1,14 @@
 <template lang="pug">
   .loader
-    .loader-title
-      | Doug Holt
-    .loader-subtitle
-      | Photography
-
-    .loader-bar(v-bind:style="{width: progress + '%'}")
-      .loader-bar-line
+    transition
+      .loader-content(v-if="showContent")
+        .loader-title
+          | Doug Holt
+        .loader-subtitle
+          | Photography
+    
+        .loader-bar(v-if="!destr" v-bind:style="{width: progress + '%'}")
+          .loader-bar-line
 </template>
 
 <script>
@@ -16,19 +18,35 @@
     data: function () {
       return {
         nav: this.$select('nav'),
-        progress: 0
+        progress: 0,
+        destr: false,
+        showContent: false,
+        timeout: 0
       }
     },
     
     mounted: function () {
-      if (window.requestAnimationFrame) {
-        let animate = () => {
-          if (this.progress < this.nav.loadProgress)
-            this.progress++;
-          window.requestAnimationFrame(animate);
-        };
-        animate();
-      }
+      this.timeout = setTimeout(() => {
+        this.showContent = true;
+  
+        if (window.requestAnimationFrame) {
+          let animate = () => {
+            if (this.destr)
+              return;
+            if (this.progress < this.nav.loadProgress)
+              this.progress++;
+            window.requestAnimationFrame(animate);
+          };
+          animate();
+        }
+      }, 1500);
+    },
+    
+    beforeDestroy: function () {
+      console.log('bef');
+      clearTimeout(this.timeout);
+      this.destr = true;
+      this.progress = 0;
     }
   }
 </script>
@@ -44,14 +62,22 @@
 
     z-index: 9999;
 
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-
-    font-weight: 500;
-    color: rgba(0,0,0,0.87);
-    text-transform: uppercase;
+    &-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+  
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+  
+      font-weight: 500;
+      color: rgba(0,0,0,0.87);
+      text-transform: uppercase;
+    }
 
     &-title {
       font-size: 36px;
@@ -71,5 +97,14 @@
       height: 10px;
       background: #000;
     }
+  
+    .v-enter-active, .v-leave-active {
+      transition: opacity .5s, transform .5s;
+    }
+    .v-enter, .v-leave-active {
+      opacity: 0;
+      transform: translate3d(0, 70px, 0);
+    }
+  
   }
 </style>
