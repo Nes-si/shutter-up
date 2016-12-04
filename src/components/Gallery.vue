@@ -122,7 +122,18 @@
       this.burgerLines13 = this.$refs.burgerGallery.querySelectorAll('.line13');
       this.burgerArrow = this.$refs.burgerGallery.querySelector('.arrow');
   
-      store.dispatch(onLoad(100));
+      let loadCnt = 0;
+      for (let item of this.category.items) {
+        let img = new Image();
+        img.onload = () => {
+          loadCnt++;
+          if (loadCnt == this.category.items.length)
+            store.dispatch(onLoad(100));
+          else
+            store.dispatch(onLoad(loadCnt * 100 / this.category.items.length));
+        };
+        img.src = '/assets/data/' + this.category.name + '/items/' + item.image;
+      }
     },
 
     beforeDestroy: function () {
