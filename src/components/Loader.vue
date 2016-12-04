@@ -15,7 +15,7 @@
   export default {
     name: 'LoaderComponent',
   
-    data: function () {
+    data () {
       return {
         nav: this.$select('nav'),
         progress: 0,
@@ -25,7 +25,7 @@
       }
     },
     
-    mounted: function () {
+    mounted () {
       this.timeout = setTimeout(() => {
         this.showContent = true;
   
@@ -42,7 +42,7 @@
       }, 1500);
     },
     
-    beforeDestroy: function () {
+    beforeDestroy () {
       console.log('bef');
       clearTimeout(this.timeout);
       this.destr = true;

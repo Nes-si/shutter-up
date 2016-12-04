@@ -1,5 +1,5 @@
 import {store} from 'index';
-import {data} from 'store/fixtures';
+import {categories} from 'store/fixtures';
 
 export const CATEGORY_SET   = 'sunroof/portfolio/CATEGORY_SET';
 export const CATEGORY_NEXT  = 'sunroof/portfolio/CATEGORY_NEXT';
@@ -37,7 +37,7 @@ export default function portfolioReducer(state = initalState, action) {
   switch (action.type) {
     case CATEGORY_SET:
       let direction = action.category < state.category ? 'up' : 'down';
-      showContacts = action.category === data.length;
+      showContacts = action.category === categories.length;
       return {
         category: action.category,
         direction,
@@ -45,9 +45,9 @@ export default function portfolioReducer(state = initalState, action) {
       };
 
     case CATEGORY_NEXT:
-      if (state.category === data.length)
+      if (state.category === categories.length)
         return state;
-      showContacts = state.category === data.length - 1;
+      showContacts = state.category === categories.length - 1;
       return {
         category: state.category + 1,
         direction: 'down',

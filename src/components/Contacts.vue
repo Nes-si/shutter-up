@@ -33,18 +33,18 @@
   export default {
     name: "ContactsComponent",
     
-    data: function () {
+    data () {
       return {
         nav: this.$select('nav')
       }
     },
   
-    mounted: function () {
+    mounted () {
       store.dispatch(onLoad(100));
     },
     
     methods: {
-      onClose: function () {
+      onClose () {
         router.push({name: this.nav.pagePrev});
       }
     }

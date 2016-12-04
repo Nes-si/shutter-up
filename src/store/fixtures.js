@@ -1,4 +1,4 @@
-export const data = [
+export const categories = [
   {
     index: 0,
     name: "Product",
@@ -285,7 +285,7 @@ export const data = [
 
 
 export function getCatByName(name) {
-  for (let cat of data) {
+  for (let cat of categories) {
     if (cat.name === name)
       return cat;
   }

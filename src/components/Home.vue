@@ -36,7 +36,7 @@
           transition(name="slide")
             .screen(
               v-show="slIndex == slideNum"
-              v-bind:style="{ backgroundImage: 'url(assets/data/' + category.name + '/slides/' + slide.image + ')' }"
+              v-bind:style="{ backgroundImage: 'url(assets/categories/' + category.name + '/slides/' + slide.image + ')' }"
               )
       contacts-component(v-if="portfolio.showContacts")
 </template>
@@ -44,7 +44,7 @@
   import Velocity from 'velocity-animate';
 
   import {store} from 'index';
-  import {data} from 'store/fixtures';
+  import {categories} from 'store/fixtures';
   import {onLoad} from 'ducks/nav';
   import ScrollHandler from 'utils/scrollhandler';
   import ContactsComponent from 'components/Contacts';
@@ -57,9 +57,9 @@
       ContactsComponent
     },
 
-    data: function () {
+    data () {
       return {
-        categories: data,
+        categories,
         portfolio: this.$select('portfolio'),
         
         category: null,
@@ -72,7 +72,7 @@
       }
     },
 
-    mounted: function () {
+    mounted () {
       this.onCatUpdate();
 
       this.scrollHandler = new ScrollHandler(
@@ -90,16 +90,16 @@
           else
             store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
         };
-        img.src = 'assets/data/' + this.category.name + '/slides/' + slide.image;
+        img.src = 'assets/categories/' + this.category.name + '/slides/' + slide.image;
       }
     },
 
-    beforeDestroy: function () {
+    beforeDestroy () {
       this.scrollHandler.destroy();
     },
 
     methods: {
-      onCatUpdate: function () {
+      onCatUpdate () {
         if (this.portfolio.showContacts)
           return;
         this.category = this.categories[this.portfolio.category];
@@ -107,27 +107,27 @@
         this.timer = setInterval(() => this.slideNext(), 5000);
       },
       
-      slideNext: function () {
+      slideNext () {
         if (this.slideNum >= this.slidesLength - 1)
           this.slideNum = 0;
         else
           this.slideNum++;
       },
   
-      scrollBeforeEnter: function (el) {
+      scrollBeforeEnter (el) {
         let value = this.portfolio.direction === 'down' ? '100%' : "-100%";
         el.style.transform = `translate3d(0, ${value}, 0)`;
       },
-      scrollEnter: function (el, done) {
+      scrollEnter (el, done) {
         let value = this.portfolio.direction === 'down' ? '99%' : "-99%";
         Velocity(el, { translateY: [0, value], translateZ: 0 }, { duration: 400, complete: done });
       },
-      scrollLeave: function (el, done) {
+      scrollLeave (el, done) {
         let value = this.portfolio.direction === 'down' ? '-100%' : "100%";
         Velocity(el, { translateY: value, translateZ: 0 }, { duration: 400, complete: done });
       },
   
-      onDotClick: function (catIndex) {
+      onDotClick (catIndex) {
         let diff = catIndex - this.portfolio.category;
         if (diff < 0) {
           for (let i = 0; i < -diff; i++) {
@@ -143,7 +143,7 @@
 
     watch: {
       'portfolio.category': {
-        handler: function () {
+        handler () {
           clearInterval(this.timer);
           this.onCatUpdate();
         }

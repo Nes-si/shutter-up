@@ -52,7 +52,7 @@
           v-bind:key="i"
           v-if="i == itemNum"
           )
-          .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/data/' + category.name + '/items/' + item.image + ')' }")
+          .item-pic(v-bind:style="{ backgroundImage: 'url(/assets/categories/' + category.name + '/items/' + item.image + ')' }")
 
       .count
         .count-index-wrapper(v-bind:style="{ minWidth: counterWidth + 'px' }")
@@ -88,17 +88,17 @@
 
   import {store} from 'index';
   import {onLoad} from 'ducks/nav';
-  import {data} from 'store/fixtures';
+  import {categories} from 'store/fixtures';
   import ScrollHandler from 'utils/scrollhandler';
 
 
   export default {
     name: "GalleryComponent",
 
-    data: function () {
+    data () {
       return {
         portfolio: this.$select('portfolio'),
-        category: data[this.$select('portfolio').category],
+        category: categories[this.$select('portfolio').category],
         nav: this.$select('nav'),
 
         itemNum: 0,
@@ -112,10 +112,8 @@
       }
     },
 
-    mounted: function () {
-      this.scrollHandler = new ScrollHandler(
-        this.itemNext, this.itemPrev, 'h'
-      );
+    mounted () {
+      this.scrollHandler = new ScrollHandler(this.itemNext, this.itemPrev, 'h');
       if (this.category.items.length > 9)
         this.counterWidth = 24;
 
@@ -132,63 +130,63 @@
           else
             store.dispatch(onLoad(loadCnt * 100 / this.category.items.length));
         };
-        img.src = '/assets/data/' + this.category.name + '/items/' + item.image;
+        img.src = '/assets/categories/' + this.category.name + '/items/' + item.image;
       }
     },
 
-    beforeDestroy: function () {
+    beforeDestroy () {
       this.scrollHandler.destroy();
     },
 
     methods: {
-      itemNext: function () {
+      itemNext () {
         if (this.itemNum >= this.category.items.length - 1)
           return;
         this.itemNum++;
         this.direction = 'right';
       },
-      itemPrev: function () {
+      itemPrev () {
         if (this.itemNum <= 0)
           return;
         this.itemNum--;
         this.direction = 'left';
       },
 
-      onMenuToggle() {
+      onMenuToggle () {
         if (this.nav.menuGalleryOpened)
           store.actions.nav.menuGalleryClose();
         else
           store.actions.nav.menuGalleryOpen();
       },
   
-      onMenuItemClick(i) {
+      onMenuItemClick (i) {
         store.actions.nav.menuGalleryClose();
         this.direction = i > this.itemNum ? 'right' : 'left';
         this.itemNum = i;
       },
 
-      scrollBeforeEnter: function (el) {
+      scrollBeforeEnter (el) {
         let value = this.direction === 'right' ? '100%' : "-100%";
         el.style.transform = `translate3d(${value}, 0, 0)`;
       },
-      scrollEnter: function (el, done) {
+      scrollEnter (el, done) {
         let value = this.direction === 'right' ? '99%' : "-99%";
         Velocity(el, { translateX: [0, value], translateZ: 0 }, { duration: 400, complete: done });
       },
-      scrollLeave: function (el, done) {
+      scrollLeave (el, done) {
         let value = this.direction === 'right' ? '-100%' : "100%";
         Velocity(el, { translateX: value, translateZ: 0}, { duration: 400, complete: done });
       },
 
-      counterBeforeEnter: function (el) {
+      counterBeforeEnter (el) {
         let value = this.direction === 'right' ? '100%' : "-100%";
         el.style.transform = `translate3d(0, ${value}, 0)`;
       },
-      counterEnter: function (el, done) {
+      counterEnter (el, done) {
         let value = this.direction === 'right' ? '99%' : "-99%";
         Velocity(el, { translateY: [0, value], translateZ: 0 }, { duration: 400, complete: done });
       },
-      counterLeave: function (el, done) {
+      counterLeave (el, done) {
         let value = this.direction === 'right' ? '-100%' : "100%";
         Velocity(el, { translateY: value, translateZ: 0}, { duration: 400, complete: done });
       }
@@ -196,13 +194,13 @@
 
     watch: {
       'portfolio.category': {
-        handler: function () {
-          this.category = data[this.portfolio.category];
+        handler () {
+          this.category = categories[this.portfolio.category];
           this.itemNum = 0;
         }
       },
       'nav.menuGalleryOpened': {
-        handler: function () {
+        handler () {
           if (this.nav.menuGalleryOpened) {
             this.burgerArrow.classList.add('arrow-show');
             for (let i = 0; i < this.burgerLines13.length; i++)

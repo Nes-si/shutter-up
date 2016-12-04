@@ -31,15 +31,15 @@
 <script type="text/babel">
   import Velocity from 'velocity-animate';
 
-  import {data} from 'store/fixtures';
+  import {categories} from 'store/fixtures';
 
 
   export default {
     name: "MenuComponent",
 
-    data: function () {
+    data () {
       return {
-        categories: data,
+        categories,
         nav: this.$select('nav'),
 
         showCats: false,
@@ -49,26 +49,26 @@
       }
     },
 
-    mounted: function () {
+    mounted () {
       this.catsHeight = this.$refs.cats.getBoundingClientRect().height;
     },
 
     methods: {
-      onWorksEnter: function () {
+      onWorksEnter () {
         if (!this.showCats) {
           this.showCats = true;
           this.catsOpen();
         }
       },
 
-      onNavLeave: function () {
+      onNavLeave () {
         if (this.showCats) {
           this.showCats = false;
           this.catsClose();
         }
       },
 
-      catsOpen: function () {
+      catsOpen () {
         Velocity(this.$refs.bottom, "stop");
         Velocity(
           this.$refs.bottom,
@@ -78,7 +78,7 @@
           }
         );
       },
-      catsClose: function (el, done) {
+      catsClose (el, done) {
         Velocity(this.$refs.bottom, "stop");
         Velocity(
           this.$refs.bottom,
