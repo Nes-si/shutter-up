@@ -1,7 +1,6 @@
 <template lang="pug">
   #app
-    transition(name="loader")
-      loader-component(v-if="loaderShow")
+    loader-component
     transition(name="curtain")
       .curtain(v-if="nav.menuOpened && !nav.menuFixed")
     transition(
@@ -12,8 +11,7 @@
       )
       router-view.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
     transition(
-      name="menu-padding"
-      v-bind:enter-active-class="MPEntActClass"
+      name="menuP"
       v-bind:leave-active-class="MPLeaActClass"
       )
       .menu-padding(v-if="nav.menuOpened")
@@ -67,12 +65,7 @@
   
         MBEntActClass: 'menu-active-norm',
         
-        MPEntActClass: 'menu-active-norm',
-        MPLeaActClass: 'menu-active-lv-norm',
-        
-        loaderShow: true,
-        loaderCan1: true,
-        loaderCan2: false
+        MPLeaActClass: 'menuP-active-lv-dly'
       }
     },
 
@@ -80,6 +73,11 @@
       this.burgerLine1 = this.$refs.burgerMain.querySelector('.line1');
       this.burgerLine3 = this.$refs.burgerMain.querySelector('.line3');
       this.burgerArrow = this.$refs.burgerMain.querySelector('.arrow');
+  
+      if (this.nav.pageCurrent == PAGE_HOME)
+        this.MPLeaActClass = 'menuP-active-lv-dly';
+      else
+        this.MPLeaActClass = 'menuP-active-lv-norm';
     },
 
     methods: {
@@ -115,9 +113,6 @@
             this.RTMode = '';
             this.RTEntActClass = 'view-active-none';
             this.RTLeaActClass = 'view-active-long view-leave-active';
-            
-            this.MPEntActClass = 'menu-active-norm';
-            
           } else {
             this.RTMode = '';
             this.RTEntActClass = 'view-active-dly';
@@ -125,34 +120,11 @@
             
             if (this.nav.pageCurrent == PAGE_HOME) {
               this.MEntActClass = 'menu-active-dly';
-              this.MPEntActClass = 'menu-active-dly';
+              setTimeout(() => this.MPLeaActClass = 'menuP-active-lv-dly', 1000);
             } else {
+              console.log('norm!');
               this.MEntActClass = 'menu-active-norm';
-              this.MPEntActClass = 'menu-active-norm';
-              this.MPLeaActClass = 'menu-active-dly';
-              setTimeout(() => this.MPLeaActClass = 'menu-active-lv-norm', 1000);
-            }
-          }
-        }
-      },
-      'nav.loadProgress': {
-        handler() {
-          if (!this.loaderShow && this.nav.loadProgress < 100) {
-            this.loaderShow = true;
-            setTimeout(() => {
-              this.loaderCan1 = true;
-              if (this.loaderCan2) {
-                this.loaderShow = false;
-                this.loaderCan1 = false;
-                this.loaderCan2 = false;
-              }
-            }, 1500);
-          } else if (this.nav.loadProgress == 100) {
-            this.loaderCan2 = true;
-            if (this.loaderCan1) {
-              this.loaderShow = false;
-              this.loaderCan1 = false;
-              this.loaderCan2 = false;
+              setTimeout(() => this.MPLeaActClass = 'menuP-active-lv-norm', 1000);
             }
           }
         }
@@ -303,7 +275,18 @@
     transition: transform 1.5s step-end;
   }
 
-  .menu-padding-enter, .menu-padding-leave-active {
+  .menuP-enter {
+    transform: translate3d(-100%, 0, 0);
+  }
+  .menuP-enter-active {
+    transition: transform .5s;
+  }
+  .menuP-active-lv-norm {
+    transition: transform .5s;
+    transform: translate3d(-100%, 0, 0);
+  }
+  .menuP-active-lv-dly {
+    transition: transform 1.5s step-end;
     transform: translate3d(-100%, 0, 0);
   }
 
