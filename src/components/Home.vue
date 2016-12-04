@@ -30,11 +30,11 @@
           v-bind:key="slIndex"
           )
           transition(name="title" appear)
-            .product(v-show="slIndex == slideNum")
+            .slide-title(v-show="slIndex == slideNum")
               | {{category.name}}
               span {{slide.name}}
           transition(name="slide")
-            .screen(
+            .slide-img(
               v-show="slIndex == slideNum"
               v-bind:style="{ backgroundImage: 'url(assets/categories/' + category.name + '/slides/' + slide.image + ')' }"
               )
@@ -86,7 +86,7 @@
         img.onload = () => {
           loadCnt++;
           if (loadCnt == this.slidesLength)
-            store.dispatch(onLoad(100));
+            setTimeout(() => store.dispatch(onLoad(100)), 3000);
           else
             store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
         };
@@ -153,12 +153,20 @@
 </script>
 <style lang="scss" scoped rel="stylesheet/scss">
   .home {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    
     .category {
-      height: 100vh;
-      width: 100%;
-      position: absolute;
-      margin-left: 216px;
       display: block;
+      position: absolute;
+      top: 0;
+      left: 216px;
+      height: 100%;
+      width: 100vw;
+      overflow: hidden;
 
       .bg {
         position: absolute;
@@ -172,7 +180,7 @@
         z-index: 9;
       }
 
-      .product {
+      .slide-title {
         font-family: 'Marvel', sans-serif;
         font-weight: bold;
         font-size: 16px;
@@ -201,10 +209,10 @@
         }
       }
 
-      .screen {
+      .slide-img {
         position: absolute;
         top: 0;
-        left: 0;
+        right: 0;
         width: 100%;
         height: 100%;
         background: center center no-repeat / cover;
@@ -212,6 +220,47 @@
         animation-name: starting;
         animation-duration: 4s;
         animation-fill-mode: backwards;
+      }
+    }
+  
+    .dots {
+      position: absolute;
+      top: 50%;
+      right: 36px;
+      transform: translateY(-50%);
+    
+      z-index: 10;
+    
+      .dot {
+        border: 1px solid #FFFFFF;
+        height: 8px;
+        width: 8px;
+        cursor: pointer;
+        border-radius: 100px;
+      
+        margin-bottom: 24px;
+        display: block;
+      
+        transition: background-color .5s, border-color .5s;
+      
+        &.dot-square {
+          margin-bottom: 0;
+          border-radius: 0;
+        }
+      
+        &.dot-active {
+          background: #FFFFFF;
+        }
+      }
+    }
+  
+    .dots-inverse {
+      .dot {
+        border-color: #707070;
+      
+        &.dot-active {
+          background: #707070;
+        }
       }
     }
   }
@@ -225,47 +274,6 @@
     }
   }
 
-
-  .dots {
-    position: absolute;
-    top: 50%;
-    right: 36px;
-    transform: translateY(-50%);
-
-    z-index: 10;
-
-    .dot {
-      border: 1px solid #FFFFFF;
-      height: 8px;
-      width: 8px;
-      cursor: pointer;
-      border-radius: 100px;
-
-      margin-bottom: 24px;
-      display: block;
-
-      transition: background-color .5s, border-color .5s;
-
-      &.dot-square {
-        margin-bottom: 0;
-        border-radius: 0;
-      }
-
-      &.dot-active {
-        background: #FFFFFF;
-      }
-    }
-  }
-
-  .dots-inverse {
-    .dot {
-      border-color: #707070;
-
-      &.dot-active {
-        background: #707070;
-      }
-    }
-  }
 
   .slide-enter-active {
     transition: opacity 1s ease, transform 4s ease;

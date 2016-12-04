@@ -1,6 +1,9 @@
 <template lang="pug">
-  transition(name="main")
-    .loader(v-if="loaderShow")
+  transition(
+    name="main"
+    v-bind:leave-active-class="leaveActClass"
+    )
+    .loader(v-show="loaderShow")
       transition(name="content")
         .loader-content(v-if="showContent")
           .loader-title
@@ -13,6 +16,9 @@
 </template>
 
 <script>
+  import {PAGE_HOME} from 'index';
+  
+  
   export default {
     name: 'LoaderComponent',
   
@@ -26,7 +32,9 @@
   
         loaderShow: true,
         loaderCan1: true,
-        loaderCan2: false
+        loaderCan2: false,
+  
+        leaveActClass: 'leave-active-menu'
       }
     },
     
@@ -49,10 +57,10 @@
     
     methods: {
       hide () {
+        this.showContent = false;
         this.loaderShow = false;
         this.loaderCan1 = false;
         this.loaderCan2 = false;
-        this.showContent = false;
         this.progress = 0;
         clearTimeout(this.timeout);
       }
@@ -72,6 +80,15 @@
             this.loaderCan2 = true;
             if (this.loaderCan1)
               this.hide();
+          }
+        }
+      },
+      'nav.pageCurrent': {
+        handler() {
+          if (this.nav.pageCurrent == PAGE_HOME) {
+            this.leaveActClass = 'leave-active-menu';
+          } else {
+            this.leaveActClass = 'leave-active-norm';
           }
         }
       }
@@ -127,10 +144,20 @@
     }
   }
 
-  .main-enter-active, .main-leave-active {
-    transition: transform 1s ease-in-out .4s;
+  .main-enter-active {
+    transition: transform 1s ease-in-out;
   }
   .main-enter, .main-leave-active {
+    transform: translate3d(0, -100%, 0);
+  }
+
+  .leave-active-menu {
+    transition: transform 1s ease;
+    transform: translate3d(-100%, 0, 0);
+    z-index: 20;
+  }
+  .leave-active-norm {
+    transition: transform 1s ease-in-out;
     transform: translate3d(0, -100%, 0);
   }
 

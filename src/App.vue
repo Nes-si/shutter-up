@@ -11,11 +11,6 @@
       )
       router-view.router-view(v-bind:class="{'router-view-menu': nav.menuOpened && !nav.menuFixed}")
     transition(
-      name="menuP"
-      v-bind:leave-active-class="MPLeaActClass"
-      )
-      .menu-padding(v-if="nav.menuOpened")
-    transition(
       name="menu"
       v-bind:enter-active-class="MEntActClass"
       )
@@ -63,9 +58,7 @@
         MEntActClass: 'menu-active-norm',
         MLeaActClass: 'menu-active-lv-norm',
   
-        MBEntActClass: 'menu-active-norm',
-        
-        MPLeaActClass: 'menuP-active-lv-dly'
+        MBEntActClass: 'menu-active-norm'
       }
     },
 
@@ -73,11 +66,6 @@
       this.burgerLine1 = this.$refs.burgerMain.querySelector('.line1');
       this.burgerLine3 = this.$refs.burgerMain.querySelector('.line3');
       this.burgerArrow = this.$refs.burgerMain.querySelector('.arrow');
-  
-      if (this.nav.pageCurrent == PAGE_HOME)
-        this.MPLeaActClass = 'menuP-active-lv-dly';
-      else
-        this.MPLeaActClass = 'menuP-active-lv-norm';
     },
 
     methods: {
@@ -118,14 +106,10 @@
             this.RTEntActClass = 'view-active-dly';
             this.RTLeaActClass = 'view-active-dly';
             
-            if (this.nav.pageCurrent == PAGE_HOME) {
+            if (this.nav.pageCurrent == PAGE_HOME)
               this.MEntActClass = 'menu-active-dly';
-              setTimeout(() => this.MPLeaActClass = 'menuP-active-lv-dly', 1000);
-            } else {
-              console.log('norm!');
+            else
               this.MEntActClass = 'menu-active-norm';
-              setTimeout(() => this.MPLeaActClass = 'menuP-active-lv-norm', 1000);
-            }
           }
         }
       }
@@ -244,16 +228,6 @@
     transition: transform .5s;
   }
   
-  .menu-padding {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 216px;
-    height: 100%;
-    z-index: 4;
-    background: #F5F5F5;
-  }
-
   .router-view-menu {
     transform: translate3d(175px, 0, 0);
   }
@@ -275,21 +249,6 @@
     transition: transform 1.5s step-end;
   }
 
-  .menuP-enter {
-    transform: translate3d(-100%, 0, 0);
-  }
-  .menuP-enter-active {
-    transition: transform .5s;
-  }
-  .menuP-active-lv-norm {
-    transition: transform .5s;
-    transform: translate3d(-100%, 0, 0);
-  }
-  .menuP-active-lv-dly {
-    transition: transform 1.5s step-end;
-    transform: translate3d(-100%, 0, 0);
-  }
-
   .menu-burger-enter-active, .menu-burger-leave-active {
     transition: opacity 1s step-end;
   }
@@ -304,7 +263,6 @@
     opacity: .01;
   }
 
-  
   .loader-enter-active, .loader-leave-active {
     transition: transform 1s ease-in-out .4s;
   }
@@ -312,22 +270,17 @@
     transform: translate3d(0, -100%, 0);
   }
   
-
   .view-enter, .view-leave-active {
     transform: translate3d(0, 100%, 0);
   }
-
   .view-active-none {
     transition: none;
   }
-
   .view-active-long {
     transition: transform .5s;
   }
-
   .view-active-dly {
     transition: transform 1.5s step-end;
   }
-  
 
 </style>
