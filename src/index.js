@@ -19,6 +19,7 @@ export const PAGE_ABOUT         = 'about';
 export const PAGE_JOURNAL       = 'journal';
 export const PAGE_JOURNAL_ITEM  = 'journal_item';
 export const PAGE_CONTACTS      = 'contacts';
+export const PAGE_ALL           = 'all';
 
 export const store = configureStore();
 
@@ -58,7 +59,7 @@ export const router = new VueRouter({
       component: Contacts
     },
     {
-      name: PAGE_HOME,
+      name: PAGE_ALL,
       path: '*',
       component: Home
     },
