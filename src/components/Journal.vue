@@ -5,6 +5,46 @@
         | Journal
 
       .journal-content
+        .journal-column
+          router-link.journal-item(to="/journal/item1")
+            img.journal-image(src="~assets/images/journal-post-1.png")
+            .journal-date
+              | 10—2016
+            .journal-name
+              | Blog Post 1: A Few Of Our Favorite Things
+          router-link.journal-item(to="/journal/item2")
+            img.journal-image(src="~assets/images/journal-post-2.png")
+            .journal-date
+              | 08—2016
+            .journal-name
+              | Blog Post 2: New Blog Title
+          router-link.journal-item(to="/journal/item3")
+            img.journal-image(src="~assets/images/journal-post-3.png")
+            .journal-date
+              | 03—2016
+            .journal-name
+              | Blog Post 3: Not all names need a colon
+        .journal-column
+          router-link.journal-item(to="/journal/item4")
+            img.journal-image(src="~assets/images/journal-post-4.png")
+            .journal-date
+              | 12—2015
+            .journal-name
+              | Short & Sweet
+          router-link.journal-item(to="/journal/item5")
+            img.journal-image(src="~assets/images/journal-post-5.png")
+            .journal-date
+              | 10—2015
+            .journal-name
+              | Another Amazing Blog Article
+          router-link.journal-item(to="/journal/item6")
+            img.journal-image(src="~assets/images/journal-post-6.png")
+            .journal-date
+              | 10—2015
+            .journal-name
+              | Last example post
+
+      .journal-content
         router-link.journal-item(to="/journal/item1")
           img.journal-image(src="~assets/images/journal-post-1.png")
           .journal-date
@@ -86,9 +126,15 @@
       justify-content: space-between;
     }
 
-    &-item {
+    &-column {
+      display: flex;
+      flex-flow: column nowrap;
       flex: 0 0 43%;
     }
+
+    // &-item {
+    //   flex: 0 0 43%;
+    // }
 
     &-image {
       width: 100%;
