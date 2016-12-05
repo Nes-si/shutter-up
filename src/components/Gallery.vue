@@ -7,7 +7,10 @@
       )
 
     transition(name="curtain")
-      .menu-curtain(v-if="nav.menuRightOpened")
+      .menu-curtain(
+        v-if="nav.menuRightOpened"
+        @click="onCurtainClick"
+        )
 
     transition(name="menu")
       .menu(v-if="nav.menuRightOpened")
@@ -158,6 +161,10 @@
         else
           store.actions.nav.menuRightOpen();
       },
+  
+      onCurtainClick () {
+        store.actions.nav.menuRightClose();
+      },
 
       onMenuItemClick (i) {
         store.actions.nav.menuRightClose();
@@ -201,6 +208,7 @@
       },
       'nav.menuRightOpened': {
         handler () {
+          this.scrollHandler.disabled = this.nav.menuRightOpened;
           if (this.nav.menuRightOpened) {
             this.burgerArrow.classList.add('arrow-show');
             for (let i = 0; i < this.burgerLines13.length; i++)
@@ -210,6 +218,11 @@
             for (let i = 0; i < this.burgerLines13.length; i++)
               this.burgerLines13[i].classList.remove('line13-show');
           }
+        }
+      },
+      'nav.menuOpened': {
+        handler () {
+          this.scrollHandler.disabled = this.nav.menuOpened;
         }
       }
     }
@@ -366,7 +379,7 @@
       width: 100%;
       height: 100%;
       background: rgba(255, 255, 255, .7);
-      z-index: 4;
+      z-index: 25;
     }
 
     .menu {
@@ -380,7 +393,7 @@
       height: 100%;
       padding: 36px 80px;
 
-      z-index: 5;
+      z-index: 30;
 
       &-title {
         font-size: 18px;

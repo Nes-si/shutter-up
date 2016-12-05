@@ -2,7 +2,10 @@
   #app
     loader-component
     transition(name="curtain")
-      .curtain(v-if="nav.menuOpened && !nav.menuFixed")
+      .curtain(
+        v-if="nav.menuOpened && !nav.menuFixed"
+        @click="onCurtainClick"
+        )
     transition(
       name="view"
       v-bind:mode="RTMode"
@@ -74,6 +77,10 @@
           store.actions.nav.menuClose();
         else
           store.actions.nav.menuOpen();
+      },
+  
+      onCurtainClick() {
+        store.actions.nav.menuClose();
       }
     },
 

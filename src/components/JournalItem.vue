@@ -7,7 +7,10 @@
       )
 
     transition(name="curtain")
-      .menu-curtain(v-if="nav.menuRightOpened")
+      .menu-curtain(
+        v-if="nav.menuRightOpened"
+        @click="onCurtainClick"
+        )
 
     transition(name="menu")
       .menu(v-if="nav.menuRightOpened")
@@ -86,6 +89,10 @@
           store.actions.nav.menuRightClose();
         else
           store.actions.nav.menuRightOpen();
+      },
+  
+      onCurtainClick () {
+        store.actions.nav.menuRightClose();
       },
   
       onMenuItemClick (post) {
@@ -253,7 +260,7 @@
       width: 100%;
       height: 100%;
       background: rgba(255, 255, 255, .7);
-      z-index: 4;
+      z-index: 25;
     }
   
     .menu {
@@ -267,7 +274,7 @@
       height: 100%;
       padding: 36px 80px;
     
-      z-index: 5;
+      z-index: 30;
     
       &-title {
         font-size: 18px;
