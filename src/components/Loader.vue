@@ -1,11 +1,12 @@
 <template lang="pug">
   transition(
     name="main"
+    v-bind:enter-class="enterClass"
     v-bind:leave-active-class="leaveActClass"
     )
     .loader(v-show="loaderShow")
       transition(name="content")
-        .loader-content(v-if="showContent")
+        .loader-content(v-if="contentShow")
           .loader-title
             | Doug Holt
           .loader-subtitle
@@ -25,27 +26,48 @@
     data () {
       return {
         nav: this.$select('nav'),
-        progress: 0,
-        destr: false,
-        showContent: false,
-        timeout: 0,
+  
+        firstRun: true,
   
         loaderShow: true,
         loaderCan1: true,
         loaderCan2: false,
   
-        leaveActClass: 'main-leave-active-menu'
+        contentShow: false,
+        progress: 0,
+        timeout: 0,
+  
+        leaveActClass: 'main-leave-active-menu',
+        enterClass: ''
       }
     },
     
     mounted () {
-      if (this.nav.pageCurrent == PAGE_HOME)
-        this.leaveActClass = 'main-leave-active-menu';
-      else
-        this.leaveActClass = 'main-leave-active-norm';
+      this.onPageUpd();
+      this.show();
+    },
+    
+    methods: {
+      onPageUpd () {
+        if (this.nav.pageCurrent == PAGE_HOME)
+          this.leaveActClass = 'main-leave-active-menu';
+        else
+          this.leaveActClass = 'main-leave-active-norm';
+      },
       
-      this.timeout = setTimeout(() => {
-        this.showContent = true;
+      show () {
+        this.loaderShow = true;
+  
+        if (this.firstRun) {
+          this.showContent();
+          this.enterClass = 'main-enter-norm';
+        } else {
+          this.timeout = setTimeout(() => this.showContent(), 1500);
+        }
+      },
+      
+      showContent () {
+        this.contentShow = true;
   
         if (window.requestAnimationFrame) {
           let animate = () => {
@@ -57,12 +79,11 @@
           };
           animate();
         }
-      }, 1500);
-    },
-    
-    methods: {
+      },
+      
       hide () {
-        this.showContent = false;
+        this.firstRun = false;
+        this.contentShow = false;
         this.loaderShow = false;
         this.loaderCan1 = false;
         this.loaderCan2 = false;
@@ -74,14 +95,17 @@
     watch: {
       'nav.loadProgress': {
         handler() {
-          if (!this.loaderShow && this.nav.loadProgress < 100) {
-            this.loaderShow = true;
+          if (this.nav.loadProgress < 100) {
+            if (this.loaderShow)
+              return;
+            this.show();
             setTimeout(() => {
               this.loaderCan1 = true;
               if (this.loaderCan2)
                 this.hide();
             }, 1500);
-          } else if (this.nav.loadProgress == 100) {
+  
+          } else {
             this.loaderCan2 = true;
             if (this.loaderCan1)
               this.hide();
@@ -90,10 +114,7 @@
       },
       'nav.pageCurrent': {
         handler() {
-          if (this.nav.pageCurrent == PAGE_HOME)
-            this.leaveActClass = 'main-leave-active-menu';
-          else
-            this.leaveActClass = 'main-leave-active-norm';
+          this.onPageUpd();
         }
       }
     }
@@ -151,7 +172,7 @@
   .main-enter-active {
     transition: transform 1s ease-in-out;
   }
-  .main-enter, .main-leave-active {
+  .main-enter-norm {
     transform: translate3d(0, -100%, 0);
   }
 
@@ -165,8 +186,11 @@
     transform: translate3d(0, -100%, 0);
   }
 
-  .content-enter-active, .content-leave-active {
+  .content-enter-active {
     transition: opacity .5s, transform .5s;
+  }
+  .content-leave-active {
+    transition: opacity .2s, transform .2s;
   }
   .content-enter, .content-leave-active {
     opacity: 0;
