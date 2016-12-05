@@ -85,10 +85,12 @@
         let img = new Image();
         img.onload = () => {
           loadCnt++;
-          if (loadCnt == this.slidesLength)
+          if (loadCnt == this.slidesLength) {
             store.dispatch(onLoad(100));
-          else
+            this.loadOthers();
+          } else {
             store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
+          }
         };
         img.src = 'assets/categories/' + this.category.name + '/slides/' + slide.image;
       }
@@ -99,6 +101,18 @@
     },
 
     methods: {
+      loadOthers() {
+        for (let cat of this.categories) {
+          if (cat == this.category)
+            continue;
+          
+          for (let slide of cat.slides) {
+            let img = new Image();
+            img.src = 'assets/categories/' + cat.name + '/slides/' + slide.image;
+          }
+        }
+      },
+      
       onCatUpdate () {
         if (this.portfolio.showContacts)
           return;
