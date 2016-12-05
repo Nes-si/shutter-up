@@ -46,8 +46,7 @@
           | {{post.title}}
         .journal-content-author
           | By {{post.author}}
-        .journal-content-text
-          | {{post.text}}
+        .journal-content-text(v-html="post.text")
 </template>
 
 <script>
