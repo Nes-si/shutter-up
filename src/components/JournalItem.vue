@@ -21,16 +21,14 @@
               | Title
           .menu-item(
             v-for="(tempPost, i) of posts"
-            @click="onMenuItemClick(i)"
+            v-bind:key="i"
+            @click="onMenuItemClick(tempPost)"
             )
             .menu-year
               | 2016
             .menu-name
               .menu-dot
-                .menu-dotBg(
-                  v-bind:key="i"
-                  v-if="post.id == tempPost.id"
-                  )
+                .menu-dotBg(v-if="tempPost.id == post.id")
               | {{tempPost.title}}
   
     .journal-content(v-bind:class="{'content-menu': nav.menuRightOpened}")
@@ -91,9 +89,9 @@
           store.actions.nav.menuRightOpen();
       },
   
-      onMenuItemClick (i) {
+      onMenuItemClick (post) {
         store.actions.nav.menuRightClose();
-        this.post = posts[i];
+        this.post = post;
         history.replaceState({path: "/journal/" + this.post.id}, "post.id", "/journal/" + this.post.id);
       }
     },
