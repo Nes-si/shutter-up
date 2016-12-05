@@ -50,7 +50,7 @@ export const router = new VueRouter({
     },
     {
       name: PAGE_JOURNAL_ITEM,
-      path: '/journal/:item',
+      path: '/journal/:post',
       component: JournalItem
     },
     {

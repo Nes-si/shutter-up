@@ -1,36 +1,43 @@
 <template lang="pug">
-  transition(appear)
-    .journal-single
-      .journal-single-content
-        .journal-single-image
-          img(src="~assets/images/journal-post-1.png")
-        .journal-single-info
-          .journal-single-title
-            | Blog Post 1: A Few Of Our Favourite Things
-          .journal-single-date
-            | 10—2016
-          .journal-single-titleBig
-            | Blog Post 1: A Few Of Our Favorite Things
-          .journal-single-author
-            | By Doug Holt
-          .journal-single-text
-            | A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents.
-          .journal-single-text
-            | I should be incapable of drawing a single stroke at the present moment; and yet I feel that I never was a greater artist than now. When, while the lovely valley teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into the inner sanctuary, I throw myself down among the tall grass by the trickling stream.
-          .journal-single-text
-            | I feel the presence of the Almighty, who formed us in his own image, and the breath of that universal love which bears and sustains us, as it floats around us in an eternity of bliss; and then, my friend, when darkness overspreads my eyes.
+  .journal-single
+    .journal-single-content
+      .journal-single-image
+        img(
+          v-bind:src="'/assets/posts/' + post.id + '/' + post.image"
+          v-on:load="onImgLoaded"
+          )
+      .journal-single-info
+        .journal-single-title
+          | {{post.title}}
+        .journal-single-date
+          | {{post.date}}
+        .journal-single-titleBig
+          | {{post.title}}
+        .journal-single-author
+          | By {{post.author}}
+        .journal-single-text
+          | {{post.text}}
 </template>
 
 <script>
   import {onLoad} from 'ducks/nav';
   import {store} from 'index';
+  import {getPost} from 'store/fixtures';
 
 
   export default {
     name: "JournalItemComponent",
-
-    mounted: function () {
-      store.dispatch(onLoad(100));
+    
+    data () {
+      return {
+        post: getPost(this.$route.params.post)
+      }
+    },
+    
+    methods: {
+      onImgLoaded () {
+        store.dispatch(onLoad(100));
+      }
     }
   }
 </script>
@@ -119,15 +126,5 @@
       line-height: 24px;
       padding: 0 30px;
     }
-  }
-
-  .v-enter-active {
-    transition: transform 1s ease 1s;
-  }
-  .v-leave-active {
-    transition: transform 1s;
-  }
-  .v-enter, .v-leave-active {
-    transform: translate3d(0, 100vh, 0);
   }
 </style>

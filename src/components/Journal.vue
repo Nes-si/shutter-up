@@ -1,86 +1,35 @@
 <template lang="pug">
-  transition(appear)
-    .journal
-      .journal-title
-        | Journal
+  .journal
+    .journal-title
+      | Journal
 
-      .journal-content
-        .journal-column
-          router-link.journal-item(to="/journal/item1")
-            img.journal-image(src="~assets/images/journal-post-1.png")
-            .journal-date
-              | 10—2016
-            .journal-name
-              | Blog Post 1: A Few Of Our Favorite Things
-          router-link.journal-item(to="/journal/item2")
-            img.journal-image(src="~assets/images/journal-post-2.png")
-            .journal-date
-              | 08—2016
-            .journal-name
-              | Blog Post 2: New Blog Title
-          router-link.journal-item(to="/journal/item3")
-            img.journal-image(src="~assets/images/journal-post-3.png")
-            .journal-date
-              | 03—2016
-            .journal-name
-              | Blog Post 3: Not all names need a colon
-        .journal-column
-          router-link.journal-item(to="/journal/item4")
-            img.journal-image(src="~assets/images/journal-post-4.png")
-            .journal-date
-              | 12—2015
-            .journal-name
-              | Short & Sweet
-          router-link.journal-item(to="/journal/item5")
-            img.journal-image(src="~assets/images/journal-post-5.png")
-            .journal-date
-              | 10—2015
-            .journal-name
-              | Another Amazing Blog Article
-          router-link.journal-item(to="/journal/item6")
-            img.journal-image(src="~assets/images/journal-post-6.png")
-            .journal-date
-              | 10—2015
-            .journal-name
-              | Last example post
-
-      .journal-content
-        router-link.journal-item(to="/journal/item1")
-          img.journal-image(src="~assets/images/journal-post-1.png")
+    .journal-content
+      .journal-column
+        router-link.journal-item(
+          v-for="(post, i) of postsOdd"
+          v-bind:to="'/journal/' + post.id"
+          )
+          img.journal-image(
+            v-bind:src="'assets/posts/' + post.id + '/' + post.image"
+            v-on:load="onImgLoaded"
+            )
           .journal-date
-            | 10—2016
+            | {{post.date}}
           .journal-name
-            | Blog Post 1: A Few Of Our Favorite Things
-        router-link.journal-item(to="/journal/item2")
-          img.journal-image(src="~assets/images/journal-post-2.png")
+            | {{post.title}}
+      .journal-column
+        router-link.journal-item(
+          v-for="(post, i) of postsEven"
+          v-bind:to="'/journal/' + post.id"
+          )
+          img.journal-image(
+            v-bind:src="'assets/posts/' + post.id + '/' + post.image"
+            v-on:load="onImgLoaded"
+            )
           .journal-date
-            | 08—2016
+            | {{post.date}}
           .journal-name
-            | Blog Post 2: New Blog Title
-        router-link.journal-item(to="/journal/item3")
-          img.journal-image(src="~assets/images/journal-post-3.png")
-          .journal-date
-            | 03—2016
-          .journal-name
-            | Blog Post 3: Not all names need a colon
-        router-link.journal-item(to="/journal/item4")
-          img.journal-image(src="~assets/images/journal-post-4.png")
-          .journal-date
-            | 12—2015
-          .journal-name
-            | Short & Sweet
-        router-link.journal-item(to="/journal/item5")
-          img.journal-image(src="~assets/images/journal-post-5.png")
-          .journal-date
-            | 10—2015
-          .journal-name
-            | Another Amazing Blog Article
-        router-link.journal-item(to="/journal/item6")
-          img.journal-image(src="~assets/images/journal-post-6.png")
-          .journal-date
-            | 10—2015
-          .journal-name
-            | Last example post
+            | {{post.title}}
 </template>
 
 <script>
@@ -91,9 +40,35 @@
 
   export default {
     name: "JournalComponent",
+    
+    data () {
+      return {
+        postsOdd: [],
+        postsEven: [],
+        imgLoaded: 0
+      }
+    },
 
     mounted () {
-      store.dispatch(onLoad(100));
+      let postsRev = posts.slice();
+      postsRev.reverse();
+      for (let i = 0; i < postsRev.length; i++) {
+        let post = postsRev[i];
+        if (i % 2 == 0)
+          this.postsOdd.push(post);
+        else
+          this.postsEven.push(post);
+      }
+    },
+    
+    methods: {
+      onImgLoaded () {
+        this.imgLoaded++;
+        if (this.imgLoaded == posts.length)
+          store.dispatch(onLoad(100));
+        else
+          store.dispatch(onLoad(this.imgLoaded * 100 / posts.length));
+      }
     }
   }
 </script>
@@ -162,15 +137,5 @@
       letter-spacing: 1px;
       line-height: 2.6vw;
     }
-  }
-
-  .v-enter-active {
-    transition: transform 1s ease 1s;
-  }
-  .v-leave-active {
-    transition: transform 1s;
-  }
-  .v-enter, .v-leave-active {
-    transform: translate3d(0, 100vh, 0);
   }
 </style>
