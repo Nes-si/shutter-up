@@ -128,10 +128,11 @@
             this.RTLeaActClass = 'view-active-dly';
             if (this.nav.pageCurrent == PAGE_HOME) {
               this.MEntActClass = 'menu-active-dly';
-            else
+            } else {
               this.MEntActClass = 'menu-active-norm';
           }
         }
+      }
       }
     }
   }

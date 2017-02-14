@@ -6,7 +6,7 @@
           | DOUG HOLT
           .logo-inner
             | PHOTOGRAPHY
-  
+
       .nav(@mouseleave="onNavLeave")
         .nav-item.nav-work(@mouseenter="onWorksEnter")
           .nav-workLabel
@@ -25,7 +25,7 @@
             router-link(to="/journal") Journal
           .nav-item
             router-link(to="/contacts") Contact
-  
+
       .lock
 </template>
 
@@ -102,22 +102,22 @@
     height: 100%;
 
     z-index: 15;
-    
+
     &-container {
       position: absolute;
       top: 0;
       left: 0;
       height: 100%;
       width: 100%;
-  
+
       padding: 10vh 36px;
       background: #F5F5F5;
       transition: background .5s;
     }
-  
+
     .menu-white {
       background: white;
-    
+
       .nav-bottom-cont {
         background: white;
       }
@@ -127,6 +127,7 @@
       background: url('~assets/images/lock.svg') no-repeat center center / contain;
       height: 13px;
       width: 10px;
+      display: none;
       position: absolute;
       left: 36px;
       bottom: 38px;
