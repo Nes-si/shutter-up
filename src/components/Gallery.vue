@@ -83,7 +83,17 @@
               v-bind:key="i"
               v-if="i == itemNum"
               ) {{ item.title }}
-    .info
+    .info-icon(v-on:click="toggleInfo")
+    .info-block(v-bind:class="{shown: showInfo}")
+      .info-block-cross(v-on:click="toggleInfo")
+      .info-block-label
+        | CATEGORY
+      .info-block-name
+        | {{ category.name }}
+      .info-block-label
+        | INFO
+      .info-block-text
+        | {{ category.info }}
 </template>
 
 <script>
@@ -103,7 +113,7 @@
         portfolio: this.$select('portfolio'),
         category: categories[this.$select('portfolio').category],
         nav: this.$select('nav'),
-
+        showInfo: false,
         itemNum: 0,
         direction: 'right',
         burgerLines13: null,
@@ -142,17 +152,25 @@
     },
 
     methods: {
+      toggleInfo (){
+        this.showInfo = !this.showInfo;
+      },
+      hideInfo (){
+        this.showInfo = false;
+      },
       itemNext () {
         if (this.itemNum >= this.category.items.length - 1)
           return;
         this.itemNum++;
         this.direction = 'right';
+        this.hideInfo();
       },
       itemPrev () {
         if (this.itemNum <= 0)
           return;
         this.itemNum--;
         this.direction = 'left';
+        this.hideInfo();
       },
 
       onMenuToggle () {
@@ -160,10 +178,13 @@
           store.actions.nav.menuRightClose();
         else
           store.actions.nav.menuRightOpen();
+          this.hideInfo();
       },
-  
+
       onCurtainClick () {
         store.actions.nav.menuRightClose();
+        this.hideInfo();
+
       },
 
       onMenuItemClick (i) {
@@ -482,7 +503,7 @@
       }
     }
 
-    .info {
+    .info-icon {
       background: url('~assets/images/info.svg') no-repeat center center / contain;
       height: 23px;
       width: 22px;
@@ -499,6 +520,74 @@
 
       &:hover {
         opacity: 1;
+      }
+    }
+    .info-block {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50vw;
+      height: 74vh;
+      background: #212121;
+      color: #fff;
+      padding: 100px;
+
+      transition: transform .4s ease;
+      transform: translate3d(0,100%,0);
+
+      &.shown {
+        transform: translate3d(0,0,0);
+      }
+
+      &-cross {
+        position: absolute;
+        top: 35px;
+        left: 35px;
+        width: 24px;
+        height: 24px;
+        display: block;
+        transform: rotate(45deg);
+        transform-origin: 50% 50%;
+        opacity: 0.7;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+
+        &:hover{
+          opacity: 1;
+        }
+        &:before {
+          display: block;
+          content: "";
+          position: absolute;
+          width: 24px;
+          height: 1px;
+          top: 11.5px;
+          left: 0;
+          background: #fff;
+        }
+        &:after {
+          display: block;
+          content: "";
+          position: absolute;
+          width: 1px;
+          height: 24px;
+          top: 0;
+          left: 11.5px;
+          background: #fff;
+
+        }
+      }
+      &-label {
+        opacity: 0.5;
+        margin-bottom: 7px;
+      }
+      &-name {
+        font-size: 30px;
+        margin-bottom: 10px;
+      }
+      &-text {
+        opacity: 0.7;
+        font-size: 18px;
       }
     }
   }

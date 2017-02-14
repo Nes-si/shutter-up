@@ -81,19 +81,22 @@
       );
 
       let loadCnt = 0;
-      for (let slide of this.category.slides) {
-        let img = new Image();
-        img.onload = () => {
-          loadCnt++;
-          if (loadCnt == this.slidesLength) {
-            store.dispatch(onLoad(100));
-            this.loadOthers();
-          } else {
-            store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
-          }
-        };
-        img.src = 'assets/categories/' + this.category.name + '/slides/' + slide.image;
-      }
+
+
+      categories.forEach((cat) => {
+        cat.slides.forEach((slide) => {
+          let img = new Image();
+          img.onload = () => {
+            loadCnt++;
+            if (loadCnt == this.slidesLength)
+              store.dispatch(onLoad(100));
+            else
+              store.dispatch(onLoad(loadCnt * 100 / this.slidesLength));
+          };
+          img.src = 'assets/categories/' + cat.name + '/slides/' + slide.image;
+        })
+      })
+
     },
 
     beforeDestroy () {
@@ -105,14 +108,14 @@
         for (let cat of this.categories) {
           if (cat == this.category)
             continue;
-          
+
           for (let slide of cat.slides) {
             let img = new Image();
             img.src = 'assets/categories/' + cat.name + '/slides/' + slide.image;
           }
         }
       },
-      
+
       onCatUpdate () {
         if (this.portfolio.showContacts)
           return;
@@ -172,7 +175,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    
+
     .category {
       display: block;
       position: absolute;
@@ -236,42 +239,42 @@
         animation-fill-mode: backwards;
       }
     }
-  
+
     .dots {
       position: absolute;
       top: 50%;
       right: 36px;
       transform: translateY(-50%);
-    
+
       z-index: 10;
-    
+
       .dot {
         border: 1px solid #FFFFFF;
         height: 8px;
         width: 8px;
         cursor: pointer;
         border-radius: 100px;
-      
+
         margin-bottom: 24px;
         display: block;
-      
+
         transition: background-color .5s, border-color .5s;
-      
+
         &.dot-square {
           margin-bottom: 0;
           border-radius: 0;
         }
-      
+
         &.dot-active {
           background: #FFFFFF;
         }
       }
     }
-  
+
     .dots-inverse {
       .dot {
         border-color: #707070;
-      
+
         &.dot-active {
           background: #707070;
         }

@@ -27,6 +27,10 @@
         v-show="!nav.menuFixed"
         v-html="require('assets/images/burger.inline.svg')"
         )
+    .secret
+      input(type="password")
+
+      input(type="submit" value="Submit")
 </template>
 
 <script>
@@ -52,16 +56,24 @@
         burgerLines1: null,
         burgerLines3: null,
         burgerArrow: null,
-        
+
         RTMode: '',
-        
+
         RTEntActClass: 'view-active-long',
         RTLeaActClass: 'view-active-long',
-  
+
         MEntActClass: 'menu-active-norm',
         MLeaActClass: 'menu-active-lv-norm',
-  
-        MBEntActClass: 'menu-active-norm'
+
+        MBEntActClass: 'menu-active-norm',
+
+        MPEntActClass: 'menu-active-norm',
+        MPLeaActClass: 'menu-active-lv-norm',
+
+        loaderShow: true,
+        loaderCan1: true,
+        loaderCan2: false
+
       }
     },
 
@@ -78,7 +90,7 @@
         else
           store.actions.nav.menuOpen();
       },
-  
+
       onCurtainClick() {
         store.actions.nav.menuClose();
       }
@@ -108,12 +120,13 @@
             this.RTMode = '';
             this.RTEntActClass = 'view-active-none';
             this.RTLeaActClass = 'view-active-long view-leave-active';
+            this.MPEntActClass = 'menu-active-norm';
+
           } else {
             this.RTMode = '';
             this.RTEntActClass = 'view-active-dly';
             this.RTLeaActClass = 'view-active-dly';
-            
-            if (this.nav.pageCurrent == PAGE_HOME)
+            if (this.nav.pageCurrent == PAGE_HOME) {
               this.MEntActClass = 'menu-active-dly';
             else
               this.MEntActClass = 'menu-active-norm';
@@ -225,7 +238,15 @@
     opacity: .4;
     z-index: 3;
   }
-
+  .secret {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    height: 40px;
+    background: #aaa;
+    display: none;
+  }
   .router-view {
     position: absolute;
     top: 0;
@@ -234,7 +255,17 @@
     height: 100%;
     transition: transform .5s;
   }
-  
+
+  .menu-padding {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 216px;
+    height: 100%;
+    z-index: 4;
+    background: #F5F5F5;
+  }
+
   .router-view-menu {
     transform: translate3d(175px, 0, 0);
   }
@@ -262,7 +293,7 @@
   .menu-burger-enter, .menu-burger-leave-active {
     opacity: .01
   }
-  
+
   .curtain-enter-active, .curtain-leave-active {
     transition: opacity .5s;
   }
@@ -276,7 +307,7 @@
   .loader-enter, .loader-leave-active {
     transform: translate3d(0, -100%, 0);
   }
-  
+
   .view-enter, .view-leave-active {
     transform: translate3d(0, 100%, 0);
   }
